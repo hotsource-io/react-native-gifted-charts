@@ -216,7 +216,7 @@ type itemType = {
 };
 
 export const BarChart = (props: PropTypes) => {
-  const scrollRef = useRef();
+  const scrollRef = useRef<any>();
   const [points, setPoints] = useState('');
   const [arrowPoints, setArrowPoints] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(-1);

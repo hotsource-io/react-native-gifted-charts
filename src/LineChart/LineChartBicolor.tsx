@@ -244,7 +244,7 @@ type sectionType = {
 };
 
 export const LineChartBicolor = (props: propTypes) => {
-  const scrollRef = useRef();
+  const scrollRef = useRef<any>();
   const [toggle, setToggle] = useState(false);
   const [pointsArray, setPointsArray] = useState([]);
   const [fillPointsArray, setFillPointsArray] = useState([]);

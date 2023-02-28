@@ -392,7 +392,7 @@ type Pointer = {
 };
 
 export const LineChart = (props: propTypes) => {
-  const scrollRef = useRef();
+  const scrollRef = useRef<any>();
   const [scrollX, setScrollX] = useState(0);
   const [arrow1Points, setArrow1Points] = useState('');
   const [arrow2Points, setArrow2Points] = useState('');
