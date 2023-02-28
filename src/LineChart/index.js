@@ -22,150 +22,175 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LineChart = void 0;
-const react_1 = __importStar(require("react"));
-const react_native_1 = require("react-native");
-const styles_1 = require("./styles");
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const utils_1 = require("../utils");
-const lineSvg_1 = __importDefault(require("../Components/lineSvg"));
-let initialData = null;
-let animations = [];
-const LineChart = (props) => {
+var react_1 = __importStar(require("react"));
+var react_native_1 = require("react-native");
+var styles_1 = require("./styles");
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var utils_1 = require("../utils");
+var lineSvg_1 = __importDefault(require("../Components/lineSvg"));
+var initialData = null;
+var animations = [];
+var LineChart = function (props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, _64, _65, _66, _67, _68, _69, _70, _71, _72, _73, _74, _75, _76, _77, _78, _79, _80, _81, _82, _83, _84, _85, _86, _87, _88, _89, _90, _91, _92, _93, _94, _95, _96, _97;
-    const scrollRef = (0, react_1.useRef)();
-    const [scrollX, setScrollX] = (0, react_1.useState)(0);
-    const [arrow1Points, setArrow1Points] = (0, react_1.useState)('');
-    const [arrow2Points, setArrow2Points] = (0, react_1.useState)('');
-    const [arrow3Points, setArrow3Points] = (0, react_1.useState)('');
-    const [arrow4Points, setArrow4Points] = (0, react_1.useState)('');
-    const [arrow5Points, setArrow5Points] = (0, react_1.useState)('');
-    const [pointerIndex, setPointerIndex] = (0, react_1.useState)(-1);
-    const [pointerX, setPointerX] = (0, react_1.useState)(0);
-    const [pointerY, setPointerY] = (0, react_1.useState)(0);
-    const [pointerItem, setPointerItem] = (0, react_1.useState)({
+    var scrollRef = (0, react_1.useRef)();
+    var _98 = __read((0, react_1.useState)(0), 2), scrollX = _98[0], setScrollX = _98[1];
+    var _99 = __read((0, react_1.useState)(''), 2), arrow1Points = _99[0], setArrow1Points = _99[1];
+    var _100 = __read((0, react_1.useState)(''), 2), arrow2Points = _100[0], setArrow2Points = _100[1];
+    var _101 = __read((0, react_1.useState)(''), 2), arrow3Points = _101[0], setArrow3Points = _101[1];
+    var _102 = __read((0, react_1.useState)(''), 2), arrow4Points = _102[0], setArrow4Points = _102[1];
+    var _103 = __read((0, react_1.useState)(''), 2), arrow5Points = _103[0], setArrow5Points = _103[1];
+    var _104 = __read((0, react_1.useState)(-1), 2), pointerIndex = _104[0], setPointerIndex = _104[1];
+    var _105 = __read((0, react_1.useState)(0), 2), pointerX = _105[0], setPointerX = _105[1];
+    var _106 = __read((0, react_1.useState)(0), 2), pointerY = _106[0], setPointerY = _106[1];
+    var _107 = __read((0, react_1.useState)({
         pointerShiftX: 0,
         pointerShiftY: 0,
-    });
-    const [pointerY2, setPointerY2] = (0, react_1.useState)(0);
-    const [pointerItem2, setPointerItem2] = (0, react_1.useState)({
+    }), 2), pointerItem = _107[0], setPointerItem = _107[1];
+    var _108 = __read((0, react_1.useState)(0), 2), pointerY2 = _108[0], setPointerY2 = _108[1];
+    var _109 = __read((0, react_1.useState)({
         pointerShiftX: 0,
         pointerShiftY: 0,
-    });
-    const [pointerY3, setPointerY3] = (0, react_1.useState)(0);
-    const [pointerItem3, setPointerItem3] = (0, react_1.useState)({
+    }), 2), pointerItem2 = _109[0], setPointerItem2 = _109[1];
+    var _110 = __read((0, react_1.useState)(0), 2), pointerY3 = _110[0], setPointerY3 = _110[1];
+    var _111 = __read((0, react_1.useState)({
         pointerShiftX: 0,
         pointerShiftY: 0,
-    });
-    const [pointerY4, setPointerY4] = (0, react_1.useState)(0);
-    const [pointerItem4, setPointerItem4] = (0, react_1.useState)({
+    }), 2), pointerItem3 = _111[0], setPointerItem3 = _111[1];
+    var _112 = __read((0, react_1.useState)(0), 2), pointerY4 = _112[0], setPointerY4 = _112[1];
+    var _113 = __read((0, react_1.useState)({
         pointerShiftX: 0,
         pointerShiftY: 0,
-    });
-    const [pointerY5, setPointerY5] = (0, react_1.useState)(0);
-    const [pointerItem5, setPointerItem5] = (0, react_1.useState)({
+    }), 2), pointerItem4 = _113[0], setPointerItem4 = _113[1];
+    var _114 = __read((0, react_1.useState)(0), 2), pointerY5 = _114[0], setPointerY5 = _114[1];
+    var _115 = __read((0, react_1.useState)({
         pointerShiftX: 0,
         pointerShiftY: 0,
-    });
-    const [responderStartTime, setResponderStartTime] = (0, react_1.useState)(0);
-    const [responderActive, setResponderActive] = (0, react_1.useState)(false);
-    const [points, setPoints] = (0, react_1.useState)('');
-    const [points2, setPoints2] = (0, react_1.useState)('');
-    const [points3, setPoints3] = (0, react_1.useState)('');
-    const [points4, setPoints4] = (0, react_1.useState)('');
-    const [points5, setPoints5] = (0, react_1.useState)('');
-    const [fillPoints, setFillPoints] = (0, react_1.useState)('');
-    const [fillPoints2, setFillPoints2] = (0, react_1.useState)('');
-    const [fillPoints3, setFillPoints3] = (0, react_1.useState)('');
-    const [fillPoints4, setFillPoints4] = (0, react_1.useState)('');
-    const [fillPoints5, setFillPoints5] = (0, react_1.useState)('');
-    const [selectedIndex, setSelectedIndex] = (0, react_1.useState)(-1);
-    const containerHeight = props.height || 200;
-    const noOfSections = props.noOfSections || 10;
-    let data = (0, react_1.useMemo)(() => {
+    }), 2), pointerItem5 = _115[0], setPointerItem5 = _115[1];
+    var _116 = __read((0, react_1.useState)(0), 2), responderStartTime = _116[0], setResponderStartTime = _116[1];
+    var _117 = __read((0, react_1.useState)(false), 2), responderActive = _117[0], setResponderActive = _117[1];
+    var _118 = __read((0, react_1.useState)(''), 2), points = _118[0], setPoints = _118[1];
+    var _119 = __read((0, react_1.useState)(''), 2), points2 = _119[0], setPoints2 = _119[1];
+    var _120 = __read((0, react_1.useState)(''), 2), points3 = _120[0], setPoints3 = _120[1];
+    var _121 = __read((0, react_1.useState)(''), 2), points4 = _121[0], setPoints4 = _121[1];
+    var _122 = __read((0, react_1.useState)(''), 2), points5 = _122[0], setPoints5 = _122[1];
+    var _123 = __read((0, react_1.useState)(''), 2), fillPoints = _123[0], setFillPoints = _123[1];
+    var _124 = __read((0, react_1.useState)(''), 2), fillPoints2 = _124[0], setFillPoints2 = _124[1];
+    var _125 = __read((0, react_1.useState)(''), 2), fillPoints3 = _125[0], setFillPoints3 = _125[1];
+    var _126 = __read((0, react_1.useState)(''), 2), fillPoints4 = _126[0], setFillPoints4 = _126[1];
+    var _127 = __read((0, react_1.useState)(''), 2), fillPoints5 = _127[0], setFillPoints5 = _127[1];
+    var _128 = __read((0, react_1.useState)(-1), 2), selectedIndex = _128[0], setSelectedIndex = _128[1];
+    var containerHeight = props.height || 200;
+    var noOfSections = props.noOfSections || 10;
+    var data = (0, react_1.useMemo)(function () {
         if (!props.data) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data.map(item => {
+            return props.data.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data;
     }, [props.yAxisOffset, props.data]);
-    const data2 = (0, react_1.useMemo)(() => {
+    var data2 = (0, react_1.useMemo)(function () {
         if (!props.data2) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data2.map(item => {
+            return props.data2.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data2;
     }, [props.yAxisOffset, props.data2]);
-    const data3 = (0, react_1.useMemo)(() => {
+    var data3 = (0, react_1.useMemo)(function () {
         if (!props.data3) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data3.map(item => {
+            return props.data3.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data3;
     }, [props.yAxisOffset, props.data3]);
-    const data4 = (0, react_1.useMemo)(() => {
+    var data4 = (0, react_1.useMemo)(function () {
         if (!props.data4) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data4.map(item => {
+            return props.data4.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data4;
     }, [props.yAxisOffset, props.data4]);
-    const data5 = (0, react_1.useMemo)(() => {
+    var data5 = (0, react_1.useMemo)(function () {
         if (!props.data5) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data5.map(item => {
+            return props.data5.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data5;
     }, [props.yAxisOffset, props.data5]);
-    const scrollToEnd = props.scrollToEnd || false;
-    const scrollAnimation = props.scrollAnimation === false ? false : true;
-    const opacValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue2 = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue3 = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue4 = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue5 = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const labelsExtraHeight = props.labelsExtraHeight || 0;
-    const animationDuration = props.animationDuration || 800;
-    const onDataChangeAnimationDuration = props.onDataChangeAnimationDuration || 400;
-    const animateTogether = props.animateTogether || false;
-    const animateOnDataChange = props.yAxisOffset
+    var scrollToEnd = props.scrollToEnd || false;
+    var scrollAnimation = props.scrollAnimation === false ? false : true;
+    var opacValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue2 = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue3 = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue4 = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue5 = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var labelsExtraHeight = props.labelsExtraHeight || 0;
+    var animationDuration = props.animationDuration || 800;
+    var onDataChangeAnimationDuration = props.onDataChangeAnimationDuration || 400;
+    var animateTogether = props.animateTogether || false;
+    var animateOnDataChange = props.yAxisOffset
         ? false
         : props.animateOnDataChange || false;
-    const yAxisLabelPrefix = props.yAxisLabelPrefix || '';
-    const yAxisLabelSuffix = props.yAxisLabelSuffix || '';
-    const yAxisSide = props.yAxisSide || 'left';
-    const startIndex1 = props.startIndex1 === 0 ? 0 : props.startIndex1 || props.startIndex || 0;
-    let endIndex1;
+    var yAxisLabelPrefix = props.yAxisLabelPrefix || '';
+    var yAxisLabelSuffix = props.yAxisLabelSuffix || '';
+    var yAxisSide = props.yAxisSide || 'left';
+    var startIndex1 = props.startIndex1 === 0 ? 0 : props.startIndex1 || props.startIndex || 0;
+    var endIndex1;
     if (props.endIndex1 === undefined || props.endIndex1 === null) {
         if (props.endIndex === undefined || props.endIndex === null) {
             endIndex1 = data.length - 1;
@@ -177,63 +202,63 @@ const LineChart = (props) => {
     else {
         endIndex1 = props.endIndex1;
     }
-    const startIndex2 = props.startIndex2 || 0;
-    const endIndex2 = props.endIndex2 === 0 ? 0 : props.endIndex2 || data2.length - 1;
-    const startIndex3 = props.startIndex3 || 0;
-    const endIndex3 = props.endIndex3 === 0 ? 0 : props.endIndex3 || data3.length - 1;
-    const startIndex4 = props.startIndex4 || 0;
-    const endIndex4 = props.endIndex4 === 0 ? 0 : props.endIndex4 || data4.length - 1;
-    const startIndex5 = props.startIndex5 || 0;
-    const endIndex5 = props.endIndex5 === 0 ? 0 : props.endIndex5 || data5.length - 1;
+    var startIndex2 = props.startIndex2 || 0;
+    var endIndex2 = props.endIndex2 === 0 ? 0 : props.endIndex2 || data2.length - 1;
+    var startIndex3 = props.startIndex3 || 0;
+    var endIndex3 = props.endIndex3 === 0 ? 0 : props.endIndex3 || data3.length - 1;
+    var startIndex4 = props.startIndex4 || 0;
+    var endIndex4 = props.endIndex4 === 0 ? 0 : props.endIndex4 || data4.length - 1;
+    var startIndex5 = props.startIndex5 || 0;
+    var endIndex5 = props.endIndex5 === 0 ? 0 : props.endIndex5 || data5.length - 1;
     if (!initialData) {
-        initialData = [...data];
-        animations = initialData.map(item => new react_native_1.Animated.Value(item.value));
+        initialData = __spreadArray([], __read(data), false);
+        animations = initialData.map(function (item) { return new react_native_1.Animated.Value(item.value); });
     }
-    let newPoints = '', newFillPoints = '';
-    let counter = 0;
-    const initialSpacing = props.initialSpacing === 0 ? 0 : props.initialSpacing || 40;
-    const thickness = props.thickness || 2;
-    const adjustToWidth = props.adjustToWidth || false;
-    const spacing = props.spacing === 0
+    var newPoints = '', newFillPoints = '';
+    var counter = 0;
+    var initialSpacing = props.initialSpacing === 0 ? 0 : props.initialSpacing || 40;
+    var thickness = props.thickness || 2;
+    var adjustToWidth = props.adjustToWidth || false;
+    var spacing = props.spacing === 0
         ? 0
         : props.spacing ||
             (adjustToWidth
                 ? ((props.width || 200) - initialSpacing) / data.length
                 : 60);
-    const xAxisLength = props.xAxisLength;
-    const xAxisThickness = props.xAxisThickness === 0 ? 0 : props.xAxisThickness || 1;
-    const dataPointsHeight1 = props.dataPointsHeight1 || props.dataPointsHeight || 2;
-    const dataPointsWidth1 = props.dataPointsWidth1 || props.dataPointsWidth || 2;
-    const dataPointsRadius1 = props.dataPointsRadius1 || props.dataPointsRadius || 3;
-    const dataPointsColor1 = props.dataPointsColor1 || props.dataPointsColor || 'black';
-    const dataPointsShape1 = props.dataPointsShape1 || props.dataPointsShape || 'circular';
-    const dataPointsHeight2 = props.dataPointsHeight2 || props.dataPointsHeight || 2;
-    const dataPointsWidth2 = props.dataPointsWidth2 || props.dataPointsWidth || 2;
-    const dataPointsRadius2 = props.dataPointsRadius2 || props.dataPointsRadius || 3;
-    const dataPointsColor2 = props.dataPointsColor2 || props.dataPointsColor || 'blue';
-    const dataPointsShape2 = props.dataPointsShape2 || props.dataPointsShape || 'circular';
-    const dataPointsHeight3 = props.dataPointsHeight3 || props.dataPointsHeight || 2;
-    const dataPointsWidth3 = props.dataPointsWidth3 || props.dataPointsWidth || 2;
-    const dataPointsRadius3 = props.dataPointsRadius3 || props.dataPointsRadius || 3;
-    const dataPointsColor3 = props.dataPointsColor3 || props.dataPointsColor || 'red';
-    const dataPointsShape3 = props.dataPointsShape3 || props.dataPointsShape || 'circular';
-    const dataPointsHeight4 = props.dataPointsHeight4 || props.dataPointsHeight || 2;
-    const dataPointsWidth4 = props.dataPointsWidth4 || props.dataPointsWidth || 2;
-    const dataPointsRadius4 = props.dataPointsRadius4 || props.dataPointsRadius || 3;
-    const dataPointsColor4 = props.dataPointsColor4 || props.dataPointsColor || 'red';
-    const dataPointsShape4 = props.dataPointsShape4 || props.dataPointsShape || 'circular';
-    const dataPointsHeight5 = props.dataPointsHeight5 || props.dataPointsHeight || 2;
-    const dataPointsWidth5 = props.dataPointsWidth5 || props.dataPointsWidth || 2;
-    const dataPointsRadius5 = props.dataPointsRadius5 || props.dataPointsRadius || 3;
-    const dataPointsColor5 = props.dataPointsColor5 || props.dataPointsColor || 'red';
-    const dataPointsShape5 = props.dataPointsShape5 || props.dataPointsShape || 'circular';
+    var xAxisLength = props.xAxisLength;
+    var xAxisThickness = props.xAxisThickness === 0 ? 0 : props.xAxisThickness || 1;
+    var dataPointsHeight1 = props.dataPointsHeight1 || props.dataPointsHeight || 2;
+    var dataPointsWidth1 = props.dataPointsWidth1 || props.dataPointsWidth || 2;
+    var dataPointsRadius1 = props.dataPointsRadius1 || props.dataPointsRadius || 3;
+    var dataPointsColor1 = props.dataPointsColor1 || props.dataPointsColor || 'black';
+    var dataPointsShape1 = props.dataPointsShape1 || props.dataPointsShape || 'circular';
+    var dataPointsHeight2 = props.dataPointsHeight2 || props.dataPointsHeight || 2;
+    var dataPointsWidth2 = props.dataPointsWidth2 || props.dataPointsWidth || 2;
+    var dataPointsRadius2 = props.dataPointsRadius2 || props.dataPointsRadius || 3;
+    var dataPointsColor2 = props.dataPointsColor2 || props.dataPointsColor || 'blue';
+    var dataPointsShape2 = props.dataPointsShape2 || props.dataPointsShape || 'circular';
+    var dataPointsHeight3 = props.dataPointsHeight3 || props.dataPointsHeight || 2;
+    var dataPointsWidth3 = props.dataPointsWidth3 || props.dataPointsWidth || 2;
+    var dataPointsRadius3 = props.dataPointsRadius3 || props.dataPointsRadius || 3;
+    var dataPointsColor3 = props.dataPointsColor3 || props.dataPointsColor || 'red';
+    var dataPointsShape3 = props.dataPointsShape3 || props.dataPointsShape || 'circular';
+    var dataPointsHeight4 = props.dataPointsHeight4 || props.dataPointsHeight || 2;
+    var dataPointsWidth4 = props.dataPointsWidth4 || props.dataPointsWidth || 2;
+    var dataPointsRadius4 = props.dataPointsRadius4 || props.dataPointsRadius || 3;
+    var dataPointsColor4 = props.dataPointsColor4 || props.dataPointsColor || 'red';
+    var dataPointsShape4 = props.dataPointsShape4 || props.dataPointsShape || 'circular';
+    var dataPointsHeight5 = props.dataPointsHeight5 || props.dataPointsHeight || 2;
+    var dataPointsWidth5 = props.dataPointsWidth5 || props.dataPointsWidth || 2;
+    var dataPointsRadius5 = props.dataPointsRadius5 || props.dataPointsRadius || 3;
+    var dataPointsColor5 = props.dataPointsColor5 || props.dataPointsColor || 'red';
+    var dataPointsShape5 = props.dataPointsShape5 || props.dataPointsShape || 'circular';
     if (animateOnDataChange) {
-        animations.forEach((item, index) => {
-            item.addListener(val => {
+        animations.forEach(function (item, index) {
+            item.addListener(function (val) {
                 data[index].value = val.value;
-                let pp = '', ppp = '';
+                var pp = '', ppp = '';
                 if (!props.curved) {
-                    for (let i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data.length; i++) {
                         pp +=
                             'L' +
                                 (initialSpacing - dataPointsWidth1 / 2 + spacing * i) +
@@ -273,7 +298,7 @@ const LineChart = (props) => {
             });
         });
     }
-    const setPointsOnChange = () => {
+    var setPointsOnChange = function () {
         if (counter === data.length) {
             // console.log('here.......');
             if (!props.curved) {
@@ -284,16 +309,18 @@ const LineChart = (props) => {
             }
         }
     };
-    (0, react_1.useEffect)(() => {
+    (0, react_1.useEffect)(function () {
         if (animateOnDataChange) {
-            react_native_1.Animated.parallel(animations.map((anItem, index) => react_native_1.Animated.timing(anItem, {
-                toValue: data[index].value,
-                useNativeDriver: true,
-                duration: onDataChangeAnimationDuration,
-            }))).start();
+            react_native_1.Animated.parallel(animations.map(function (anItem, index) {
+                return react_native_1.Animated.timing(anItem, {
+                    toValue: data[index].value,
+                    useNativeDriver: true,
+                    duration: onDataChangeAnimationDuration,
+                });
+            })).start();
         }
     }, [animateOnDataChange, data, onDataChangeAnimationDuration]);
-    const labelsAppear = (0, react_1.useCallback)(() => {
+    var labelsAppear = (0, react_1.useCallback)(function () {
         opacValue.setValue(0);
         react_native_1.Animated.timing(opacValue, {
             toValue: 1,
@@ -302,11 +329,11 @@ const LineChart = (props) => {
             useNativeDriver: false,
         }).start();
     }, [opacValue]);
-    const appearingOpacity = opacValue.interpolate({
+    var appearingOpacity = opacValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1],
     });
-    const decreaseWidth = (0, react_1.useCallback)(() => {
+    var decreaseWidth = (0, react_1.useCallback)(function () {
         widthValue.setValue(0);
         react_native_1.Animated.timing(widthValue, {
             toValue: 1,
@@ -315,7 +342,7 @@ const LineChart = (props) => {
             useNativeDriver: false,
         }).start();
     }, [animationDuration, widthValue]);
-    const decreaseWidth2 = (0, react_1.useCallback)(() => {
+    var decreaseWidth2 = (0, react_1.useCallback)(function () {
         widthValue2.setValue(0);
         react_native_1.Animated.timing(widthValue2, {
             toValue: 1,
@@ -324,7 +351,7 @@ const LineChart = (props) => {
             useNativeDriver: false,
         }).start();
     }, [animationDuration, widthValue2]);
-    const decreaseWidth3 = (0, react_1.useCallback)(() => {
+    var decreaseWidth3 = (0, react_1.useCallback)(function () {
         widthValue3.setValue(0);
         react_native_1.Animated.timing(widthValue3, {
             toValue: 1,
@@ -333,7 +360,7 @@ const LineChart = (props) => {
             useNativeDriver: false,
         }).start();
     }, [animationDuration, widthValue3]);
-    const decreaseWidth4 = (0, react_1.useCallback)(() => {
+    var decreaseWidth4 = (0, react_1.useCallback)(function () {
         widthValue4.setValue(0);
         react_native_1.Animated.timing(widthValue4, {
             toValue: 1,
@@ -342,7 +369,7 @@ const LineChart = (props) => {
             useNativeDriver: false,
         }).start();
     }, [animationDuration, widthValue4]);
-    const decreaseWidth5 = (0, react_1.useCallback)(() => {
+    var decreaseWidth5 = (0, react_1.useCallback)(function () {
         widthValue5.setValue(0);
         react_native_1.Animated.timing(widthValue5, {
             toValue: 1,
@@ -351,21 +378,21 @@ const LineChart = (props) => {
             useNativeDriver: false,
         }).start();
     }, [animationDuration, widthValue5]);
-    const areaChart = props.areaChart || false;
-    const textFontSize1 = props.textFontSize1 || props.textFontSize || 10;
-    const textFontSize2 = props.textFontSize2 || props.textFontSize || 10;
-    const textFontSize3 = props.textFontSize3 || props.textFontSize || 10;
-    const textFontSize4 = props.textFontSize4 || props.textFontSize || 10;
-    const textFontSize5 = props.textFontSize5 || props.textFontSize || 10;
-    const textColor1 = props.textColor1 || props.textColor || 'gray';
-    const textColor2 = props.textColor2 || props.textColor || 'gray';
-    const textColor3 = props.textColor3 || props.textColor || 'gray';
-    const textColor4 = props.textColor4 || props.textColor || 'gray';
-    const textColor5 = props.textColor5 || props.textColor || 'gray';
-    const xAxisColor = props.xAxisColor || 'black';
-    let totalWidth = initialSpacing;
-    let maxItem = 0, minItem = 0;
-    data.forEach((item) => {
+    var areaChart = props.areaChart || false;
+    var textFontSize1 = props.textFontSize1 || props.textFontSize || 10;
+    var textFontSize2 = props.textFontSize2 || props.textFontSize || 10;
+    var textFontSize3 = props.textFontSize3 || props.textFontSize || 10;
+    var textFontSize4 = props.textFontSize4 || props.textFontSize || 10;
+    var textFontSize5 = props.textFontSize5 || props.textFontSize || 10;
+    var textColor1 = props.textColor1 || props.textColor || 'gray';
+    var textColor2 = props.textColor2 || props.textColor || 'gray';
+    var textColor3 = props.textColor3 || props.textColor || 'gray';
+    var textColor4 = props.textColor4 || props.textColor || 'gray';
+    var textColor5 = props.textColor5 || props.textColor || 'gray';
+    var xAxisColor = props.xAxisColor || 'black';
+    var totalWidth = initialSpacing;
+    var maxItem = 0, minItem = 0;
+    data.forEach(function (item) {
         if (item.value > maxItem) {
             maxItem = item.value;
         }
@@ -392,22 +419,22 @@ const LineChart = (props) => {
             minItem = minItem - (10 + (minItem % 10));
         }
     }
-    const maxValue = props.maxValue || maxItem;
-    const minValue = props.minValue || minItem;
-    (0, react_1.useEffect)(() => {
+    var maxValue = props.maxValue || maxItem;
+    var minValue = props.minValue || minItem;
+    (0, react_1.useEffect)(function () {
         // console.log('comes here............')
         decreaseWidth();
         labelsAppear();
-        setTimeout(() => {
+        setTimeout(function () {
             decreaseWidth2();
         }, animateTogether ? 0 : animationDuration);
-        setTimeout(() => {
+        setTimeout(function () {
             decreaseWidth3();
         }, animateTogether ? 0 : animationDuration * 2);
-        setTimeout(() => {
+        setTimeout(function () {
             decreaseWidth4();
         }, animateTogether ? 0 : animationDuration * 3);
-        setTimeout(() => {
+        setTimeout(function () {
             decreaseWidth5();
         }, animateTogether ? 0 : animationDuration * 4);
     }, [
@@ -420,56 +447,56 @@ const LineChart = (props) => {
         decreaseWidth5,
         labelsAppear,
     ]);
-    const thickness1 = props.thickness1 === 0 ? 0 : props.thickness1 || props.thickness || 1;
-    const thickness2 = props.thickness2 === 0 ? 0 : props.thickness2 || props.thickness || 1;
-    const thickness3 = props.thickness3 === 0 ? 0 : props.thickness3 || props.thickness || 1;
-    const thickness4 = props.thickness4 === 0 ? 0 : props.thickness4 || props.thickness || 1;
-    const thickness5 = props.thickness5 === 0 ? 0 : props.thickness5 || props.thickness || 1;
-    const zIndex1 = props.zIndex1 || 0;
-    const zIndex2 = props.zIndex2 || 0;
-    const zIndex3 = props.zIndex3 || 0;
-    const zIndex4 = props.zIndex4 || 0;
-    const zIndex5 = props.zIndex5 || 0;
-    const strokeDashArray1 = props.strokeDashArray1 || props.strokeDashArray;
-    const strokeDashArray2 = props.strokeDashArray2 || props.strokeDashArray;
-    const strokeDashArray3 = props.strokeDashArray3 || props.strokeDashArray;
-    const strokeDashArray4 = props.strokeDashArray4 || props.strokeDashArray;
-    const strokeDashArray5 = props.strokeDashArray5 || props.strokeDashArray;
-    const rotateLabel = props.rotateLabel || false;
-    const isAnimated = props.isAnimated || false;
-    const hideDataPoints1 = props.hideDataPoints || props.hideDataPoints1 || false;
-    const hideDataPoints2 = props.hideDataPoints || props.hideDataPoints2 || false;
-    const hideDataPoints3 = props.hideDataPoints || props.hideDataPoints3 || false;
-    const hideDataPoints4 = props.hideDataPoints || props.hideDataPoints4 || false;
-    const hideDataPoints5 = props.hideDataPoints || props.hideDataPoints5 || false;
-    const color1 = props.color1 || props.color || 'black';
-    const color2 = props.color2 || props.color || 'black';
-    const color3 = props.color3 || props.color || 'black';
-    const color4 = props.color4 || props.color || 'black';
-    const color5 = props.color5 || props.color || 'black';
-    const startFillColor1 = props.startFillColor1 || props.startFillColor || 'gray';
-    const endFillColor1 = props.endFillColor1 || props.endFillColor || 'white';
-    const startOpacity = props.startOpacity === 0 ? 0 : props.startOpacity || 1;
-    const endOpacity = props.endOpacity === 0 ? 0 : props.endOpacity || 1;
-    const startOpacity1 = props.startOpacity1 === 0 ? 0 : props.startOpacity1 || startOpacity;
-    const endOpacity1 = props.endOpacity1 === 0 ? 0 : props.endOpacity1 || endOpacity;
-    const startFillColor2 = props.startFillColor2 || props.startFillColor || 'gray';
-    const endFillColor2 = props.endFillColor2 || props.endFillColor || 'white';
-    const startOpacity2 = props.startOpacity2 === 0 ? 0 : props.startOpacity2 || startOpacity;
-    const endOpacity2 = props.endOpacity2 === 0 ? 0 : props.endOpacity2 || endOpacity;
-    const startFillColor3 = props.startFillColor3 || props.startFillColor || 'gray';
-    const endFillColor3 = props.endFillColor3 || props.endFillColor || 'white';
-    const startOpacity3 = props.startOpacity3 === 0 ? 0 : props.startOpacity3 || startOpacity;
-    const endOpacity3 = props.endOpacity3 === 0 ? 0 : props.endOpacity3 || endOpacity;
-    const startFillColor4 = props.startFillColor4 || props.startFillColor || 'gray';
-    const endFillColor4 = props.endFillColor4 || props.endFillColor || 'white';
-    const startOpacity4 = props.startOpacity4 === 0 ? 0 : props.startOpacity4 || startOpacity;
-    const endOpacity4 = props.endOpacity4 === 0 ? 0 : props.endOpacity4 || endOpacity;
-    const startFillColor5 = props.startFillColor5 || props.startFillColor || 'gray';
-    const endFillColor5 = props.endFillColor5 || props.endFillColor || 'white';
-    const startOpacity5 = props.startOpacity5 === 0 ? 0 : props.startOpacity5 || startOpacity;
-    const endOpacity5 = props.endOpacity5 === 0 ? 0 : props.endOpacity5 || endOpacity;
-    const defaultArrowConfig = {
+    var thickness1 = props.thickness1 === 0 ? 0 : props.thickness1 || props.thickness || 1;
+    var thickness2 = props.thickness2 === 0 ? 0 : props.thickness2 || props.thickness || 1;
+    var thickness3 = props.thickness3 === 0 ? 0 : props.thickness3 || props.thickness || 1;
+    var thickness4 = props.thickness4 === 0 ? 0 : props.thickness4 || props.thickness || 1;
+    var thickness5 = props.thickness5 === 0 ? 0 : props.thickness5 || props.thickness || 1;
+    var zIndex1 = props.zIndex1 || 0;
+    var zIndex2 = props.zIndex2 || 0;
+    var zIndex3 = props.zIndex3 || 0;
+    var zIndex4 = props.zIndex4 || 0;
+    var zIndex5 = props.zIndex5 || 0;
+    var strokeDashArray1 = props.strokeDashArray1 || props.strokeDashArray;
+    var strokeDashArray2 = props.strokeDashArray2 || props.strokeDashArray;
+    var strokeDashArray3 = props.strokeDashArray3 || props.strokeDashArray;
+    var strokeDashArray4 = props.strokeDashArray4 || props.strokeDashArray;
+    var strokeDashArray5 = props.strokeDashArray5 || props.strokeDashArray;
+    var rotateLabel = props.rotateLabel || false;
+    var isAnimated = props.isAnimated || false;
+    var hideDataPoints1 = props.hideDataPoints || props.hideDataPoints1 || false;
+    var hideDataPoints2 = props.hideDataPoints || props.hideDataPoints2 || false;
+    var hideDataPoints3 = props.hideDataPoints || props.hideDataPoints3 || false;
+    var hideDataPoints4 = props.hideDataPoints || props.hideDataPoints4 || false;
+    var hideDataPoints5 = props.hideDataPoints || props.hideDataPoints5 || false;
+    var color1 = props.color1 || props.color || 'black';
+    var color2 = props.color2 || props.color || 'black';
+    var color3 = props.color3 || props.color || 'black';
+    var color4 = props.color4 || props.color || 'black';
+    var color5 = props.color5 || props.color || 'black';
+    var startFillColor1 = props.startFillColor1 || props.startFillColor || 'gray';
+    var endFillColor1 = props.endFillColor1 || props.endFillColor || 'white';
+    var startOpacity = props.startOpacity === 0 ? 0 : props.startOpacity || 1;
+    var endOpacity = props.endOpacity === 0 ? 0 : props.endOpacity || 1;
+    var startOpacity1 = props.startOpacity1 === 0 ? 0 : props.startOpacity1 || startOpacity;
+    var endOpacity1 = props.endOpacity1 === 0 ? 0 : props.endOpacity1 || endOpacity;
+    var startFillColor2 = props.startFillColor2 || props.startFillColor || 'gray';
+    var endFillColor2 = props.endFillColor2 || props.endFillColor || 'white';
+    var startOpacity2 = props.startOpacity2 === 0 ? 0 : props.startOpacity2 || startOpacity;
+    var endOpacity2 = props.endOpacity2 === 0 ? 0 : props.endOpacity2 || endOpacity;
+    var startFillColor3 = props.startFillColor3 || props.startFillColor || 'gray';
+    var endFillColor3 = props.endFillColor3 || props.endFillColor || 'white';
+    var startOpacity3 = props.startOpacity3 === 0 ? 0 : props.startOpacity3 || startOpacity;
+    var endOpacity3 = props.endOpacity3 === 0 ? 0 : props.endOpacity3 || endOpacity;
+    var startFillColor4 = props.startFillColor4 || props.startFillColor || 'gray';
+    var endFillColor4 = props.endFillColor4 || props.endFillColor || 'white';
+    var startOpacity4 = props.startOpacity4 === 0 ? 0 : props.startOpacity4 || startOpacity;
+    var endOpacity4 = props.endOpacity4 === 0 ? 0 : props.endOpacity4 || endOpacity;
+    var startFillColor5 = props.startFillColor5 || props.startFillColor || 'gray';
+    var endFillColor5 = props.endFillColor5 || props.endFillColor || 'white';
+    var startOpacity5 = props.startOpacity5 === 0 ? 0 : props.startOpacity5 || startOpacity;
+    var endOpacity5 = props.endOpacity5 === 0 ? 0 : props.endOpacity5 || endOpacity;
+    var defaultArrowConfig = {
         length: 10,
         width: 10,
         strokeWidth: thickness1,
@@ -477,43 +504,43 @@ const LineChart = (props) => {
         fillColor: 'none',
         showArrowBase: true,
     };
-    const arrowLength1 = (_d = (_b = (_a = props.arrowConfig1) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : (_c = props.arrowConfig) === null || _c === void 0 ? void 0 : _c.length) !== null && _d !== void 0 ? _d : defaultArrowConfig.length;
-    const arrowWidth1 = (_h = (_f = (_e = props.arrowConfig1) === null || _e === void 0 ? void 0 : _e.width) !== null && _f !== void 0 ? _f : (_g = props.arrowConfig) === null || _g === void 0 ? void 0 : _g.width) !== null && _h !== void 0 ? _h : defaultArrowConfig.width;
-    const arrowStrokeWidth1 = (_m = (_k = (_j = props.arrowConfig1) === null || _j === void 0 ? void 0 : _j.strokeWidth) !== null && _k !== void 0 ? _k : (_l = props.arrowConfig) === null || _l === void 0 ? void 0 : _l.strokeWidth) !== null && _m !== void 0 ? _m : defaultArrowConfig.strokeWidth;
-    const arrowStrokeColor1 = (_r = (_p = (_o = props.arrowConfig1) === null || _o === void 0 ? void 0 : _o.strokeColor) !== null && _p !== void 0 ? _p : (_q = props.arrowConfig) === null || _q === void 0 ? void 0 : _q.strokeColor) !== null && _r !== void 0 ? _r : defaultArrowConfig.strokeColor;
-    const arrowFillColor1 = (_v = (_t = (_s = props.arrowConfig1) === null || _s === void 0 ? void 0 : _s.fillColor) !== null && _t !== void 0 ? _t : (_u = props.arrowConfig) === null || _u === void 0 ? void 0 : _u.fillColor) !== null && _v !== void 0 ? _v : defaultArrowConfig.fillColor;
-    const showArrowBase1 = (_z = (_x = (_w = props.arrowConfig1) === null || _w === void 0 ? void 0 : _w.showArrowBase) !== null && _x !== void 0 ? _x : (_y = props.arrowConfig) === null || _y === void 0 ? void 0 : _y.showArrowBase) !== null && _z !== void 0 ? _z : defaultArrowConfig.showArrowBase;
-    const arrowLength2 = (_3 = (_1 = (_0 = props.arrowConfig2) === null || _0 === void 0 ? void 0 : _0.length) !== null && _1 !== void 0 ? _1 : (_2 = props.arrowConfig) === null || _2 === void 0 ? void 0 : _2.length) !== null && _3 !== void 0 ? _3 : defaultArrowConfig.length;
-    const arrowWidth2 = (_7 = (_5 = (_4 = props.arrowConfig2) === null || _4 === void 0 ? void 0 : _4.width) !== null && _5 !== void 0 ? _5 : (_6 = props.arrowConfig) === null || _6 === void 0 ? void 0 : _6.width) !== null && _7 !== void 0 ? _7 : defaultArrowConfig.width;
-    const arrowStrokeWidth2 = (_11 = (_9 = (_8 = props.arrowConfig2) === null || _8 === void 0 ? void 0 : _8.strokeWidth) !== null && _9 !== void 0 ? _9 : (_10 = props.arrowConfig) === null || _10 === void 0 ? void 0 : _10.strokeWidth) !== null && _11 !== void 0 ? _11 : defaultArrowConfig.strokeWidth;
-    const arrowStrokeColor2 = (_15 = (_13 = (_12 = props.arrowConfig2) === null || _12 === void 0 ? void 0 : _12.strokeColor) !== null && _13 !== void 0 ? _13 : (_14 = props.arrowConfig) === null || _14 === void 0 ? void 0 : _14.strokeColor) !== null && _15 !== void 0 ? _15 : defaultArrowConfig.strokeColor;
-    const arrowFillColor2 = (_19 = (_17 = (_16 = props.arrowConfig2) === null || _16 === void 0 ? void 0 : _16.fillColor) !== null && _17 !== void 0 ? _17 : (_18 = props.arrowConfig) === null || _18 === void 0 ? void 0 : _18.fillColor) !== null && _19 !== void 0 ? _19 : defaultArrowConfig.fillColor;
-    const showArrowBase2 = (_23 = (_21 = (_20 = props.arrowConfig2) === null || _20 === void 0 ? void 0 : _20.showArrowBase) !== null && _21 !== void 0 ? _21 : (_22 = props.arrowConfig) === null || _22 === void 0 ? void 0 : _22.showArrowBase) !== null && _23 !== void 0 ? _23 : defaultArrowConfig.showArrowBase;
-    const arrowLength3 = (_27 = (_25 = (_24 = props.arrowConfig3) === null || _24 === void 0 ? void 0 : _24.length) !== null && _25 !== void 0 ? _25 : (_26 = props.arrowConfig) === null || _26 === void 0 ? void 0 : _26.length) !== null && _27 !== void 0 ? _27 : defaultArrowConfig.length;
-    const arrowWidth3 = (_31 = (_29 = (_28 = props.arrowConfig3) === null || _28 === void 0 ? void 0 : _28.width) !== null && _29 !== void 0 ? _29 : (_30 = props.arrowConfig) === null || _30 === void 0 ? void 0 : _30.width) !== null && _31 !== void 0 ? _31 : defaultArrowConfig.width;
-    const arrowStrokeWidth3 = (_35 = (_33 = (_32 = props.arrowConfig3) === null || _32 === void 0 ? void 0 : _32.strokeWidth) !== null && _33 !== void 0 ? _33 : (_34 = props.arrowConfig) === null || _34 === void 0 ? void 0 : _34.strokeWidth) !== null && _35 !== void 0 ? _35 : defaultArrowConfig.strokeWidth;
-    const arrowStrokeColor3 = (_39 = (_37 = (_36 = props.arrowConfig3) === null || _36 === void 0 ? void 0 : _36.strokeColor) !== null && _37 !== void 0 ? _37 : (_38 = props.arrowConfig) === null || _38 === void 0 ? void 0 : _38.strokeColor) !== null && _39 !== void 0 ? _39 : defaultArrowConfig.strokeColor;
-    const arrowFillColor3 = (_43 = (_41 = (_40 = props.arrowConfig3) === null || _40 === void 0 ? void 0 : _40.fillColor) !== null && _41 !== void 0 ? _41 : (_42 = props.arrowConfig) === null || _42 === void 0 ? void 0 : _42.fillColor) !== null && _43 !== void 0 ? _43 : defaultArrowConfig.fillColor;
-    const showArrowBase3 = (_47 = (_45 = (_44 = props.arrowConfig3) === null || _44 === void 0 ? void 0 : _44.showArrowBase) !== null && _45 !== void 0 ? _45 : (_46 = props.arrowConfig) === null || _46 === void 0 ? void 0 : _46.showArrowBase) !== null && _47 !== void 0 ? _47 : defaultArrowConfig.showArrowBase;
-    const arrowLength4 = (_51 = (_49 = (_48 = props.arrowConfig4) === null || _48 === void 0 ? void 0 : _48.length) !== null && _49 !== void 0 ? _49 : (_50 = props.arrowConfig) === null || _50 === void 0 ? void 0 : _50.length) !== null && _51 !== void 0 ? _51 : defaultArrowConfig.length;
-    const arrowWidth4 = (_55 = (_53 = (_52 = props.arrowConfig4) === null || _52 === void 0 ? void 0 : _52.width) !== null && _53 !== void 0 ? _53 : (_54 = props.arrowConfig) === null || _54 === void 0 ? void 0 : _54.width) !== null && _55 !== void 0 ? _55 : defaultArrowConfig.width;
-    const arrowStrokeWidth4 = (_59 = (_57 = (_56 = props.arrowConfig4) === null || _56 === void 0 ? void 0 : _56.strokeWidth) !== null && _57 !== void 0 ? _57 : (_58 = props.arrowConfig) === null || _58 === void 0 ? void 0 : _58.strokeWidth) !== null && _59 !== void 0 ? _59 : defaultArrowConfig.strokeWidth;
-    const arrowStrokeColor4 = (_63 = (_61 = (_60 = props.arrowConfig4) === null || _60 === void 0 ? void 0 : _60.strokeColor) !== null && _61 !== void 0 ? _61 : (_62 = props.arrowConfig) === null || _62 === void 0 ? void 0 : _62.strokeColor) !== null && _63 !== void 0 ? _63 : defaultArrowConfig.strokeColor;
-    const arrowFillColor4 = (_67 = (_65 = (_64 = props.arrowConfig4) === null || _64 === void 0 ? void 0 : _64.fillColor) !== null && _65 !== void 0 ? _65 : (_66 = props.arrowConfig) === null || _66 === void 0 ? void 0 : _66.fillColor) !== null && _67 !== void 0 ? _67 : defaultArrowConfig.fillColor;
-    const showArrowBase4 = (_71 = (_69 = (_68 = props.arrowConfig4) === null || _68 === void 0 ? void 0 : _68.showArrowBase) !== null && _69 !== void 0 ? _69 : (_70 = props.arrowConfig) === null || _70 === void 0 ? void 0 : _70.showArrowBase) !== null && _71 !== void 0 ? _71 : defaultArrowConfig.showArrowBase;
-    const arrowLength5 = (_75 = (_73 = (_72 = props.arrowConfig5) === null || _72 === void 0 ? void 0 : _72.length) !== null && _73 !== void 0 ? _73 : (_74 = props.arrowConfig) === null || _74 === void 0 ? void 0 : _74.length) !== null && _75 !== void 0 ? _75 : defaultArrowConfig.length;
-    const arrowWidth5 = (_79 = (_77 = (_76 = props.arrowConfig5) === null || _76 === void 0 ? void 0 : _76.width) !== null && _77 !== void 0 ? _77 : (_78 = props.arrowConfig) === null || _78 === void 0 ? void 0 : _78.width) !== null && _79 !== void 0 ? _79 : defaultArrowConfig.width;
-    const arrowStrokeWidth5 = (_83 = (_81 = (_80 = props.arrowConfig5) === null || _80 === void 0 ? void 0 : _80.strokeWidth) !== null && _81 !== void 0 ? _81 : (_82 = props.arrowConfig) === null || _82 === void 0 ? void 0 : _82.strokeWidth) !== null && _83 !== void 0 ? _83 : defaultArrowConfig.strokeWidth;
-    const arrowStrokeColor5 = (_87 = (_85 = (_84 = props.arrowConfig5) === null || _84 === void 0 ? void 0 : _84.strokeColor) !== null && _85 !== void 0 ? _85 : (_86 = props.arrowConfig) === null || _86 === void 0 ? void 0 : _86.strokeColor) !== null && _87 !== void 0 ? _87 : defaultArrowConfig.strokeColor;
-    const arrowFillColor5 = (_91 = (_89 = (_88 = props.arrowConfig5) === null || _88 === void 0 ? void 0 : _88.fillColor) !== null && _89 !== void 0 ? _89 : (_90 = props.arrowConfig) === null || _90 === void 0 ? void 0 : _90.fillColor) !== null && _91 !== void 0 ? _91 : defaultArrowConfig.fillColor;
-    const showArrowBase5 = (_95 = (_93 = (_92 = props.arrowConfig5) === null || _92 === void 0 ? void 0 : _92.showArrowBase) !== null && _93 !== void 0 ? _93 : (_94 = props.arrowConfig) === null || _94 === void 0 ? void 0 : _94.showArrowBase) !== null && _95 !== void 0 ? _95 : defaultArrowConfig.showArrowBase;
-    const getArrowPoints = (arrowTipX, arrowTipY, x1, y1, arrowLength, arrowWidth, showArrowBase) => {
-        let dataLineSlope = (arrowTipY - y1) / (arrowTipX - x1);
-        let d = arrowLength;
-        let d2 = arrowWidth / 2;
-        let interSectionX = arrowTipX - Math.sqrt((d * d) / (dataLineSlope * dataLineSlope + 1));
-        let interSectionY = arrowTipY - dataLineSlope * (arrowTipX - interSectionX);
-        let arrowBasex1, arrowBaseY1, arrowBaseX2, arrowBaseY2;
+    var arrowLength1 = (_d = (_b = (_a = props.arrowConfig1) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : (_c = props.arrowConfig) === null || _c === void 0 ? void 0 : _c.length) !== null && _d !== void 0 ? _d : defaultArrowConfig.length;
+    var arrowWidth1 = (_h = (_f = (_e = props.arrowConfig1) === null || _e === void 0 ? void 0 : _e.width) !== null && _f !== void 0 ? _f : (_g = props.arrowConfig) === null || _g === void 0 ? void 0 : _g.width) !== null && _h !== void 0 ? _h : defaultArrowConfig.width;
+    var arrowStrokeWidth1 = (_m = (_k = (_j = props.arrowConfig1) === null || _j === void 0 ? void 0 : _j.strokeWidth) !== null && _k !== void 0 ? _k : (_l = props.arrowConfig) === null || _l === void 0 ? void 0 : _l.strokeWidth) !== null && _m !== void 0 ? _m : defaultArrowConfig.strokeWidth;
+    var arrowStrokeColor1 = (_r = (_p = (_o = props.arrowConfig1) === null || _o === void 0 ? void 0 : _o.strokeColor) !== null && _p !== void 0 ? _p : (_q = props.arrowConfig) === null || _q === void 0 ? void 0 : _q.strokeColor) !== null && _r !== void 0 ? _r : defaultArrowConfig.strokeColor;
+    var arrowFillColor1 = (_v = (_t = (_s = props.arrowConfig1) === null || _s === void 0 ? void 0 : _s.fillColor) !== null && _t !== void 0 ? _t : (_u = props.arrowConfig) === null || _u === void 0 ? void 0 : _u.fillColor) !== null && _v !== void 0 ? _v : defaultArrowConfig.fillColor;
+    var showArrowBase1 = (_z = (_x = (_w = props.arrowConfig1) === null || _w === void 0 ? void 0 : _w.showArrowBase) !== null && _x !== void 0 ? _x : (_y = props.arrowConfig) === null || _y === void 0 ? void 0 : _y.showArrowBase) !== null && _z !== void 0 ? _z : defaultArrowConfig.showArrowBase;
+    var arrowLength2 = (_3 = (_1 = (_0 = props.arrowConfig2) === null || _0 === void 0 ? void 0 : _0.length) !== null && _1 !== void 0 ? _1 : (_2 = props.arrowConfig) === null || _2 === void 0 ? void 0 : _2.length) !== null && _3 !== void 0 ? _3 : defaultArrowConfig.length;
+    var arrowWidth2 = (_7 = (_5 = (_4 = props.arrowConfig2) === null || _4 === void 0 ? void 0 : _4.width) !== null && _5 !== void 0 ? _5 : (_6 = props.arrowConfig) === null || _6 === void 0 ? void 0 : _6.width) !== null && _7 !== void 0 ? _7 : defaultArrowConfig.width;
+    var arrowStrokeWidth2 = (_11 = (_9 = (_8 = props.arrowConfig2) === null || _8 === void 0 ? void 0 : _8.strokeWidth) !== null && _9 !== void 0 ? _9 : (_10 = props.arrowConfig) === null || _10 === void 0 ? void 0 : _10.strokeWidth) !== null && _11 !== void 0 ? _11 : defaultArrowConfig.strokeWidth;
+    var arrowStrokeColor2 = (_15 = (_13 = (_12 = props.arrowConfig2) === null || _12 === void 0 ? void 0 : _12.strokeColor) !== null && _13 !== void 0 ? _13 : (_14 = props.arrowConfig) === null || _14 === void 0 ? void 0 : _14.strokeColor) !== null && _15 !== void 0 ? _15 : defaultArrowConfig.strokeColor;
+    var arrowFillColor2 = (_19 = (_17 = (_16 = props.arrowConfig2) === null || _16 === void 0 ? void 0 : _16.fillColor) !== null && _17 !== void 0 ? _17 : (_18 = props.arrowConfig) === null || _18 === void 0 ? void 0 : _18.fillColor) !== null && _19 !== void 0 ? _19 : defaultArrowConfig.fillColor;
+    var showArrowBase2 = (_23 = (_21 = (_20 = props.arrowConfig2) === null || _20 === void 0 ? void 0 : _20.showArrowBase) !== null && _21 !== void 0 ? _21 : (_22 = props.arrowConfig) === null || _22 === void 0 ? void 0 : _22.showArrowBase) !== null && _23 !== void 0 ? _23 : defaultArrowConfig.showArrowBase;
+    var arrowLength3 = (_27 = (_25 = (_24 = props.arrowConfig3) === null || _24 === void 0 ? void 0 : _24.length) !== null && _25 !== void 0 ? _25 : (_26 = props.arrowConfig) === null || _26 === void 0 ? void 0 : _26.length) !== null && _27 !== void 0 ? _27 : defaultArrowConfig.length;
+    var arrowWidth3 = (_31 = (_29 = (_28 = props.arrowConfig3) === null || _28 === void 0 ? void 0 : _28.width) !== null && _29 !== void 0 ? _29 : (_30 = props.arrowConfig) === null || _30 === void 0 ? void 0 : _30.width) !== null && _31 !== void 0 ? _31 : defaultArrowConfig.width;
+    var arrowStrokeWidth3 = (_35 = (_33 = (_32 = props.arrowConfig3) === null || _32 === void 0 ? void 0 : _32.strokeWidth) !== null && _33 !== void 0 ? _33 : (_34 = props.arrowConfig) === null || _34 === void 0 ? void 0 : _34.strokeWidth) !== null && _35 !== void 0 ? _35 : defaultArrowConfig.strokeWidth;
+    var arrowStrokeColor3 = (_39 = (_37 = (_36 = props.arrowConfig3) === null || _36 === void 0 ? void 0 : _36.strokeColor) !== null && _37 !== void 0 ? _37 : (_38 = props.arrowConfig) === null || _38 === void 0 ? void 0 : _38.strokeColor) !== null && _39 !== void 0 ? _39 : defaultArrowConfig.strokeColor;
+    var arrowFillColor3 = (_43 = (_41 = (_40 = props.arrowConfig3) === null || _40 === void 0 ? void 0 : _40.fillColor) !== null && _41 !== void 0 ? _41 : (_42 = props.arrowConfig) === null || _42 === void 0 ? void 0 : _42.fillColor) !== null && _43 !== void 0 ? _43 : defaultArrowConfig.fillColor;
+    var showArrowBase3 = (_47 = (_45 = (_44 = props.arrowConfig3) === null || _44 === void 0 ? void 0 : _44.showArrowBase) !== null && _45 !== void 0 ? _45 : (_46 = props.arrowConfig) === null || _46 === void 0 ? void 0 : _46.showArrowBase) !== null && _47 !== void 0 ? _47 : defaultArrowConfig.showArrowBase;
+    var arrowLength4 = (_51 = (_49 = (_48 = props.arrowConfig4) === null || _48 === void 0 ? void 0 : _48.length) !== null && _49 !== void 0 ? _49 : (_50 = props.arrowConfig) === null || _50 === void 0 ? void 0 : _50.length) !== null && _51 !== void 0 ? _51 : defaultArrowConfig.length;
+    var arrowWidth4 = (_55 = (_53 = (_52 = props.arrowConfig4) === null || _52 === void 0 ? void 0 : _52.width) !== null && _53 !== void 0 ? _53 : (_54 = props.arrowConfig) === null || _54 === void 0 ? void 0 : _54.width) !== null && _55 !== void 0 ? _55 : defaultArrowConfig.width;
+    var arrowStrokeWidth4 = (_59 = (_57 = (_56 = props.arrowConfig4) === null || _56 === void 0 ? void 0 : _56.strokeWidth) !== null && _57 !== void 0 ? _57 : (_58 = props.arrowConfig) === null || _58 === void 0 ? void 0 : _58.strokeWidth) !== null && _59 !== void 0 ? _59 : defaultArrowConfig.strokeWidth;
+    var arrowStrokeColor4 = (_63 = (_61 = (_60 = props.arrowConfig4) === null || _60 === void 0 ? void 0 : _60.strokeColor) !== null && _61 !== void 0 ? _61 : (_62 = props.arrowConfig) === null || _62 === void 0 ? void 0 : _62.strokeColor) !== null && _63 !== void 0 ? _63 : defaultArrowConfig.strokeColor;
+    var arrowFillColor4 = (_67 = (_65 = (_64 = props.arrowConfig4) === null || _64 === void 0 ? void 0 : _64.fillColor) !== null && _65 !== void 0 ? _65 : (_66 = props.arrowConfig) === null || _66 === void 0 ? void 0 : _66.fillColor) !== null && _67 !== void 0 ? _67 : defaultArrowConfig.fillColor;
+    var showArrowBase4 = (_71 = (_69 = (_68 = props.arrowConfig4) === null || _68 === void 0 ? void 0 : _68.showArrowBase) !== null && _69 !== void 0 ? _69 : (_70 = props.arrowConfig) === null || _70 === void 0 ? void 0 : _70.showArrowBase) !== null && _71 !== void 0 ? _71 : defaultArrowConfig.showArrowBase;
+    var arrowLength5 = (_75 = (_73 = (_72 = props.arrowConfig5) === null || _72 === void 0 ? void 0 : _72.length) !== null && _73 !== void 0 ? _73 : (_74 = props.arrowConfig) === null || _74 === void 0 ? void 0 : _74.length) !== null && _75 !== void 0 ? _75 : defaultArrowConfig.length;
+    var arrowWidth5 = (_79 = (_77 = (_76 = props.arrowConfig5) === null || _76 === void 0 ? void 0 : _76.width) !== null && _77 !== void 0 ? _77 : (_78 = props.arrowConfig) === null || _78 === void 0 ? void 0 : _78.width) !== null && _79 !== void 0 ? _79 : defaultArrowConfig.width;
+    var arrowStrokeWidth5 = (_83 = (_81 = (_80 = props.arrowConfig5) === null || _80 === void 0 ? void 0 : _80.strokeWidth) !== null && _81 !== void 0 ? _81 : (_82 = props.arrowConfig) === null || _82 === void 0 ? void 0 : _82.strokeWidth) !== null && _83 !== void 0 ? _83 : defaultArrowConfig.strokeWidth;
+    var arrowStrokeColor5 = (_87 = (_85 = (_84 = props.arrowConfig5) === null || _84 === void 0 ? void 0 : _84.strokeColor) !== null && _85 !== void 0 ? _85 : (_86 = props.arrowConfig) === null || _86 === void 0 ? void 0 : _86.strokeColor) !== null && _87 !== void 0 ? _87 : defaultArrowConfig.strokeColor;
+    var arrowFillColor5 = (_91 = (_89 = (_88 = props.arrowConfig5) === null || _88 === void 0 ? void 0 : _88.fillColor) !== null && _89 !== void 0 ? _89 : (_90 = props.arrowConfig) === null || _90 === void 0 ? void 0 : _90.fillColor) !== null && _91 !== void 0 ? _91 : defaultArrowConfig.fillColor;
+    var showArrowBase5 = (_95 = (_93 = (_92 = props.arrowConfig5) === null || _92 === void 0 ? void 0 : _92.showArrowBase) !== null && _93 !== void 0 ? _93 : (_94 = props.arrowConfig) === null || _94 === void 0 ? void 0 : _94.showArrowBase) !== null && _95 !== void 0 ? _95 : defaultArrowConfig.showArrowBase;
+    var getArrowPoints = function (arrowTipX, arrowTipY, x1, y1, arrowLength, arrowWidth, showArrowBase) {
+        var dataLineSlope = (arrowTipY - y1) / (arrowTipX - x1);
+        var d = arrowLength;
+        var d2 = arrowWidth / 2;
+        var interSectionX = arrowTipX - Math.sqrt((d * d) / (dataLineSlope * dataLineSlope + 1));
+        var interSectionY = arrowTipY - dataLineSlope * (arrowTipX - interSectionX);
+        var arrowBasex1, arrowBaseY1, arrowBaseX2, arrowBaseY2;
         if (dataLineSlope === 0) {
             arrowBasex1 = interSectionX;
             arrowBaseY1 = interSectionY - d2;
@@ -521,7 +548,7 @@ const LineChart = (props) => {
             arrowBaseY2 = interSectionY + d2;
         }
         else {
-            let arrowBaseSlope = -1 / dataLineSlope;
+            var arrowBaseSlope = -1 / dataLineSlope;
             arrowBasex1 =
                 interSectionX -
                     Math.sqrt((d2 * d2) / (arrowBaseSlope * arrowBaseSlope + 1));
@@ -533,18 +560,18 @@ const LineChart = (props) => {
             arrowBaseY2 =
                 interSectionY + arrowBaseSlope * (interSectionX - arrowBasex1);
         }
-        let arrowPoints = ` M${interSectionX} ${interSectionY}`;
-        arrowPoints += ` ${showArrowBase ? 'L' : 'M'}${arrowBasex1} ${arrowBaseY1}`;
-        arrowPoints += ` L${arrowTipX} ${arrowTipY}`;
-        arrowPoints += ` M${interSectionX} ${interSectionY}`;
-        arrowPoints += ` ${showArrowBase ? 'L' : 'M'}${arrowBaseX2} ${arrowBaseY2}`;
-        arrowPoints += ` L${arrowTipX} ${arrowTipY}`;
+        var arrowPoints = " M".concat(interSectionX, " ").concat(interSectionY);
+        arrowPoints += " ".concat(showArrowBase ? 'L' : 'M').concat(arrowBasex1, " ").concat(arrowBaseY1);
+        arrowPoints += " L".concat(arrowTipX, " ").concat(arrowTipY);
+        arrowPoints += " M".concat(interSectionX, " ").concat(interSectionY);
+        arrowPoints += " ".concat(showArrowBase ? 'L' : 'M').concat(arrowBaseX2, " ").concat(arrowBaseY2);
+        arrowPoints += " L".concat(arrowTipX, " ").concat(arrowTipY);
         return arrowPoints;
     };
-    (0, react_1.useEffect)(() => {
-        let pp = '', pp2 = '', pp3 = '', pp4 = '', pp5 = '';
+    (0, react_1.useEffect)(function () {
+        var pp = '', pp2 = '', pp3 = '', pp4 = '', pp5 = '';
         if (!props.curved) {
-            for (let i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 if (i >= startIndex1 && i <= endIndex1 && !animateOnDataChange) {
                     pp +=
                         'L' +
@@ -603,53 +630,53 @@ const LineChart = (props) => {
             setPoints5(pp5.replace('L', 'M'));
             setPoints(pp.replace('L', 'M'));
             if (data.length > 1 && (props.showArrow1 || props.showArrows)) {
-                let ppArray = pp.trim().split(' ');
-                let arrowTipY = parseInt(ppArray[ppArray.length - 1]);
-                let arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
-                let y1 = parseInt(ppArray[ppArray.length - 3]);
-                let x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength1, arrowWidth1, showArrowBase1);
+                var ppArray = pp.trim().split(' ');
+                var arrowTipY = parseInt(ppArray[ppArray.length - 1]);
+                var arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
+                var y1 = parseInt(ppArray[ppArray.length - 3]);
+                var x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength1, arrowWidth1, showArrowBase1);
                 setArrow1Points(arrowPoints);
             }
             if (data2.length > 1 && (props.showArrow2 || props.showArrows)) {
-                let ppArray = pp2.trim().split(' ');
-                let arrowTipY = parseInt(ppArray[ppArray.length - 1]);
-                let arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
-                let y1 = parseInt(ppArray[ppArray.length - 3]);
-                let x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength2, arrowWidth2, showArrowBase2);
+                var ppArray = pp2.trim().split(' ');
+                var arrowTipY = parseInt(ppArray[ppArray.length - 1]);
+                var arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
+                var y1 = parseInt(ppArray[ppArray.length - 3]);
+                var x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength2, arrowWidth2, showArrowBase2);
                 setArrow2Points(arrowPoints);
             }
             if (data3.length > 1 && (props.showArrow3 || props.showArrows)) {
-                let ppArray = pp3.trim().split(' ');
-                let arrowTipY = parseInt(ppArray[ppArray.length - 1]);
-                let arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
-                let y1 = parseInt(ppArray[ppArray.length - 3]);
-                let x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength3, arrowWidth3, showArrowBase3);
+                var ppArray = pp3.trim().split(' ');
+                var arrowTipY = parseInt(ppArray[ppArray.length - 1]);
+                var arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
+                var y1 = parseInt(ppArray[ppArray.length - 3]);
+                var x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength3, arrowWidth3, showArrowBase3);
                 setArrow3Points(arrowPoints);
             }
             if (data4.length > 1 && (props.showArrow4 || props.showArrows)) {
-                let ppArray = pp4.trim().split(' ');
-                let arrowTipY = parseInt(ppArray[ppArray.length - 1]);
-                let arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
-                let y1 = parseInt(ppArray[ppArray.length - 3]);
-                let x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength4, arrowWidth4, showArrowBase4);
+                var ppArray = pp4.trim().split(' ');
+                var arrowTipY = parseInt(ppArray[ppArray.length - 1]);
+                var arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
+                var y1 = parseInt(ppArray[ppArray.length - 3]);
+                var x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength4, arrowWidth4, showArrowBase4);
                 setArrow4Points(arrowPoints);
             }
             if (data5.length > 1 && (props.showArrow5 || props.showArrows)) {
-                let ppArray = pp5.trim().split(' ');
-                let arrowTipY = parseInt(ppArray[ppArray.length - 1]);
-                let arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
-                let y1 = parseInt(ppArray[ppArray.length - 3]);
-                let x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength5, arrowWidth5, showArrowBase5);
+                var ppArray = pp5.trim().split(' ');
+                var arrowTipY = parseInt(ppArray[ppArray.length - 1]);
+                var arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
+                var y1 = parseInt(ppArray[ppArray.length - 3]);
+                var x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength5, arrowWidth5, showArrowBase5);
                 setArrow5Points(arrowPoints);
             }
             /***************************          For Area Charts          *************************/
             if (areaChart) {
-                let ppp = '', ppp2 = '', ppp3 = '', ppp4 = '', ppp5 = '';
+                var ppp = '', ppp2 = '', ppp3 = '', ppp4 = '', ppp5 = '';
                 if (data.length && !animateOnDataChange) {
                     ppp =
                         'L' +
@@ -773,8 +800,8 @@ const LineChart = (props) => {
             /*************************************************************************************/
         }
         else {
-            let p1Array = [], p2Array = [], p3Array = [], p4Array = [], p5Array = [];
-            for (let i = 0; i < data.length; i++) {
+            var p1Array = [], p2Array = [], p3Array = [], p4Array = [], p5Array = [];
+            for (var i = 0; i < data.length; i++) {
                 if (i >= startIndex1 && i <= endIndex1) {
                     p1Array.push([
                         initialSpacing - dataPointsWidth1 / 2 + spacing * i,
@@ -814,11 +841,11 @@ const LineChart = (props) => {
                     ]);
                 }
             }
-            let xx = (0, utils_1.svgPath)(p1Array, utils_1.bezierCommand);
-            let xx2 = (0, utils_1.svgPath)(p2Array, utils_1.bezierCommand);
-            let xx3 = (0, utils_1.svgPath)(p3Array, utils_1.bezierCommand);
-            let xx4 = (0, utils_1.svgPath)(p4Array, utils_1.bezierCommand);
-            let xx5 = (0, utils_1.svgPath)(p5Array, utils_1.bezierCommand);
+            var xx = (0, utils_1.svgPath)(p1Array, utils_1.bezierCommand);
+            var xx2 = (0, utils_1.svgPath)(p2Array, utils_1.bezierCommand);
+            var xx3 = (0, utils_1.svgPath)(p3Array, utils_1.bezierCommand);
+            var xx4 = (0, utils_1.svgPath)(p4Array, utils_1.bezierCommand);
+            var xx5 = (0, utils_1.svgPath)(p5Array, utils_1.bezierCommand);
             // console.log('xx', xx);
             setPoints(xx);
             setPoints2(xx2);
@@ -826,43 +853,43 @@ const LineChart = (props) => {
             setPoints4(xx4);
             setPoints5(xx5);
             if (data.length > 1 && (props.showArrow1 || props.showArrows)) {
-                let arrowTipY = p1Array[p1Array.length - 1][1];
-                let arrowTipX = p1Array[p1Array.length - 1][0];
-                let y1 = p1Array[p1Array.length - 2][1];
-                let x1 = p1Array[p1Array.length - 2][0];
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength1, arrowWidth1, showArrowBase1);
+                var arrowTipY = p1Array[p1Array.length - 1][1];
+                var arrowTipX = p1Array[p1Array.length - 1][0];
+                var y1 = p1Array[p1Array.length - 2][1];
+                var x1 = p1Array[p1Array.length - 2][0];
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength1, arrowWidth1, showArrowBase1);
                 setArrow1Points(arrowPoints);
             }
             if (data2.length > 1 && (props.showArrow2 || props.showArrows)) {
-                let arrowTipY = p2Array[p2Array.length - 1][1];
-                let arrowTipX = p2Array[p2Array.length - 1][0];
-                let y1 = p2Array[p2Array.length - 2][1];
-                let x1 = p2Array[p2Array.length - 2][0];
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength2, arrowWidth2, showArrowBase2);
+                var arrowTipY = p2Array[p2Array.length - 1][1];
+                var arrowTipX = p2Array[p2Array.length - 1][0];
+                var y1 = p2Array[p2Array.length - 2][1];
+                var x1 = p2Array[p2Array.length - 2][0];
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength2, arrowWidth2, showArrowBase2);
                 setArrow2Points(arrowPoints);
             }
             if (data3.length > 1 && (props.showArrow3 || props.showArrows)) {
-                let arrowTipY = p3Array[p3Array.length - 1][1];
-                let arrowTipX = p3Array[p3Array.length - 1][0];
-                let y1 = p3Array[p3Array.length - 2][1];
-                let x1 = p3Array[p3Array.length - 2][0];
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength3, arrowWidth3, showArrowBase3);
+                var arrowTipY = p3Array[p3Array.length - 1][1];
+                var arrowTipX = p3Array[p3Array.length - 1][0];
+                var y1 = p3Array[p3Array.length - 2][1];
+                var x1 = p3Array[p3Array.length - 2][0];
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength3, arrowWidth3, showArrowBase3);
                 setArrow2Points(arrowPoints);
             }
             if (data4.length > 1 && (props.showArrow4 || props.showArrows)) {
-                let arrowTipY = p4Array[p4Array.length - 1][1];
-                let arrowTipX = p4Array[p4Array.length - 1][0];
-                let y1 = p4Array[p4Array.length - 2][1];
-                let x1 = p4Array[p4Array.length - 2][0];
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength4, arrowWidth4, showArrowBase4);
+                var arrowTipY = p4Array[p4Array.length - 1][1];
+                var arrowTipX = p4Array[p4Array.length - 1][0];
+                var y1 = p4Array[p4Array.length - 2][1];
+                var x1 = p4Array[p4Array.length - 2][0];
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength4, arrowWidth4, showArrowBase4);
                 setArrow2Points(arrowPoints);
             }
             if (data5.length > 1 && (props.showArrow5 || props.showArrows)) {
-                let arrowTipY = p5Array[p5Array.length - 1][1];
-                let arrowTipX = p5Array[p5Array.length - 1][0];
-                let y1 = p5Array[p5Array.length - 2][1];
-                let x1 = p5Array[p5Array.length - 2][0];
-                let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength5, arrowWidth5, showArrowBase5);
+                var arrowTipY = p5Array[p5Array.length - 1][1];
+                var arrowTipX = p5Array[p5Array.length - 1][0];
+                var y1 = p5Array[p5Array.length - 2][1];
+                var x1 = p5Array[p5Array.length - 2][0];
+                var arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, arrowLength5, arrowWidth5, showArrowBase5);
                 setArrow2Points(arrowPoints);
             }
             /***************************          For Area Charts          *************************/
@@ -1073,49 +1100,49 @@ const LineChart = (props) => {
         arrowWidth5,
         showArrowBase5,
     ]);
-    const horizSections = [{ value: '0' }];
-    const horizSectionsBelow = [];
-    const stepHeight = props.stepHeight || containerHeight / noOfSections;
-    const stepValue = props.stepValue || maxValue / noOfSections;
-    const noOfSectionsBelowXAxis = props.noOfSectionsBelowXAxis || -minValue / stepValue;
-    const rulesThickness = props.rulesThickness === 0 ? 0 : props.rulesThickness || 1;
-    const rulesLength = props.rulesLength;
-    const rulesColor = props.rulesColor || 'lightgray';
-    const verticalLinesThickness = props.verticalLinesThickness === 0 ? 0 : props.verticalLinesThickness || 1;
-    const verticalLinesHeight = props.verticalLinesHeight;
-    const verticalLinesColor = props.verticalLinesColor || 'lightgray';
-    const verticalLinesZIndex = props.verticalLinesZIndex || -1;
-    const gradientDirection = props.gradientDirection || 'vertical';
+    var horizSections = [{ value: '0' }];
+    var horizSectionsBelow = [];
+    var stepHeight = props.stepHeight || containerHeight / noOfSections;
+    var stepValue = props.stepValue || maxValue / noOfSections;
+    var noOfSectionsBelowXAxis = props.noOfSectionsBelowXAxis || -minValue / stepValue;
+    var rulesThickness = props.rulesThickness === 0 ? 0 : props.rulesThickness || 1;
+    var rulesLength = props.rulesLength;
+    var rulesColor = props.rulesColor || 'lightgray';
+    var verticalLinesThickness = props.verticalLinesThickness === 0 ? 0 : props.verticalLinesThickness || 1;
+    var verticalLinesHeight = props.verticalLinesHeight;
+    var verticalLinesColor = props.verticalLinesColor || 'lightgray';
+    var verticalLinesZIndex = props.verticalLinesZIndex || -1;
+    var gradientDirection = props.gradientDirection || 'vertical';
     // const animationEasing = props.animationEasing || Easing.ease
     // const opacity = props.opacity || 1;
-    const hideRules = props.hideRules || false;
-    const showVerticalLines = props.showVerticalLines || false;
-    const verticalLinesUptoDataPoint = props.verticalLinesUptoDataPoint || false;
-    let verticalLinesAr = [];
+    var hideRules = props.hideRules || false;
+    var showVerticalLines = props.showVerticalLines || false;
+    var verticalLinesUptoDataPoint = props.verticalLinesUptoDataPoint || false;
+    var verticalLinesAr = [];
     props.noOfVerticalLines
-        ? (verticalLinesAr = [...Array(props.noOfVerticalLines).keys()])
-        : (verticalLinesAr = [...Array(data.length).keys()]);
-    const verticalLinesSpacing = props.verticalLinesSpacing || 0;
-    const showYAxisIndices = props.showYAxisIndices || false;
-    const showXAxisIndices = props.showXAxisIndices || false;
-    const yAxisIndicesHeight = props.yAxisIndicesHeight || 4;
-    const xAxisIndicesHeight = props.xAxisIndicesHeight || 2;
-    const yAxisIndicesWidth = props.yAxisIndicesWidth || 2;
-    const xAxisIndicesWidth = props.xAxisIndicesWidth || 4;
-    const xAxisIndicesColor = props.xAxisIndicesColor || 'black';
-    const yAxisIndicesColor = props.yAxisIndicesColor || 'black';
-    const yAxisThickness = props.yAxisThickness === 0 ? 0 : props.yAxisThickness || 1;
-    const yAxisColor = props.yAxisColor || 'black';
-    const yAxisTextStyle = props.yAxisTextStyle;
-    const yAxisTextNumberOfLines = props.yAxisTextNumberOfLines || 1;
-    const xAxisTextNumberOfLines = props.xAxisTextNumberOfLines || 1;
-    const yAxisLabelContainerStyle = props.yAxisLabelContainerStyle;
-    const horizontalRulesStyle = props.horizontalRulesStyle;
-    const showFractionalValues = props.showFractionalValues || false;
-    const yAxisLabelWidth = props.yAxisLabelWidth || 35;
-    const hideYAxisText = props.hideYAxisText || false;
-    const backgroundColor = props.backgroundColor || 'transparent';
-    const defaultPointerConfig = {
+        ? (verticalLinesAr = __spreadArray([], __read(Array(props.noOfVerticalLines).keys()), false))
+        : (verticalLinesAr = __spreadArray([], __read(Array(data.length).keys()), false));
+    var verticalLinesSpacing = props.verticalLinesSpacing || 0;
+    var showYAxisIndices = props.showYAxisIndices || false;
+    var showXAxisIndices = props.showXAxisIndices || false;
+    var yAxisIndicesHeight = props.yAxisIndicesHeight || 4;
+    var xAxisIndicesHeight = props.xAxisIndicesHeight || 2;
+    var yAxisIndicesWidth = props.yAxisIndicesWidth || 2;
+    var xAxisIndicesWidth = props.xAxisIndicesWidth || 4;
+    var xAxisIndicesColor = props.xAxisIndicesColor || 'black';
+    var yAxisIndicesColor = props.yAxisIndicesColor || 'black';
+    var yAxisThickness = props.yAxisThickness === 0 ? 0 : props.yAxisThickness || 1;
+    var yAxisColor = props.yAxisColor || 'black';
+    var yAxisTextStyle = props.yAxisTextStyle;
+    var yAxisTextNumberOfLines = props.yAxisTextNumberOfLines || 1;
+    var xAxisTextNumberOfLines = props.xAxisTextNumberOfLines || 1;
+    var yAxisLabelContainerStyle = props.yAxisLabelContainerStyle;
+    var horizontalRulesStyle = props.horizontalRulesStyle;
+    var showFractionalValues = props.showFractionalValues || false;
+    var yAxisLabelWidth = props.yAxisLabelWidth || 35;
+    var hideYAxisText = props.hideYAxisText || false;
+    var backgroundColor = props.backgroundColor || 'transparent';
+    var defaultPointerConfig = {
         height: 0,
         width: 0,
         radius: 5,
@@ -1142,84 +1169,84 @@ const LineChart = (props) => {
         hidePointer4: false,
         hidePointer5: false,
     };
-    const pointerConfig = props.pointerConfig || null;
-    const getPointerProps = props.getPointerProps || null;
-    const pointerHeight = pointerConfig && pointerConfig.height
+    var pointerConfig = props.pointerConfig || null;
+    var getPointerProps = props.getPointerProps || null;
+    var pointerHeight = pointerConfig && pointerConfig.height
         ? pointerConfig.height
         : defaultPointerConfig.height;
-    const pointerWidth = pointerConfig && pointerConfig.width
+    var pointerWidth = pointerConfig && pointerConfig.width
         ? pointerConfig.width
         : defaultPointerConfig.width;
-    const pointerRadius = pointerConfig && pointerConfig.radius
+    var pointerRadius = pointerConfig && pointerConfig.radius
         ? pointerConfig.radius
         : defaultPointerConfig.radius;
-    const pointerColor = pointerConfig && pointerConfig.pointerColor
+    var pointerColor = pointerConfig && pointerConfig.pointerColor
         ? pointerConfig.pointerColor
         : defaultPointerConfig.pointerColor;
-    const pointerComponent = pointerConfig && pointerConfig.pointerComponent
+    var pointerComponent = pointerConfig && pointerConfig.pointerComponent
         ? pointerConfig.pointerComponent
         : defaultPointerConfig.pointerComponent;
-    const showPointerStrip = pointerConfig && pointerConfig.showPointerStrip === false
+    var showPointerStrip = pointerConfig && pointerConfig.showPointerStrip === false
         ? false
         : defaultPointerConfig.showPointerStrip;
-    const pointerStripHeight = pointerConfig && pointerConfig.pointerStripHeight
+    var pointerStripHeight = pointerConfig && pointerConfig.pointerStripHeight
         ? pointerConfig.pointerStripHeight
         : defaultPointerConfig.pointerStripHeight;
-    const pointerStripWidth = pointerConfig && pointerConfig.pointerStripWidth
+    var pointerStripWidth = pointerConfig && pointerConfig.pointerStripWidth
         ? pointerConfig.pointerStripWidth
         : defaultPointerConfig.pointerStripWidth;
-    const pointerStripColor = pointerConfig && pointerConfig.pointerStripColor
+    var pointerStripColor = pointerConfig && pointerConfig.pointerStripColor
         ? pointerConfig.pointerStripColor
         : defaultPointerConfig.pointerStripColor;
-    const pointerStripUptoDataPoint = pointerConfig && pointerConfig.pointerStripUptoDataPoint
+    var pointerStripUptoDataPoint = pointerConfig && pointerConfig.pointerStripUptoDataPoint
         ? pointerConfig.pointerStripUptoDataPoint
         : defaultPointerConfig.pointerStripUptoDataPoint;
-    const pointerLabelComponent = pointerConfig && pointerConfig.pointerLabelComponent
+    var pointerLabelComponent = pointerConfig && pointerConfig.pointerLabelComponent
         ? pointerConfig.pointerLabelComponent
         : defaultPointerConfig.pointerLabelComponent;
-    const stripOverPointer = pointerConfig && pointerConfig.stripOverPointer
+    var stripOverPointer = pointerConfig && pointerConfig.stripOverPointer
         ? pointerConfig.stripOverPointer
         : defaultPointerConfig.stripOverPointer;
-    const shiftPointerLabelX = pointerConfig && pointerConfig.shiftPointerLabelX
+    var shiftPointerLabelX = pointerConfig && pointerConfig.shiftPointerLabelX
         ? pointerConfig.shiftPointerLabelX
         : defaultPointerConfig.shiftPointerLabelX;
-    const shiftPointerLabelY = pointerConfig && pointerConfig.shiftPointerLabelY
+    var shiftPointerLabelY = pointerConfig && pointerConfig.shiftPointerLabelY
         ? pointerConfig.shiftPointerLabelY
         : defaultPointerConfig.shiftPointerLabelY;
-    const pointerLabelWidth = pointerConfig && pointerConfig.pointerLabelWidth
+    var pointerLabelWidth = pointerConfig && pointerConfig.pointerLabelWidth
         ? pointerConfig.pointerLabelWidth
         : defaultPointerConfig.pointerLabelWidth;
-    const pointerLabelHeight = pointerConfig && pointerConfig.pointerLabelHeight
+    var pointerLabelHeight = pointerConfig && pointerConfig.pointerLabelHeight
         ? pointerConfig.pointerLabelHeight
         : defaultPointerConfig.pointerLabelHeight;
-    const autoAdjustPointerLabelPosition = pointerConfig && pointerConfig.autoAdjustPointerLabelPosition === false
+    var autoAdjustPointerLabelPosition = pointerConfig && pointerConfig.autoAdjustPointerLabelPosition === false
         ? false
         : defaultPointerConfig.autoAdjustPointerLabelPosition;
-    const pointerVanishDelay = pointerConfig && pointerConfig.pointerVanishDelay
+    var pointerVanishDelay = pointerConfig && pointerConfig.pointerVanishDelay
         ? pointerConfig.pointerVanishDelay
         : defaultPointerConfig.pointerVanishDelay;
-    const activatePointersOnLongPress = pointerConfig && pointerConfig.activatePointersOnLongPress
+    var activatePointersOnLongPress = pointerConfig && pointerConfig.activatePointersOnLongPress
         ? pointerConfig.activatePointersOnLongPress
         : defaultPointerConfig.activatePointersOnLongPress;
-    const activatePointersDelay = pointerConfig && pointerConfig.activatePointersDelay
+    var activatePointersDelay = pointerConfig && pointerConfig.activatePointersDelay
         ? pointerConfig.activatePointersDelay
         : defaultPointerConfig.activatePointersDelay;
-    const hidePointer1 = pointerConfig && pointerConfig.hidePointer1
+    var hidePointer1 = pointerConfig && pointerConfig.hidePointer1
         ? pointerConfig.hidePointer1
         : defaultPointerConfig.hidePointer1;
-    const hidePointer2 = pointerConfig && pointerConfig.hidePointer2
+    var hidePointer2 = pointerConfig && pointerConfig.hidePointer2
         ? pointerConfig.hidePointer2
         : defaultPointerConfig.hidePointer2;
-    const hidePointer3 = pointerConfig && pointerConfig.hidePointer3
+    var hidePointer3 = pointerConfig && pointerConfig.hidePointer3
         ? pointerConfig.hidePointer3
         : defaultPointerConfig.hidePointer3;
-    const hidePointer4 = pointerConfig && pointerConfig.hidePointer4
+    var hidePointer4 = pointerConfig && pointerConfig.hidePointer4
         ? pointerConfig.hidePointer4
         : defaultPointerConfig.hidePointer4;
-    const hidePointer5 = pointerConfig && pointerConfig.hidePointer5
+    var hidePointer5 = pointerConfig && pointerConfig.hidePointer5
         ? pointerConfig.hidePointer5
         : defaultPointerConfig.hidePointer5;
-    const disableScroll = props.disableScroll ||
+    var disableScroll = props.disableScroll ||
         (pointerConfig
             ? activatePointersOnLongPress
                 ? responderActive
@@ -1227,23 +1254,23 @@ const LineChart = (props) => {
                     : false
                 : true
             : false);
-    const showScrollIndicator = props.showScrollIndicator || false;
-    const hideOrigin = props.hideOrigin || false;
-    const rulesType = props.rulesType || 'line';
-    const xAxisType = props.xAxisType || 'solid';
-    const dashWidth = props.dashWidth === 0 ? 0 : props.dashWidth || 4;
-    const dashGap = props.dashGap === 0 ? 0 : props.dashGap || 8;
-    const pressEnabled = props.pressEnabled || false;
-    const showDataPointOnPress = props.showDataPointOnPress || false;
-    const showStripOnPress = props.showStripOnPress || false;
-    const showTextOnPress = props.showTextOnPress || false;
-    const stripHeight = props.stripHeight;
-    const stripWidth = props.stripWidth === 0 ? 0 : props.stripWidth || 2;
-    const stripColor = props.stripColor || color1;
-    const stripOpacity = props.stripOpacity || (startOpacity1 + endOpacity1) / 2;
-    const unFocusOnPressOut = props.unFocusOnPressOut === false ? false : true;
-    const delayBeforeUnFocus = props.delayBeforeUnFocus === 0 ? 0 : props.delayBeforeUnFocus || 300;
-    const defaultReferenceConfig = {
+    var showScrollIndicator = props.showScrollIndicator || false;
+    var hideOrigin = props.hideOrigin || false;
+    var rulesType = props.rulesType || 'line';
+    var xAxisType = props.xAxisType || 'solid';
+    var dashWidth = props.dashWidth === 0 ? 0 : props.dashWidth || 4;
+    var dashGap = props.dashGap === 0 ? 0 : props.dashGap || 8;
+    var pressEnabled = props.pressEnabled || false;
+    var showDataPointOnPress = props.showDataPointOnPress || false;
+    var showStripOnPress = props.showStripOnPress || false;
+    var showTextOnPress = props.showTextOnPress || false;
+    var stripHeight = props.stripHeight;
+    var stripWidth = props.stripWidth === 0 ? 0 : props.stripWidth || 2;
+    var stripColor = props.stripColor || color1;
+    var stripOpacity = props.stripOpacity || (startOpacity1 + endOpacity1) / 2;
+    var unFocusOnPressOut = props.unFocusOnPressOut === false ? false : true;
+    var delayBeforeUnFocus = props.delayBeforeUnFocus === 0 ? 0 : props.delayBeforeUnFocus || 300;
+    var defaultReferenceConfig = {
         thickness: rulesThickness,
         width: (props.width || totalWidth) + 11,
         color: 'black',
@@ -1253,11 +1280,11 @@ const LineChart = (props) => {
         labelText: '',
         labelTextStyle: null,
     };
-    const showReferenceLine1 = props.showReferenceLine1 || false;
-    const referenceLine1Position = props.referenceLine1Position === 0
+    var showReferenceLine1 = props.showReferenceLine1 || false;
+    var referenceLine1Position = props.referenceLine1Position === 0
         ? 0
         : props.referenceLine1Position || containerHeight / 2;
-    const referenceLine1Config = props.referenceLine1Config
+    var referenceLine1Config = props.referenceLine1Config
         ? {
             thickness: props.referenceLine1Config.thickness || rulesThickness,
             width: (props.referenceLine1Config.width || props.width || totalWidth) + 11,
@@ -1271,11 +1298,11 @@ const LineChart = (props) => {
                 defaultReferenceConfig.labelTextStyle,
         }
         : defaultReferenceConfig;
-    const showReferenceLine2 = props.showReferenceLine2 || false;
-    const referenceLine2Position = props.referenceLine2Position === 0
+    var showReferenceLine2 = props.showReferenceLine2 || false;
+    var referenceLine2Position = props.referenceLine2Position === 0
         ? 0
         : props.referenceLine2Position || (3 * containerHeight) / 2;
-    const referenceLine2Config = props.referenceLine2Config
+    var referenceLine2Config = props.referenceLine2Config
         ? {
             thickness: props.referenceLine2Config.thickness || rulesThickness,
             width: (props.referenceLine2Config.width || props.width || totalWidth) + 11,
@@ -1289,11 +1316,11 @@ const LineChart = (props) => {
                 defaultReferenceConfig.labelTextStyle,
         }
         : defaultReferenceConfig;
-    const showReferenceLine3 = props.showReferenceLine3 || false;
-    const referenceLine3Position = props.referenceLine3Position === 0
+    var showReferenceLine3 = props.showReferenceLine3 || false;
+    var referenceLine3Position = props.referenceLine3Position === 0
         ? 0
         : props.referenceLine3Position || containerHeight / 3;
-    const referenceLine3Config = props.referenceLine3Config
+    var referenceLine3Config = props.referenceLine3Config
         ? {
             thickness: props.referenceLine3Config.thickness || rulesThickness,
             width: (props.referenceLine3Config.width || props.width || totalWidth) + 11,
@@ -1309,8 +1336,8 @@ const LineChart = (props) => {
         : defaultReferenceConfig;
     // console.log('data', data);
     horizSections.pop();
-    for (let i = 0; i <= noOfSections; i++) {
-        let value = maxValue - stepValue * i;
+    for (var i = 0; i <= noOfSections; i++) {
+        var value = maxValue - stepValue * i;
         if (props.showFractionalValues || props.roundToDigits) {
             value = parseFloat(value.toFixed(props.roundToDigits || 1));
         }
@@ -1321,8 +1348,8 @@ const LineChart = (props) => {
         });
     }
     if (noOfSectionsBelowXAxis) {
-        for (let i = 1; i <= noOfSectionsBelowXAxis; i++) {
-            let value = stepValue * -i;
+        for (var i = 1; i <= noOfSectionsBelowXAxis; i++) {
+            var value = stepValue * -i;
             if (props.showFractionalValues || props.roundToDigits) {
                 value = parseFloat(value.toFixed(props.roundToDigits || 1));
             }
@@ -1333,7 +1360,7 @@ const LineChart = (props) => {
             });
         }
     }
-    const renderLabel = (index, label, labelTextStyle, labelComponent) => {
+    var renderLabel = function (index, label, labelTextStyle, labelComponent) {
         return (<react_native_1.View style={[
                 {
                     position: 'absolute',
@@ -1352,7 +1379,7 @@ const LineChart = (props) => {
           </react_native_1.Text>)}
       </react_native_1.View>);
     };
-    const renderAnimatedLabel = (index, label, labelTextStyle, labelComponent) => {
+    var renderAnimatedLabel = function (index, label, labelTextStyle, labelComponent) {
         // console.log('label', label);
         return (<react_native_1.Animated.View style={[
                 {
@@ -1374,23 +1401,23 @@ const LineChart = (props) => {
           </react_native_1.Text>)}
       </react_native_1.Animated.View>);
     };
-    const animatedWidth = widthValue.interpolate({
+    var animatedWidth = widthValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
-    const animatedWidth2 = widthValue2.interpolate({
+    var animatedWidth2 = widthValue2.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
-    const animatedWidth3 = widthValue3.interpolate({
+    var animatedWidth3 = widthValue3.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
-    const animatedWidth4 = widthValue4.interpolate({
+    var animatedWidth4 = widthValue4.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
-    const animatedWidth5 = widthValue5.interpolate({
+    var animatedWidth5 = widthValue5.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
@@ -1407,8 +1434,8 @@ const LineChart = (props) => {
     //         </Animated.View>
     //     )
     // }
-    const getLabel = (val, index) => {
-        let label = '';
+    var getLabel = function (val, index) {
+        var label = '';
         if (showFractionalValues ||
             (props.yAxisLabelTexts && props.yAxisLabelTexts[index] !== undefined)) {
             if (val) {
@@ -1433,10 +1460,10 @@ const LineChart = (props) => {
         }
         return yAxisLabelPrefix + label + yAxisLabelSuffix;
     };
-    const renderHorizSections = () => {
+    var renderHorizSections = function () {
         return (<>
         {props.hideAxesAndRules !== true &&
-                horizSections.map((sectionItems, index) => {
+                horizSections.map(function (sectionItems, index) {
                     return (<react_native_1.View key={index} style={[
                             styles_1.styles.horizBar,
                             {
@@ -1494,8 +1521,8 @@ const LineChart = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSections.map((sectionItems, index) => {
-                    let label = getLabel(sectionItems.value, index);
+                horizSections.map(function (sectionItems, index) {
+                    var label = getLabel(sectionItems.value, index);
                     if (hideOrigin && index === horizSections.length - 1) {
                         label = '';
                     }
@@ -1536,7 +1563,7 @@ const LineChart = (props) => {
             /***********************************************************************************************/
             }
 
-        {horizSectionsBelow.map((sectionItems, index) => {
+        {horizSectionsBelow.map(function (sectionItems, index) {
                 return (<react_native_1.View key={index} style={[
                         styles_1.styles.horizBar,
                         {
@@ -1577,8 +1604,8 @@ const LineChart = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSectionsBelow.map((sectionItems, index) => {
-                    let label = getLabel(horizSectionsBelow[horizSectionsBelow.length - 1 - index].value, index);
+                horizSectionsBelow.map(function (sectionItems, index) {
+                    var label = getLabel(horizSectionsBelow[horizSectionsBelow.length - 1 - index].value, index);
                     return (<react_native_1.View key={index} style={[
                             styles_1.styles.horizBar,
                             styles_1.styles.leftLabel,
@@ -1622,8 +1649,8 @@ const LineChart = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSections.map((sectionItems, index) => {
-                    let label = getLabel(sectionItems.value, index);
+                horizSections.map(function (sectionItems, index) {
+                    var label = getLabel(sectionItems.value, index);
                     if (hideOrigin && index === horizSections.length - 1) {
                         label = '';
                     }
@@ -1707,20 +1734,20 @@ const LineChart = (props) => {
             }
       </>);
     };
-    const onStripPress = (item, index) => {
+    var onStripPress = function (item, index) {
         setSelectedIndex(index);
         if (props.onPress) {
             props.onPress(item, index);
         }
     };
-    const renderDataPoints = (dataForRender, dataPtsShape, dataPtsWidth, dataPtsHeight, dataPtsColor, dataPtsRadius, textColor, textFontSize, startIndex, endIndex) => {
-        return dataForRender.map((item, index) => {
+    var renderDataPoints = function (dataForRender, dataPtsShape, dataPtsWidth, dataPtsHeight, dataPtsColor, dataPtsRadius, textColor, textFontSize, startIndex, endIndex) {
+        return dataForRender.map(function (item, index) {
             if (index < startIndex || index > endIndex)
                 return null;
             if (item.hideDataPoint) {
                 return null;
             }
-            let dataPointsShape, dataPointsWidth, dataPointsHeight, dataPointsColor, dataPointsRadius, text, customDataPoint, dataPointLabelComponent;
+            var dataPointsShape, dataPointsWidth, dataPointsHeight, dataPointsColor, dataPointsRadius, text, customDataPoint, dataPointLabelComponent;
             if (index === selectedIndex) {
                 dataPointsShape =
                     item.focusedDataPointShape ||
@@ -1770,13 +1797,15 @@ const LineChart = (props) => {
                 customDataPoint = item.customDataPoint || props.customDataPoint;
                 dataPointLabelComponent = item.dataPointLabelComponent;
             }
-            const currentStripHeight = item.stripHeight === 0 ? 0 : item.stripHeight || stripHeight;
-            const currentStripWidth = item.stripWidth === 0 ? 0 : item.stripWidth || stripWidth;
-            const currentStripOpacity = item.stripOpacity === 0 ? 0 : item.stripOpacity || stripOpacity;
-            const currentStripColor = item.stripColor || stripColor;
+            var currentStripHeight = item.stripHeight === 0 ? 0 : item.stripHeight || stripHeight;
+            var currentStripWidth = item.stripWidth === 0 ? 0 : item.stripWidth || stripWidth;
+            var currentStripOpacity = item.stripOpacity === 0 ? 0 : item.stripOpacity || stripOpacity;
+            var currentStripColor = item.stripColor || stripColor;
             return (<react_1.Fragment key={index}>
           {pressEnabled ? (<>
-              {unFocusOnPressOut ? (<react_native_svg_1.Rect onPressIn={() => onStripPress(item, index)} onPressOut={() => setTimeout(() => setSelectedIndex(-1), delayBeforeUnFocus)} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>) : (<react_native_svg_1.Rect onPress={() => onStripPress(item, index)} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>)}
+              {unFocusOnPressOut ? (<react_native_svg_1.Rect onPressIn={function () { return onStripPress(item, index); }} onPressOut={function () {
+                            return setTimeout(function () { return setSelectedIndex(-1); }, delayBeforeUnFocus);
+                        }} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>) : (<react_native_svg_1.Rect onPress={function () { return onStripPress(item, index); }} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>)}
             </>) : null}
           {item.showStrip ||
                     (pressEnabled && index === selectedIndex && showStripOnPress) ? (<react_native_svg_1.Rect x={initialSpacing + (spacing * index - dataPointsWidth / 2)} y={currentStripHeight
@@ -1805,7 +1834,7 @@ const LineChart = (props) => {
                             ? index === selectedIndex
                                 ? dataPointsColor
                                 : 'none'
-                            : dataPointsColor} onPress={() => {
+                            : dataPointsColor} onPress={function () {
                             item.onPress ? item.onPress(item, index) : null;
                         }}/>)}
             </react_1.Fragment>) : (<react_1.Fragment key={index}>
@@ -1815,7 +1844,7 @@ const LineChart = (props) => {
                             ? index === selectedIndex
                                 ? dataPointsColor
                                 : 'none'
-                            : dataPointsColor} onPress={() => {
+                            : dataPointsColor} onPress={function () {
                             item.onPress ? item.onPress(item, index) : null;
                         }}/>)}
             </react_1.Fragment>)}
@@ -1854,8 +1883,8 @@ const LineChart = (props) => {
         </react_1.Fragment>);
         });
     };
-    const renderSpecificVerticalLines = (dataForRender) => {
-        return dataForRender.map((item, index) => {
+    var renderSpecificVerticalLines = function (dataForRender) {
+        return dataForRender.map(function (item, index) {
             if (item.showVerticalLine) {
                 return (<react_native_svg_1.Rect x={initialSpacing -
                         (item.verticalLineThickness || 1) / 2 -
@@ -1871,7 +1900,7 @@ const LineChart = (props) => {
             return null;
         });
     };
-    const renderPointer = (lineNumber) => {
+    var renderPointer = function (lineNumber) {
         if (lineNumber === 1 && hidePointer1)
             return;
         if (lineNumber === 2 && hidePointer2)
@@ -1882,7 +1911,7 @@ const LineChart = (props) => {
             return;
         if (lineNumber === 5 && hidePointer5)
             return;
-        let pointerItemLocal, pointerYLocal, pointerColorLocal;
+        var pointerItemLocal, pointerYLocal, pointerColorLocal;
         switch (lineNumber) {
             case 1:
                 pointerItemLocal = pointerItem;
@@ -1924,10 +1953,10 @@ const LineChart = (props) => {
                 }}/>)}
       </react_native_1.View>);
     };
-    const renderStripAndLabel = () => {
-        let pointerItemLocal, pointerYLocal;
+    var renderStripAndLabel = function () {
+        var pointerItemLocal, pointerYLocal;
         pointerItemLocal = [pointerItem];
-        let arr = [pointerY];
+        var arr = [pointerY];
         if (pointerY2 !== 0) {
             arr.push(pointerY2);
             pointerItemLocal.push(pointerItem2);
@@ -1944,8 +1973,8 @@ const LineChart = (props) => {
             arr.push(pointerY5);
             pointerItemLocal.push(pointerItem5);
         }
-        pointerYLocal = Math.min(...arr);
-        let left = 0, top = 0;
+        pointerYLocal = Math.min.apply(Math, __spreadArray([], __read(arr), false));
+        var left = 0, top = 0;
         if (autoAdjustPointerLabelPosition) {
             if (pointerX < pointerLabelWidth / 2) {
                 left = 7;
@@ -2038,7 +2067,7 @@ const LineChart = (props) => {
           </react_native_1.View>)}
       </react_native_1.View>);
     };
-    const lineSvgComponent = (points, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor) => {
+    var lineSvgComponent = function (points, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor) {
         return (<react_native_svg_1.default>
         {strokeDashArray &&
                 strokeDashArray.length === 2 &&
@@ -2080,29 +2109,29 @@ const LineChart = (props) => {
         {showArrow && (<react_native_svg_1.Path d={arrowPoints} fill={arrowFillColor} stroke={arrowStrokeColor} strokeWidth={arrowStrokeWidth}/>)}
       </react_native_svg_1.default>);
     };
-    const renderLine = (zIndex, points, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor) => {
-        return (<react_native_1.View onStartShouldSetResponder={evt => (pointerConfig ? true : false)} onMoveShouldSetResponder={evt => (pointerConfig ? true : false)} onResponderGrant={evt => {
+    var renderLine = function (zIndex, points, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor) {
+        return (<react_native_1.View onStartShouldSetResponder={function (evt) { return (pointerConfig ? true : false); }} onMoveShouldSetResponder={function (evt) { return (pointerConfig ? true : false); }} onResponderGrant={function (evt) {
                 if (!pointerConfig)
                     return;
                 setResponderStartTime(evt.timeStamp);
                 if (activatePointersOnLongPress) {
                     return;
                 }
-                let x = evt.nativeEvent.locationX;
+                var x = evt.nativeEvent.locationX;
                 if (!activatePointersOnLongPress &&
                     x > (props.width || react_native_1.Dimensions.get('window').width))
                     return;
-                let factor = (x - initialSpacing) / spacing;
+                var factor = (x - initialSpacing) / spacing;
                 factor = Math.round(factor);
                 factor = Math.min(factor, data.length - 1);
                 factor = Math.max(factor, 0);
-                let z = initialSpacing +
+                var z = initialSpacing +
                     spacing * factor -
                     (pointerRadius || pointerWidth / 2) -
                     2;
                 setPointerX(z);
                 setPointerIndex(factor);
-                let item, y;
+                var item, y;
                 item = data[factor];
                 y =
                     containerHeight -
@@ -2159,7 +2188,7 @@ const LineChart = (props) => {
                         setPointerItem5(item);
                     }
                 }
-            }} onResponderMove={evt => {
+            }} onResponderMove={function (evt) {
                 // console.log('onResponderMove++++++++++',evt);
                 if (!pointerConfig)
                     return;
@@ -2170,19 +2199,19 @@ const LineChart = (props) => {
                 else {
                     setResponderActive(true);
                 }
-                let x = evt.nativeEvent.locationX;
+                var x = evt.nativeEvent.locationX;
                 if (!activatePointersOnLongPress &&
                     x > (props.width || react_native_1.Dimensions.get('window').width))
                     return;
-                let factor = (x - initialSpacing) / spacing;
+                var factor = (x - initialSpacing) / spacing;
                 factor = Math.round(factor);
                 factor = Math.min(factor, data.length - 1);
                 factor = Math.max(factor, 0);
-                let z = initialSpacing +
+                var z = initialSpacing +
                     spacing * factor -
                     (pointerRadius || pointerWidth / 2) -
                     2;
-                let item, y;
+                var item, y;
                 setPointerX(z);
                 setPointerIndex(factor);
                 item = data[factor];
@@ -2245,13 +2274,13 @@ const LineChart = (props) => {
         // onResponderReject={evt => {
         //   console.log('evt...reject.......',evt);
         // }}
-        onResponderEnd={evt => {
+        onResponderEnd={function (evt) {
                 // console.log('evt...end.......',evt);
                 setResponderStartTime(0);
                 setPointerIndex(-1);
                 setResponderActive(false);
-                setTimeout(() => setPointerX(0), pointerVanishDelay);
-            }} onResponderTerminationRequest={evt => false} 
+                setTimeout(function () { return setPointerX(0); }, pointerVanishDelay);
+            }} onResponderTerminationRequest={function (evt) { return false; }} 
         // onResponderTerminate={evt => {
         //   console.log('evt...terminate.......',evt);
         // }}
@@ -2270,30 +2299,30 @@ const LineChart = (props) => {
         {lineSvgComponent(points, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor)}
       </react_native_1.View>);
     };
-    const renderAnimatedLine = (zIndex, points, animatedWidth, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor) => {
+    var renderAnimatedLine = function (zIndex, points, animatedWidth, currentLineThickness, color, fillPoints, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray, showArrow, arrowPoints, arrowStrokeWidth, arrowStrokeColor, arrowFillColor) {
         // console.log('animatedWidth is-------->', animatedWidth);
-        return (<react_native_1.Animated.View onStartShouldSetResponder={evt => (pointerConfig ? true : false)} onMoveShouldSetResponder={evt => (pointerConfig ? true : false)} onResponderGrant={evt => {
+        return (<react_native_1.Animated.View onStartShouldSetResponder={function (evt) { return (pointerConfig ? true : false); }} onMoveShouldSetResponder={function (evt) { return (pointerConfig ? true : false); }} onResponderGrant={function (evt) {
                 if (!pointerConfig)
                     return;
                 setResponderStartTime(evt.timeStamp);
                 if (activatePointersOnLongPress) {
                     return;
                 }
-                let x = evt.nativeEvent.locationX;
+                var x = evt.nativeEvent.locationX;
                 if (!activatePointersOnLongPress &&
                     x > (props.width || react_native_1.Dimensions.get('window').width))
                     return;
-                let factor = (x - initialSpacing) / spacing;
+                var factor = (x - initialSpacing) / spacing;
                 factor = Math.round(factor);
                 factor = Math.min(factor, data.length - 1);
                 factor = Math.max(factor, 0);
-                let z = initialSpacing +
+                var z = initialSpacing +
                     spacing * factor -
                     (pointerRadius || pointerWidth / 2) -
                     2;
                 setPointerX(z);
                 setPointerIndex(factor);
-                let item, y;
+                var item, y;
                 item = data[factor];
                 y =
                     containerHeight -
@@ -2350,7 +2379,7 @@ const LineChart = (props) => {
                         setPointerItem5(item);
                     }
                 }
-            }} onResponderMove={evt => {
+            }} onResponderMove={function (evt) {
                 if (!pointerConfig)
                     return;
                 if (activatePointersOnLongPress &&
@@ -2360,19 +2389,19 @@ const LineChart = (props) => {
                 else {
                     setResponderActive(true);
                 }
-                let x = evt.nativeEvent.locationX;
+                var x = evt.nativeEvent.locationX;
                 if (!activatePointersOnLongPress &&
                     x > (props.width || react_native_1.Dimensions.get('window').width))
                     return;
-                let factor = (x - initialSpacing) / spacing;
+                var factor = (x - initialSpacing) / spacing;
                 factor = Math.round(factor);
                 factor = Math.min(factor, data.length - 1);
                 factor = Math.max(factor, 0);
-                let z = initialSpacing +
+                var z = initialSpacing +
                     spacing * factor -
                     (pointerRadius || pointerWidth / 2) -
                     2;
-                let item, y;
+                var item, y;
                 setPointerX(z);
                 setPointerIndex(factor);
                 item = data[factor];
@@ -2435,13 +2464,13 @@ const LineChart = (props) => {
         // onResponderReject={evt => {
         //   console.log('evt...reject.......',evt);
         // }}
-        onResponderEnd={evt => {
+        onResponderEnd={function (evt) {
                 // console.log('evt...end.......',evt);
                 setResponderStartTime(0);
                 setPointerIndex(-1);
                 setResponderActive(false);
-                setTimeout(() => setPointerX(0), pointerVanishDelay);
-            }} onResponderTerminationRequest={evt => false} 
+                setTimeout(function () { return setPointerX(0); }, pointerVanishDelay);
+            }} onResponderTerminationRequest={function (evt) { return false; }} 
         // onResponderTerminate={evt => {
         //   console.log('evt...terminate.......',evt);
         // }}
@@ -2483,11 +2512,11 @@ const LineChart = (props) => {
                 // backgroundColor: 'yellow'
             },
             !props.width && { width: totalWidth - 20 },
-        ]} scrollEnabled={!disableScroll} ref={scrollRef} onContentSizeChange={() => {
+        ]} scrollEnabled={!disableScroll} ref={scrollRef} onContentSizeChange={function () {
             if (scrollRef.current && scrollToEnd) {
                 scrollRef.current.scrollToEnd({ animated: scrollAnimation });
             }
-        }} onScroll={ev => {
+        }} onScroll={function (ev) {
             if (pointerConfig &&
                 pointerConfig.activatePointersOnLongPress &&
                 pointerConfig.autoAdjustPointerLabelPosition) {
@@ -2505,7 +2534,7 @@ const LineChart = (props) => {
             props.width && { width: props.width + 10 },
         ]}>
         {showVerticalLines &&
-            verticalLinesAr.map((item, index) => {
+            verticalLinesAr.map(function (item, index) {
                 return (<react_native_1.View key={index} style={{
                         position: 'absolute',
                         zIndex: verticalLinesZIndex || -1,
@@ -2527,7 +2556,7 @@ const LineChart = (props) => {
             })}
 
         {showYAxisIndices &&
-            data.map((item, index) => {
+            data.map(function (item, index) {
                 return (<react_native_1.View key={index + '' + item.value} style={{
                         position: 'absolute',
                         height: yAxisIndicesHeight,
@@ -2578,7 +2607,7 @@ const LineChart = (props) => {
             {points5 ? renderPointer(5) : null}
             {stripOverPointer && renderStripAndLabel()}
           </react_native_1.View>) : null}
-        {data.map((item, index) => {
+        {data.map(function (item, index) {
             // console.log('item', item)
             return (<react_native_1.View key={index}>
               {isAnimated
@@ -2596,7 +2625,7 @@ const LineChart = (props) => {
       </react_native_1.ScrollView>
       {pointerConfig &&
             getPointerProps &&
-            getPointerProps({ pointerIndex, pointerX, pointerY })}
+            getPointerProps({ pointerIndex: pointerIndex, pointerX: pointerX, pointerY: pointerY })}
     </react_native_1.View>);
 };
 exports.LineChart = LineChart;

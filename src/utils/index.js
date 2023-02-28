@@ -1,18 +1,34 @@
 "use strict";
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bezierCommand = exports.svgPath = exports.getLighterColor = exports.getCumulativeWidth = void 0;
-const getCumulativeWidth = (data, index, spacing) => {
-    let cumWidth = 0;
-    for (let i = 0; i < index; i++) {
-        let { barWidth } = data[i];
+var getCumulativeWidth = function (data, index, spacing) {
+    var cumWidth = 0;
+    for (var i = 0; i < index; i++) {
+        var barWidth = data[i].barWidth;
         barWidth = barWidth || 30;
         cumWidth += barWidth + (spacing ? spacing : spacing === 0 ? 0 : 20);
     }
     return cumWidth;
 };
 exports.getCumulativeWidth = getCumulativeWidth;
-const getLighterColor = (color) => {
-    let r, g, b, lighter = '#';
+var getLighterColor = function (color) {
+    var r, g, b, lighter = '#';
     if (color.startsWith('#')) {
         if (color.length < 7) {
             r = parseInt(color[1], 16);
@@ -60,47 +76,49 @@ const getLighterColor = (color) => {
     return lighter;
 };
 exports.getLighterColor = getLighterColor;
-const svgPath = (points, command) => {
+var svgPath = function (points, command) {
     // build the d attributes by looping over the points
-    const d = points.reduce((acc, point, i, a) => i === 0
-        ? // if first point
-            `M ${point[0]},${point[1]}`
-        : // else
-            `${acc} ${command(point, i, a)}`, '');
+    var d = points.reduce(function (acc, point, i, a) {
+        return i === 0
+            ? // if first point
+                "M ".concat(point[0], ",").concat(point[1])
+            : // else
+                "".concat(acc, " ").concat(command(point, i, a));
+    }, '');
     return d;
 };
 exports.svgPath = svgPath;
-const line = (pointA, pointB) => {
-    const lengthX = pointB[0] - pointA[0];
-    const lengthY = pointB[1] - pointA[1];
+var line = function (pointA, pointB) {
+    var lengthX = pointB[0] - pointA[0];
+    var lengthY = pointB[1] - pointA[1];
     return {
         length: Math.sqrt(Math.pow(lengthX, 2) + Math.pow(lengthY, 2)),
         angle: Math.atan2(lengthY, lengthX),
     };
 };
-const controlPoint = (current, previous, next, reverse) => {
+var controlPoint = function (current, previous, next, reverse) {
     // When 'current' is the first or last point of the array
     // 'previous' or 'next' don't exist.
     // Replace with 'current'
-    const p = previous || current;
-    const n = next || current;
+    var p = previous || current;
+    var n = next || current;
     // The smoothing ratio
-    const smoothing = 0.2;
+    var smoothing = 0.2;
     // Properties of the opposed-line
-    const o = line(p, n);
+    var o = line(p, n);
     // If is end-control-point, add PI to the angle to go backward
-    const angle = o.angle + (reverse ? Math.PI : 0);
-    const length = o.length * smoothing;
+    var angle = o.angle + (reverse ? Math.PI : 0);
+    var length = o.length * smoothing;
     // The control point position is relative to the current point
-    const x = current[0] + Math.cos(angle) * length;
-    const y = current[1] + Math.sin(angle) * length;
+    var x = current[0] + Math.cos(angle) * length;
+    var y = current[1] + Math.sin(angle) * length;
     return [x, y];
 };
-const bezierCommand = (point, i, a) => {
+var bezierCommand = function (point, i, a) {
     // start control point
-    const [cpsX, cpsY] = controlPoint(a[i - 1], a[i - 2], point);
+    var _a = __read(controlPoint(a[i - 1], a[i - 2], point), 2), cpsX = _a[0], cpsY = _a[1];
     // end control point
-    const [cpeX, cpeY] = controlPoint(point, a[i - 1], a[i + 1], true);
-    return `C ${cpsX},${cpsY} ${cpeX},${cpeY} ${point[0]},${point[1]}`;
+    var _b = __read(controlPoint(point, a[i - 1], a[i + 1], true), 2), cpeX = _b[0], cpeY = _b[1];
+    return "C ".concat(cpsX, ",").concat(cpsY, " ").concat(cpeX, ",").concat(cpeY, " ").concat(point[0], ",").concat(point[1]);
 };
 exports.bezierCommand = bezierCommand;

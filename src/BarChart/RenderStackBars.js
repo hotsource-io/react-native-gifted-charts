@@ -26,21 +26,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importDefault(require("react"));
-const react_native_1 = require("react-native");
-const react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const RenderStackBars = (props) => {
+var react_1 = __importDefault(require("react"));
+var react_native_1 = require("react-native");
+var react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var RenderStackBars = function (props) {
     var _a;
-    const { barBackgroundPattern, patternId, item, index, containerHeight, maxValue, spacing, propSpacing, rotateLabel, xAxisThickness, label, labelTextStyle, xAxisTextNumberOfLines, renderTooltip, leftShiftForTooltip, leftShiftForLastIndexTooltip, initialSpacing, selectedIndex, setSelectedIndex, activeOpacity, stackData, } = props;
-    let leftSpacing = initialSpacing;
-    for (let i = 0; i < index; i++) {
+    var barBackgroundPattern = props.barBackgroundPattern, patternId = props.patternId, item = props.item, index = props.index, containerHeight = props.containerHeight, maxValue = props.maxValue, spacing = props.spacing, propSpacing = props.propSpacing, rotateLabel = props.rotateLabel, xAxisThickness = props.xAxisThickness, label = props.label, labelTextStyle = props.labelTextStyle, xAxisTextNumberOfLines = props.xAxisTextNumberOfLines, renderTooltip = props.renderTooltip, leftShiftForTooltip = props.leftShiftForTooltip, leftShiftForLastIndexTooltip = props.leftShiftForLastIndexTooltip, initialSpacing = props.initialSpacing, selectedIndex = props.selectedIndex, setSelectedIndex = props.setSelectedIndex, activeOpacity = props.activeOpacity, stackData = props.stackData;
+    var leftSpacing = initialSpacing;
+    for (var i = 0; i < index; i++) {
         leftSpacing +=
             (stackData[i].spacing === 0 ? 0 : stackData[i].spacing || propSpacing) +
                 (stackData[i].stacks[0].barWidth || props.barWidth || 30);
     }
-    const disablePress = props.disablePress || false;
-    const renderLabel = (label, labelTextStyle) => {
+    var disablePress = props.disablePress || false;
+    var renderLabel = function (label, labelTextStyle) {
         return (<react_native_1.View style={[
                 {
                     width: (item.stacks[0].barWidth || props.barWidth || 30) + spacing / 2,
@@ -60,21 +60,23 @@ const RenderStackBars = (props) => {
           </react_native_1.Text>)}
       </react_native_1.View>);
     };
-    const getPosition = (index) => {
-        let position = 0;
-        for (let i = 0; i < index; i++) {
+    var getPosition = function (index) {
+        var position = 0;
+        for (var i = 0; i < index; i++) {
             position +=
                 (Math.abs(props.item.stacks[i].value) * (containerHeight || 200)) /
                     (maxValue || 200);
         }
         return position;
     };
-    const totalHeight = props.item.stacks.reduce((acc, stack) => acc +
-        (Math.abs(stack.value) * (containerHeight || 200)) / (maxValue || 200), 0);
-    const static2DSimple = (item, index) => {
-        const cotainsNegative = item.stacks.some(item => item.value < 0);
+    var totalHeight = props.item.stacks.reduce(function (acc, stack) {
+        return acc +
+            (Math.abs(stack.value) * (containerHeight || 200)) / (maxValue || 200);
+    }, 0);
+    var static2DSimple = function (item, index) {
+        var cotainsNegative = item.stacks.some(function (item) { return item.value < 0; });
         return (<>
-        <react_native_1.TouchableOpacity disabled={disablePress} activeOpacity={activeOpacity} onPress={() => {
+        <react_native_1.TouchableOpacity disabled={disablePress} activeOpacity={activeOpacity} onPress={function () {
                 setSelectedIndex(index);
                 if (item.onPress) {
                     item.onPress();
@@ -95,7 +97,7 @@ const RenderStackBars = (props) => {
                     ],
                 },
             ]}>
-          {item.stacks.map((stackItem, index) => {
+          {item.stacks.map(function (stackItem, index) {
                 return (<react_native_1.TouchableOpacity key={index} onPress={stackItem.onPress} activeOpacity={activeOpacity} disabled={disablePress || !stackItem.onPress} style={[
                         {
                             position: 'absolute',
@@ -143,7 +145,7 @@ const RenderStackBars = (props) => {
                     ? item.barBackgroundPattern()
                     : barBackgroundPattern()}
               </react_native_svg_1.Defs>
-              <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width="100%" height="100%" fill={`url(#${item.patternId || patternId})`}/>
+              <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width="100%" height="100%" fill={"url(#".concat(item.patternId || patternId, ")")}/>
             </react_native_svg_1.default>)}
         </react_native_1.TouchableOpacity>
         {item.topLabelComponent && (<react_native_1.View style={[

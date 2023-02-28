@@ -23,20 +23,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const React = __importStar(require("react"));
-const react_native_svg_1 = __importStar(require("react-native-svg"));
+var React = __importStar(require("react"));
+var react_native_svg_1 = __importStar(require("react-native-svg"));
 function Rule(props) {
-    const { thickness, width, color, type, dashWidth, dashGap } = props.config;
+    var _a = props.config, thickness = _a.thickness, width = _a.width, color = _a.color, type = _a.type, dashWidth = _a.dashWidth, dashGap = _a.dashGap;
     if (type === 'solid') {
         return (<react_native_svg_1.default height={thickness} width={width} {...props}>
         <react_native_svg_1.G fill="lightgray" stroke={color} strokeWidth={thickness}>
-          <react_native_svg_1.Path d={`M0 ${thickness / 2}h${width}`}/>
+          <react_native_svg_1.Path d={"M0 ".concat(thickness / 2, "h").concat(width)}/>
         </react_native_svg_1.G>
       </react_native_svg_1.default>);
     }
     return (<react_native_svg_1.default height={thickness} width={width} {...props}>
       <react_native_svg_1.G fill="lightgray" stroke={color} strokeWidth={thickness}>
-        <react_native_svg_1.Path strokeDasharray={`${dashWidth},${dashGap}`} d={`M0 ${thickness / 2}h${width}`}/>
+        <react_native_svg_1.Path strokeDasharray={"".concat(dashWidth, ",").concat(dashGap)} d={"M0 ".concat(thickness / 2, "h").concat(width)}/>
       </react_native_svg_1.G>
     </react_native_svg_1.default>);
 }

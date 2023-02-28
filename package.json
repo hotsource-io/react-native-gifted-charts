@@ -1,8 +1,8 @@
 {
-  "name": "react-native-gifted-charts",
-  "version": "1.2.42",
+  "name": "@hotsource/react-native-gifted-charts",
+  "version": "1.2.42.1",
   "description": "The most complete library for Bar, Line, Area, Pie, Donut and Stacked Bar charts in React Native. Allows 2D, 3D, gradient, animations and live data updates.",
-  "main": "src/index.tsx",
+  "main": "src/index.js",
   "files": [
     "src"
   ],
@@ -13,11 +13,15 @@
     "test": "jest",
     "lint": "eslint ."
   },
-  "repository": "https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts",
-  "author": "Abhinandan Kushwaha <kushabhi5@gmail.com> (https://github.com/Abhinandan-Kushwaha)",
+  "prepublish": "tsc",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotsource-io/react-native-gifted-charts.git"
+  },
+  "author": "HotSource <dev@hotsource.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts/issues"
+    "url": "https://github.com/hotsource-io/react-native-gifted-charts/issues"
   },
   "homepage": "https://gifted-charts.web.app/",
   "publishConfig": {
@@ -30,6 +34,7 @@
     "@types/react-dom": "^17.0.3",
     "@types/react-native": "^0.64.5",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-svg": "^13.4.0",
     "typescript": "^4.2.4"
   },
   "devDependencies": {
@@ -58,5 +63,9 @@
     "donut",
     "area",
     "line"
-  ]
+  ],
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  }
 }

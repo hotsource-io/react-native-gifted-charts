@@ -22,47 +22,63 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(require("react"));
-const react_native_1 = require("react-native");
-const react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
-const react_native_svg_1 = __importStar(require("react-native-svg"));
+var react_1 = __importStar(require("react"));
+var react_native_1 = require("react-native");
+var react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
+var react_native_svg_1 = __importStar(require("react-native-svg"));
 if (react_native_1.Platform.OS === 'android') {
     react_native_1.UIManager.setLayoutAnimationEnabledExperimental &&
         react_native_1.UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-const Animated2DWithGradient = (props) => {
-    const { barBackgroundPattern, patternId, barWidth, barStyle, item, opacity, animationDuration, noGradient, noAnimation, containerHeight, maxValue, barMarginBottom, } = props;
-    const [height, setHeight] = (0, react_1.useState)(noAnimation ? props.height : 2);
-    const [initialRender, setInitialRender] = (0, react_1.useState)(noAnimation ? false : true);
-    (0, react_1.useEffect)(() => {
+var Animated2DWithGradient = function (props) {
+    var barBackgroundPattern = props.barBackgroundPattern, patternId = props.patternId, barWidth = props.barWidth, barStyle = props.barStyle, item = props.item, opacity = props.opacity, animationDuration = props.animationDuration, noGradient = props.noGradient, noAnimation = props.noAnimation, containerHeight = props.containerHeight, maxValue = props.maxValue, barMarginBottom = props.barMarginBottom;
+    var _a = __read((0, react_1.useState)(noAnimation ? props.height : 2), 2), height = _a[0], setHeight = _a[1];
+    var _b = __read((0, react_1.useState)(noAnimation ? false : true), 2), initialRender = _b[0], setInitialRender = _b[1];
+    (0, react_1.useEffect)(function () {
         if (!noAnimation) {
             if (initialRender) {
-                setTimeout(() => layoutAppear(), 20);
+                setTimeout(function () { return layoutAppear(); }, 20);
             }
             else {
                 elevate();
             }
         }
     }, [props.height]);
-    const elevate = () => {
+    var elevate = function () {
         react_native_1.LayoutAnimation.configureNext({
             duration: animationDuration,
             update: { type: 'linear', property: 'scaleXY' },
         });
         setHeight(props.height);
     };
-    const layoutAppear = () => {
+    var layoutAppear = function () {
         react_native_1.LayoutAnimation.configureNext({
             duration: react_native_1.Platform.OS == 'ios' ? animationDuration : 20,
             create: { type: 'linear', property: 'opacity' },
             update: { type: 'linear', property: 'scaleXY' },
         });
         setInitialRender(false);
-        setTimeout(() => elevate(), react_native_1.Platform.OS == 'ios' ? 10 : 100);
+        setTimeout(function () { return elevate(); }, react_native_1.Platform.OS == 'ios' ? 10 : 100);
     };
     return (<>
       {!initialRender && (<react_native_1.View style={{
@@ -174,7 +190,7 @@ const Animated2DWithGradient = (props) => {
                 <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width={item.barWidth || props.barWidth || 30} height={noAnimation
                     ? (Math.abs(item.value) * (containerHeight || 200)) /
                         (maxValue || 200)
-                    : height} fill={`url(#${item.patternId || patternId})`}/>
+                    : height} fill={"url(#".concat(item.patternId || patternId, ")")}/>
               </react_native_svg_1.default>)}
           </react_native_1.View>
           {item.topLabelComponent && (<react_native_1.View style={[

@@ -22,50 +22,75 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LineChartBicolor = void 0;
-const react_1 = __importStar(require("react"));
-const react_native_1 = require("react-native");
-const styles_1 = require("./styles");
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const lineSvg_1 = __importDefault(require("../Components/lineSvg"));
-let initialData = null;
-const LineChartBicolor = (props) => {
+var react_1 = __importStar(require("react"));
+var react_native_1 = require("react-native");
+var styles_1 = require("./styles");
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var lineSvg_1 = __importDefault(require("../Components/lineSvg"));
+var initialData = null;
+var LineChartBicolor = function (props) {
     var _a, _b;
-    const scrollRef = (0, react_1.useRef)();
-    const [toggle, setToggle] = (0, react_1.useState)(false);
-    const [pointsArray, setPointsArray] = (0, react_1.useState)([]);
-    const [fillPointsArray, setFillPointsArray] = (0, react_1.useState)([]);
-    const [selectedIndex, setSelectedIndex] = (0, react_1.useState)(-1);
-    const containerHeight = props.height || 200;
-    const noOfSections = props.noOfSections || 10;
-    let data = (0, react_1.useMemo)(() => {
+    var scrollRef = (0, react_1.useRef)();
+    var _c = __read((0, react_1.useState)(false), 2), toggle = _c[0], setToggle = _c[1];
+    var _d = __read((0, react_1.useState)([]), 2), pointsArray = _d[0], setPointsArray = _d[1];
+    var _e = __read((0, react_1.useState)([]), 2), fillPointsArray = _e[0], setFillPointsArray = _e[1];
+    var _f = __read((0, react_1.useState)(-1), 2), selectedIndex = _f[0], setSelectedIndex = _f[1];
+    var containerHeight = props.height || 200;
+    var noOfSections = props.noOfSections || 10;
+    var data = (0, react_1.useMemo)(function () {
         if (!props.data) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data.map(item => {
+            return props.data.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data;
     }, [props.yAxisOffset, props.data]);
-    const scrollToEnd = props.scrollToEnd || false;
-    const scrollAnimation = props.scrollAnimation === false ? false : true;
-    const opacValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const labelsExtraHeight = props.labelsExtraHeight || 0;
-    const animationDuration = props.animationDuration || 800;
-    const animateTogether = props.animateTogether || false;
-    const yAxisLabelPrefix = props.yAxisLabelPrefix || '';
-    const yAxisLabelSuffix = props.yAxisLabelSuffix || '';
-    const yAxisSide = props.yAxisSide || 'left';
-    const startIndex1 = props.startIndex || 0;
-    let endIndex1;
+    var scrollToEnd = props.scrollToEnd || false;
+    var scrollAnimation = props.scrollAnimation === false ? false : true;
+    var opacValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var labelsExtraHeight = props.labelsExtraHeight || 0;
+    var animationDuration = props.animationDuration || 800;
+    var animateTogether = props.animateTogether || false;
+    var yAxisLabelPrefix = props.yAxisLabelPrefix || '';
+    var yAxisLabelSuffix = props.yAxisLabelSuffix || '';
+    var yAxisSide = props.yAxisSide || 'left';
+    var startIndex1 = props.startIndex || 0;
+    var endIndex1;
     if (props.endIndex === undefined || props.endIndex === null) {
         endIndex1 = data.length - 1;
     }
@@ -73,25 +98,25 @@ const LineChartBicolor = (props) => {
         endIndex1 = props.endIndex;
     }
     if (!initialData) {
-        initialData = [...data];
+        initialData = __spreadArray([], __read(data), false);
     }
-    const initialSpacing = props.initialSpacing === 0 ? 0 : props.initialSpacing || 40;
-    const thickness = props.thickness || 2;
-    const adjustToWidth = props.adjustToWidth || false;
-    const spacing = props.spacing === 0
+    var initialSpacing = props.initialSpacing === 0 ? 0 : props.initialSpacing || 40;
+    var thickness = props.thickness || 2;
+    var adjustToWidth = props.adjustToWidth || false;
+    var spacing = props.spacing === 0
         ? 0
         : props.spacing ||
             (adjustToWidth
                 ? ((props.width || 200) - initialSpacing) / data.length
                 : 60);
-    const xAxisLength = props.xAxisLength;
-    const xAxisThickness = props.xAxisThickness === 0 ? 0 : props.xAxisThickness || 1;
-    const dataPointsHeight1 = props.dataPointsHeight || 2;
-    const dataPointsWidth1 = props.dataPointsWidth || 2;
-    const dataPointsRadius1 = props.dataPointsRadius || 3;
-    const dataPointsColor1 = props.dataPointsColor || 'black';
-    const dataPointsShape1 = props.dataPointsShape || 'circular';
-    const labelsAppear = (0, react_1.useCallback)(() => {
+    var xAxisLength = props.xAxisLength;
+    var xAxisThickness = props.xAxisThickness === 0 ? 0 : props.xAxisThickness || 1;
+    var dataPointsHeight1 = props.dataPointsHeight || 2;
+    var dataPointsWidth1 = props.dataPointsWidth || 2;
+    var dataPointsRadius1 = props.dataPointsRadius || 3;
+    var dataPointsColor1 = props.dataPointsColor || 'black';
+    var dataPointsShape1 = props.dataPointsShape || 'circular';
+    var labelsAppear = (0, react_1.useCallback)(function () {
         opacValue.setValue(0);
         react_native_1.Animated.timing(opacValue, {
             toValue: 1,
@@ -100,11 +125,11 @@ const LineChartBicolor = (props) => {
             useNativeDriver: false,
         }).start();
     }, [opacValue]);
-    const appearingOpacity = opacValue.interpolate({
+    var appearingOpacity = opacValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1],
     });
-    const decreaseWidth = (0, react_1.useCallback)(() => {
+    var decreaseWidth = (0, react_1.useCallback)(function () {
         widthValue.setValue(0);
         react_native_1.Animated.timing(widthValue, {
             toValue: 1,
@@ -113,13 +138,13 @@ const LineChartBicolor = (props) => {
             useNativeDriver: false,
         }).start();
     }, [animationDuration, widthValue]);
-    const areaChart = props.areaChart || false;
-    const textFontSize1 = props.textFontSize || 10;
-    const textColor1 = props.textColor || 'gray';
-    const xAxisColor = props.xAxisColor || 'black';
-    let totalWidth = initialSpacing;
-    let maxItem = 0, minItem = 0;
-    data.forEach((item) => {
+    var areaChart = props.areaChart || false;
+    var textFontSize1 = props.textFontSize || 10;
+    var textColor1 = props.textColor || 'gray';
+    var xAxisColor = props.xAxisColor || 'black';
+    var totalWidth = initialSpacing;
+    var maxItem = 0, minItem = 0;
+    data.forEach(function (item) {
         if (item.value > maxItem) {
             maxItem = item.value;
         }
@@ -146,95 +171,95 @@ const LineChartBicolor = (props) => {
             minItem = minItem - (10 + (minItem % 10));
         }
     }
-    const maxValue = props.maxValue || maxItem;
-    const minValue = props.minValue || minItem;
-    (0, react_1.useEffect)(() => {
+    var maxValue = props.maxValue || maxItem;
+    var minValue = props.minValue || minItem;
+    (0, react_1.useEffect)(function () {
         decreaseWidth();
         labelsAppear();
     }, [animateTogether, animationDuration, decreaseWidth, labelsAppear]);
-    (0, react_1.useEffect)(() => {
-        let ppArray = [];
-        let yAtxAxis = containerHeight + 10 - xAxisThickness / 2;
-        let pp = 'M' +
+    (0, react_1.useEffect)(function () {
+        var ppArray = [];
+        var yAtxAxis = containerHeight + 10 - xAxisThickness / 2;
+        var pp = 'M' +
             (initialSpacing - dataPointsWidth1 / 2) +
             ' ' +
             (yAtxAxis - (data[0].value * containerHeight) / maxValue), pv, nv;
-        for (let i = 0; i < data.length - 1; i++) {
-            pv = data[i].value;
-            nv = data[i + 1].value;
+        for (var i_1 = 0; i_1 < data.length - 1; i_1++) {
+            pv = data[i_1].value;
+            nv = data[i_1 + 1].value;
             if (pv < 0 && nv < 0) {
                 pp +=
                     'L' +
-                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i) +
+                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i_1) +
                         ' ' +
-                        (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
+                        (yAtxAxis - (data[i_1].value * containerHeight) / maxValue) +
                         ' ';
             }
             else if (pv < 0 && nv > 0) {
                 pp +=
                     'L' +
-                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i) +
+                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i_1) +
                         ' ' +
-                        (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
+                        (yAtxAxis - (data[i_1].value * containerHeight) / maxValue) +
                         ' ';
-                let prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i;
-                let prevY = yAtxAxis - (data[i].value * containerHeight) / maxValue;
-                let nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i + 1);
-                let nextY = yAtxAxis - (data[i + 1].value * containerHeight) / maxValue;
-                let slope = (nextY - prevY) / (nextX - prevX);
-                let x = (yAtxAxis - prevY) / slope + prevX;
+                var prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i_1;
+                var prevY = yAtxAxis - (data[i_1].value * containerHeight) / maxValue;
+                var nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i_1 + 1);
+                var nextY = yAtxAxis - (data[i_1 + 1].value * containerHeight) / maxValue;
+                var slope = (nextY - prevY) / (nextX - prevX);
+                var x = (yAtxAxis - prevY) / slope + prevX;
                 pp += 'L' + (x - thickness / 2) + ' ' + yAtxAxis + ' ';
-                let pointsOb = {
+                var pointsOb_1 = {
                     points: pp.startsWith('L') ? pp.replace('L', 'M') : pp,
                     color: 'red',
                 };
-                ppArray.push(pointsOb);
-                setPointsArray([...ppArray]);
+                ppArray.push(pointsOb_1);
+                setPointsArray(__spreadArray([], __read(ppArray), false));
                 pp = 'M' + x + ' ' + yAtxAxis + ' L' + nextX + ' ' + nextY + ' ';
-                pointsOb = {
+                pointsOb_1 = {
                     points: pp,
                     color: 'green',
                 };
-                ppArray.push(pointsOb);
+                ppArray.push(pointsOb_1);
             }
             else if (pv > 0 && nv < 0) {
                 pp +=
                     'L' +
-                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i) +
+                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i_1) +
                         ' ' +
-                        (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
+                        (yAtxAxis - (data[i_1].value * containerHeight) / maxValue) +
                         ' ';
-                let prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i;
-                let prevY = yAtxAxis - (data[i].value * containerHeight) / maxValue;
-                let nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i + 1);
-                let nextY = yAtxAxis - (data[i + 1].value * containerHeight) / maxValue;
-                let slope = (nextY - prevY) / (nextX - prevX);
-                let x = (yAtxAxis - prevY) / slope + prevX;
+                var prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i_1;
+                var prevY = yAtxAxis - (data[i_1].value * containerHeight) / maxValue;
+                var nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i_1 + 1);
+                var nextY = yAtxAxis - (data[i_1 + 1].value * containerHeight) / maxValue;
+                var slope = (nextY - prevY) / (nextX - prevX);
+                var x = (yAtxAxis - prevY) / slope + prevX;
                 pp += 'L' + (x - thickness / 2) + ' ' + yAtxAxis + ' ';
-                let pointsOb = {
+                var pointsOb_2 = {
                     points: pp.startsWith('L') ? pp.replace('L', 'M') : pp,
                     color: 'green',
                 };
-                ppArray.push(pointsOb);
+                ppArray.push(pointsOb_2);
                 //   setPoints(pp);
-                setPointsArray([...ppArray]);
+                setPointsArray(__spreadArray([], __read(ppArray), false));
                 pp = 'M' + x + ' ' + yAtxAxis + ' L' + nextX + ' ' + nextY + ' ';
-                pointsOb = {
+                pointsOb_2 = {
                     points: pp,
                     color: 'red',
                 };
-                ppArray.push(pointsOb);
+                ppArray.push(pointsOb_2);
             }
             else {
                 pp +=
                     'L' +
-                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i) +
+                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i_1) +
                         ' ' +
-                        (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
+                        (yAtxAxis - (data[i_1].value * containerHeight) / maxValue) +
                         ' ';
             }
         }
-        let i = data.length - 1;
+        var i = data.length - 1;
         pv = data[i - 1].value;
         nv = data[i].value;
         if ((pv > 0 && nv > 0) || (pv < 0 && nv < 0)) {
@@ -245,15 +270,15 @@ const LineChartBicolor = (props) => {
                     (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
                     ' ';
         }
-        let pointsOb = {
+        var pointsOb = {
             points: pp.startsWith('L') ? pp.replace('L', 'M') : pp,
             color: nv > 0 ? 'green' : 'red',
         };
         ppArray.push(pointsOb);
         //   setPoints(pp);
-        setPointsArray([...ppArray]);
+        setPointsArray(__spreadArray([], __read(ppArray), false));
         /***************************          For Area Charts          *************************/
-        let startIndex = -1, endIndex = -1, startX, startY, endY, color = 'green', localArray = [], broken = false;
+        var startIndex = -1, endIndex = -1, startX, startY, endY, color = 'green', localArray = [], broken = false;
         pp = 'M' + (initialSpacing - dataPointsWidth1 / 2) + ' ' + yAtxAxis;
         for (i = 0; i < data.length - 1; i++) {
             pv = data[i].value;
@@ -265,12 +290,12 @@ const LineChartBicolor = (props) => {
                     (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
                     ' ';
             if ((pv > 0 && nv < 0) || (pv < 0 && nv > 0)) {
-                let prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i;
-                let prevY = yAtxAxis - (data[i].value * containerHeight) / maxValue;
-                let nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i + 1);
-                let nextY = yAtxAxis - (data[i + 1].value * containerHeight) / maxValue;
-                let slope = (nextY - prevY) / (nextX - prevX);
-                let x = (yAtxAxis - prevY) / slope + prevX;
+                var prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i;
+                var prevY = yAtxAxis - (data[i].value * containerHeight) / maxValue;
+                var nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i + 1);
+                var nextY = yAtxAxis - (data[i + 1].value * containerHeight) / maxValue;
+                var slope = (nextY - prevY) / (nextX - prevX);
+                var x = (yAtxAxis - prevY) / slope + prevX;
                 pp += 'L' + (x - thickness / 2) + ' ' + yAtxAxis + ' ';
                 broken = true;
                 break;
@@ -289,15 +314,15 @@ const LineChartBicolor = (props) => {
                     (yAtxAxis - xAxisThickness / 2);
         }
         localArray.push({ points: pp, color: data[0].value > 0 ? 'green' : 'red' });
-        let xs = [];
-        data.forEach((item, index) => {
-            let x = initialSpacing - dataPointsWidth1 / 2 + spacing * index;
+        var xs = [];
+        data.forEach(function (item, index) {
+            var x = initialSpacing - dataPointsWidth1 / 2 + spacing * index;
             xs.push(x + '');
         });
-        pointsArray.forEach((item, index) => {
-            let splitArray = item.points
+        pointsArray.forEach(function (item, index) {
+            var splitArray = item.points
                 .split(' ')
-                .filter(spItem => spItem && spItem !== ' ');
+                .filter(function (spItem) { return spItem && spItem !== ' '; });
             if (splitArray[1] === yAtxAxis + '' &&
                 !xs.includes(splitArray[0].replace('M', '').replace('L', ''))) {
                 startIndex = index;
@@ -318,14 +343,14 @@ const LineChartBicolor = (props) => {
                 endIndex = index;
             }
             if (startX) {
-                let filPts = '';
-                for (let j = startIndex; j <= endIndex; j++) {
+                var filPts = '';
+                for (var j = startIndex; j <= endIndex; j++) {
                     if (pointsArray[j]) {
                         filPts += pointsArray[j].points.replaceAll('M', 'L');
                     }
                 }
                 filPts += 'L ' + startX + ' ' + yAtxAxis;
-                localArray.push({ points: filPts.replace('L', 'M'), color });
+                localArray.push({ points: filPts.replace('L', 'M'), color: color });
             }
         });
         if (broken) {
@@ -334,22 +359,22 @@ const LineChartBicolor = (props) => {
                     (initialSpacing - dataPointsWidth1 / 2 + spacing * (data.length - 1)) +
                     ' ' +
                     yAtxAxis;
-            for (let i = data.length - 1; i > 0; i--) {
-                pv = data[i].value;
-                nv = data[i - 1].value;
+            for (var i_2 = data.length - 1; i_2 > 0; i_2--) {
+                pv = data[i_2].value;
+                nv = data[i_2 - 1].value;
                 pp +=
                     'L' +
-                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i) +
+                        (initialSpacing - dataPointsWidth1 / 2 + spacing * i_2) +
                         ' ' +
-                        (yAtxAxis - (data[i].value * containerHeight) / maxValue) +
+                        (yAtxAxis - (data[i_2].value * containerHeight) / maxValue) +
                         ' ';
                 if ((pv > 0 && nv < 0) || (pv < 0 && nv > 0)) {
-                    let prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i;
-                    let prevY = yAtxAxis - (data[i].value * containerHeight) / maxValue;
-                    let nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i - 1);
-                    let nextY = yAtxAxis - (data[i - 1].value * containerHeight) / maxValue;
-                    let slope = (nextY - prevY) / (nextX - prevX);
-                    let x = (yAtxAxis - prevY) / slope + prevX;
+                    var prevX = initialSpacing - dataPointsWidth1 / 2 + spacing * i_2;
+                    var prevY = yAtxAxis - (data[i_2].value * containerHeight) / maxValue;
+                    var nextX = initialSpacing - dataPointsWidth1 / 2 + spacing * (i_2 - 1);
+                    var nextY = yAtxAxis - (data[i_2 - 1].value * containerHeight) / maxValue;
+                    var slope = (nextY - prevY) / (nextX - prevX);
+                    var x = (yAtxAxis - prevY) / slope + prevX;
                     pp += 'L' + x + ' ' + yAtxAxis + ' ';
                     broken = true;
                     break;
@@ -360,7 +385,7 @@ const LineChartBicolor = (props) => {
                 color: data[data.length - 1].value > 0 ? 'green' : 'red',
             });
         }
-        setFillPointsArray([...localArray]);
+        setFillPointsArray(__spreadArray([], __read(localArray), false));
         setToggle(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -374,82 +399,82 @@ const LineChartBicolor = (props) => {
         toggle,
         maxValue,
     ]);
-    const horizSections = [{ value: '0' }];
-    const horizSectionsBelow = [];
-    const stepHeight = props.stepHeight || containerHeight / noOfSections;
-    const stepValue = props.stepValue || maxValue / noOfSections;
-    const noOfSectionsBelowXAxis = props.noOfSectionsBelowXAxis || -minValue / stepValue;
-    const thickness1 = props.thickness || 1;
-    const zIndex = props.zIndex || 0;
-    const strokeDashArray1 = props.strokeDashArray;
-    const rotateLabel = props.rotateLabel || false;
-    const isAnimated = props.isAnimated || false;
-    const hideDataPoints1 = props.hideDataPoints || false;
-    const color = props.color || 'green';
-    const colorNegative = props.colorNegative || 'red';
-    const startFillColor = props.startFillColor || 'lightgreen';
-    const endFillColor = props.endFillColor || 'white';
-    const startOpacity = props.startOpacity === 0 ? 0 : props.startOpacity || 1;
-    const endOpacity = props.endOpacity === 0 ? 0 : props.endOpacity || 1;
-    const startFillColorNegative = props.startFillColorNegative || 'pink';
-    const endFillColorNegative = props.endFillColorNegative || 'white';
-    const startOpacityNegative = props.startOpacityNegative === 0 ? 0 : props.startOpacityNegative || 1;
-    const endOpacityNegative = props.endOpacityNegative === 0 ? 0 : props.endOpacityNegative || 1;
-    const rulesThickness = props.rulesThickness === 0 ? 0 : props.rulesThickness || 1;
-    const rulesLength = props.rulesLength;
-    const rulesColor = props.rulesColor || 'lightgray';
-    const verticalLinesThickness = props.verticalLinesThickness === 0 ? 0 : props.verticalLinesThickness || 1;
-    const verticalLinesHeight = props.verticalLinesHeight;
-    const verticalLinesColor = props.verticalLinesColor || 'lightgray';
-    const verticalLinesZIndex = props.verticalLinesZIndex || -1;
-    const gradientDirection = props.gradientDirection || 'vertical';
+    var horizSections = [{ value: '0' }];
+    var horizSectionsBelow = [];
+    var stepHeight = props.stepHeight || containerHeight / noOfSections;
+    var stepValue = props.stepValue || maxValue / noOfSections;
+    var noOfSectionsBelowXAxis = props.noOfSectionsBelowXAxis || -minValue / stepValue;
+    var thickness1 = props.thickness || 1;
+    var zIndex = props.zIndex || 0;
+    var strokeDashArray1 = props.strokeDashArray;
+    var rotateLabel = props.rotateLabel || false;
+    var isAnimated = props.isAnimated || false;
+    var hideDataPoints1 = props.hideDataPoints || false;
+    var color = props.color || 'green';
+    var colorNegative = props.colorNegative || 'red';
+    var startFillColor = props.startFillColor || 'lightgreen';
+    var endFillColor = props.endFillColor || 'white';
+    var startOpacity = props.startOpacity === 0 ? 0 : props.startOpacity || 1;
+    var endOpacity = props.endOpacity === 0 ? 0 : props.endOpacity || 1;
+    var startFillColorNegative = props.startFillColorNegative || 'pink';
+    var endFillColorNegative = props.endFillColorNegative || 'white';
+    var startOpacityNegative = props.startOpacityNegative === 0 ? 0 : props.startOpacityNegative || 1;
+    var endOpacityNegative = props.endOpacityNegative === 0 ? 0 : props.endOpacityNegative || 1;
+    var rulesThickness = props.rulesThickness === 0 ? 0 : props.rulesThickness || 1;
+    var rulesLength = props.rulesLength;
+    var rulesColor = props.rulesColor || 'lightgray';
+    var verticalLinesThickness = props.verticalLinesThickness === 0 ? 0 : props.verticalLinesThickness || 1;
+    var verticalLinesHeight = props.verticalLinesHeight;
+    var verticalLinesColor = props.verticalLinesColor || 'lightgray';
+    var verticalLinesZIndex = props.verticalLinesZIndex || -1;
+    var gradientDirection = props.gradientDirection || 'vertical';
     // const animationEasing = props.animationEasing || Easing.ease
     // const opacity = props.opacity || 1;
-    const hideRules = props.hideRules || false;
-    const showVerticalLines = props.showVerticalLines || false;
-    const verticalLinesUptoDataPoint = props.verticalLinesUptoDataPoint || false;
-    let verticalLinesAr = [];
+    var hideRules = props.hideRules || false;
+    var showVerticalLines = props.showVerticalLines || false;
+    var verticalLinesUptoDataPoint = props.verticalLinesUptoDataPoint || false;
+    var verticalLinesAr = [];
     props.noOfVerticalLines
-        ? (verticalLinesAr = [...Array(props.noOfVerticalLines).keys()])
-        : (verticalLinesAr = [...Array(data.length).keys()]);
-    const verticalLinesSpacing = props.verticalLinesSpacing || 0;
-    const showYAxisIndices = props.showYAxisIndices || false;
-    const showXAxisIndices = props.showXAxisIndices || false;
-    const yAxisIndicesHeight = props.yAxisIndicesHeight || 4;
-    const xAxisIndicesHeight = props.xAxisIndicesHeight || 2;
-    const yAxisIndicesWidth = props.yAxisIndicesWidth || 2;
-    const xAxisIndicesWidth = props.xAxisIndicesWidth || 4;
-    const xAxisIndicesColor = props.xAxisIndicesColor || 'black';
-    const yAxisIndicesColor = props.yAxisIndicesColor || 'black';
-    const yAxisThickness = props.yAxisThickness === 0 ? 0 : props.yAxisThickness || 1;
-    const yAxisColor = props.yAxisColor || 'black';
-    const yAxisTextStyle = props.yAxisTextStyle;
-    const yAxisTextNumberOfLines = props.yAxisTextNumberOfLines || 1;
-    const xAxisTextNumberOfLines = props.xAxisTextNumberOfLines || 1;
-    const yAxisLabelContainerStyle = props.yAxisLabelContainerStyle;
-    const horizontalRulesStyle = props.horizontalRulesStyle;
-    const showFractionalValues = props.showFractionalValues || false;
-    const yAxisLabelWidth = props.yAxisLabelWidth || 35;
-    const hideYAxisText = props.hideYAxisText || false;
-    const backgroundColor = props.backgroundColor || 'transparent';
-    const disableScroll = props.disableScroll;
-    const showScrollIndicator = props.showScrollIndicator || false;
-    const hideOrigin = props.hideOrigin || false;
-    const rulesType = props.rulesType || 'line';
-    const xAxisType = props.xAxisType || 'solid';
-    const dashWidth = props.dashWidth === 0 ? 0 : props.dashWidth || 4;
-    const dashGap = props.dashGap === 0 ? 0 : props.dashGap || 8;
-    const pressEnabled = props.pressEnabled || false;
-    const showDataPointOnPress = props.showDataPointOnPress || false;
-    const showStripOnPress = props.showStripOnPress || false;
-    const showTextOnPress = props.showTextOnPress || false;
-    const stripHeight = props.stripHeight;
-    const stripWidth = props.stripWidth === 0 ? 0 : props.stripWidth || 2;
-    const stripColor = props.stripColor || color;
-    const stripOpacity = props.stripOpacity || (startOpacity + endOpacity) / 2;
-    const unFocusOnPressOut = props.unFocusOnPressOut === false ? false : true;
-    const delayBeforeUnFocus = props.delayBeforeUnFocus === 0 ? 0 : props.delayBeforeUnFocus || 300;
-    const defaultReferenceConfig = {
+        ? (verticalLinesAr = __spreadArray([], __read(Array(props.noOfVerticalLines).keys()), false))
+        : (verticalLinesAr = __spreadArray([], __read(Array(data.length).keys()), false));
+    var verticalLinesSpacing = props.verticalLinesSpacing || 0;
+    var showYAxisIndices = props.showYAxisIndices || false;
+    var showXAxisIndices = props.showXAxisIndices || false;
+    var yAxisIndicesHeight = props.yAxisIndicesHeight || 4;
+    var xAxisIndicesHeight = props.xAxisIndicesHeight || 2;
+    var yAxisIndicesWidth = props.yAxisIndicesWidth || 2;
+    var xAxisIndicesWidth = props.xAxisIndicesWidth || 4;
+    var xAxisIndicesColor = props.xAxisIndicesColor || 'black';
+    var yAxisIndicesColor = props.yAxisIndicesColor || 'black';
+    var yAxisThickness = props.yAxisThickness === 0 ? 0 : props.yAxisThickness || 1;
+    var yAxisColor = props.yAxisColor || 'black';
+    var yAxisTextStyle = props.yAxisTextStyle;
+    var yAxisTextNumberOfLines = props.yAxisTextNumberOfLines || 1;
+    var xAxisTextNumberOfLines = props.xAxisTextNumberOfLines || 1;
+    var yAxisLabelContainerStyle = props.yAxisLabelContainerStyle;
+    var horizontalRulesStyle = props.horizontalRulesStyle;
+    var showFractionalValues = props.showFractionalValues || false;
+    var yAxisLabelWidth = props.yAxisLabelWidth || 35;
+    var hideYAxisText = props.hideYAxisText || false;
+    var backgroundColor = props.backgroundColor || 'transparent';
+    var disableScroll = props.disableScroll;
+    var showScrollIndicator = props.showScrollIndicator || false;
+    var hideOrigin = props.hideOrigin || false;
+    var rulesType = props.rulesType || 'line';
+    var xAxisType = props.xAxisType || 'solid';
+    var dashWidth = props.dashWidth === 0 ? 0 : props.dashWidth || 4;
+    var dashGap = props.dashGap === 0 ? 0 : props.dashGap || 8;
+    var pressEnabled = props.pressEnabled || false;
+    var showDataPointOnPress = props.showDataPointOnPress || false;
+    var showStripOnPress = props.showStripOnPress || false;
+    var showTextOnPress = props.showTextOnPress || false;
+    var stripHeight = props.stripHeight;
+    var stripWidth = props.stripWidth === 0 ? 0 : props.stripWidth || 2;
+    var stripColor = props.stripColor || color;
+    var stripOpacity = props.stripOpacity || (startOpacity + endOpacity) / 2;
+    var unFocusOnPressOut = props.unFocusOnPressOut === false ? false : true;
+    var delayBeforeUnFocus = props.delayBeforeUnFocus === 0 ? 0 : props.delayBeforeUnFocus || 300;
+    var defaultReferenceConfig = {
         thickness: rulesThickness,
         width: (props.width || totalWidth) + 11,
         color: 'black',
@@ -459,11 +484,11 @@ const LineChartBicolor = (props) => {
         labelText: '',
         labelTextStyle: null,
     };
-    const showReferenceLine1 = props.showReferenceLine1 || false;
-    const referenceLine1Position = props.referenceLine1Position === 0
+    var showReferenceLine1 = props.showReferenceLine1 || false;
+    var referenceLine1Position = props.referenceLine1Position === 0
         ? 0
         : props.referenceLine1Position || containerHeight / 2;
-    const referenceLine1Config = props.referenceLine1Config
+    var referenceLine1Config = props.referenceLine1Config
         ? {
             thickness: props.referenceLine1Config.thickness || rulesThickness,
             width: (props.referenceLine1Config.width || props.width || totalWidth) + 11,
@@ -477,11 +502,11 @@ const LineChartBicolor = (props) => {
                 defaultReferenceConfig.labelTextStyle,
         }
         : defaultReferenceConfig;
-    const showReferenceLine2 = props.showReferenceLine2 || false;
-    const referenceLine2Position = props.referenceLine2Position === 0
+    var showReferenceLine2 = props.showReferenceLine2 || false;
+    var referenceLine2Position = props.referenceLine2Position === 0
         ? 0
         : props.referenceLine2Position || (3 * containerHeight) / 2;
-    const referenceLine2Config = props.referenceLine2Config
+    var referenceLine2Config = props.referenceLine2Config
         ? {
             thickness: props.referenceLine2Config.thickness || rulesThickness,
             width: (props.referenceLine2Config.width || props.width || totalWidth) + 11,
@@ -495,11 +520,11 @@ const LineChartBicolor = (props) => {
                 defaultReferenceConfig.labelTextStyle,
         }
         : defaultReferenceConfig;
-    const showReferenceLine3 = props.showReferenceLine3 || false;
-    const referenceLine3Position = props.referenceLine3Position === 0
+    var showReferenceLine3 = props.showReferenceLine3 || false;
+    var referenceLine3Position = props.referenceLine3Position === 0
         ? 0
         : props.referenceLine3Position || containerHeight / 3;
-    const referenceLine3Config = props.referenceLine3Config
+    var referenceLine3Config = props.referenceLine3Config
         ? {
             thickness: props.referenceLine3Config.thickness || rulesThickness,
             width: (props.referenceLine3Config.width || props.width || totalWidth) + 11,
@@ -514,8 +539,8 @@ const LineChartBicolor = (props) => {
         }
         : defaultReferenceConfig;
     horizSections.pop();
-    for (let i = 0; i <= noOfSections; i++) {
-        let value = maxValue - stepValue * i;
+    for (var i = 0; i <= noOfSections; i++) {
+        var value = maxValue - stepValue * i;
         if (props.showFractionalValues || props.roundToDigits) {
             value = parseFloat(value.toFixed(props.roundToDigits || 1));
         }
@@ -526,8 +551,8 @@ const LineChartBicolor = (props) => {
         });
     }
     if (noOfSectionsBelowXAxis) {
-        for (let i = 1; i <= noOfSectionsBelowXAxis; i++) {
-            let value = stepValue * -i;
+        for (var i = 1; i <= noOfSectionsBelowXAxis; i++) {
+            var value = stepValue * -i;
             if (props.showFractionalValues || props.roundToDigits) {
                 value = parseFloat(value.toFixed(props.roundToDigits || 1));
             }
@@ -538,7 +563,7 @@ const LineChartBicolor = (props) => {
             });
         }
     }
-    const renderLabel = (index, label, labelTextStyle, labelComponent) => {
+    var renderLabel = function (index, label, labelTextStyle, labelComponent) {
         return (<react_native_1.View style={[
                 {
                     position: 'absolute',
@@ -557,7 +582,7 @@ const LineChartBicolor = (props) => {
           </react_native_1.Text>)}
       </react_native_1.View>);
     };
-    const renderAnimatedLabel = (index, label, labelTextStyle, labelComponent) => {
+    var renderAnimatedLabel = function (index, label, labelTextStyle, labelComponent) {
         return (<react_native_1.Animated.View style={[
                 {
                     height: rotateLabel ? 40 : 20,
@@ -578,12 +603,12 @@ const LineChartBicolor = (props) => {
           </react_native_1.Text>)}
       </react_native_1.Animated.View>);
     };
-    const animatedWidth = widthValue.interpolate({
+    var animatedWidth = widthValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
-    const getLabel = (val, index) => {
-        let label = '';
+    var getLabel = function (val, index) {
+        var label = '';
         if (showFractionalValues ||
             (props.yAxisLabelTexts && props.yAxisLabelTexts[index] !== undefined)) {
             if (val) {
@@ -608,10 +633,10 @@ const LineChartBicolor = (props) => {
         }
         return yAxisLabelPrefix + label + yAxisLabelSuffix;
     };
-    const renderHorizSections = () => {
+    var renderHorizSections = function () {
         return (<>
         {props.hideAxesAndRules !== true &&
-                horizSections.map((sectionItems, index) => {
+                horizSections.map(function (sectionItems, index) {
                     return (<react_native_1.View key={index} style={[
                             styles_1.styles.horizBar,
                             {
@@ -669,8 +694,8 @@ const LineChartBicolor = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSections.map((sectionItems, index) => {
-                    let label = getLabel(sectionItems.value, index);
+                horizSections.map(function (sectionItems, index) {
+                    var label = getLabel(sectionItems.value, index);
                     if (hideOrigin && index === horizSections.length - 1) {
                         label = '';
                     }
@@ -711,7 +736,7 @@ const LineChartBicolor = (props) => {
             /***********************************************************************************************/
             }
 
-        {horizSectionsBelow.map((sectionItems, index) => {
+        {horizSectionsBelow.map(function (sectionItems, index) {
                 return (<react_native_1.View key={index} style={[
                         styles_1.styles.horizBar,
                         {
@@ -752,8 +777,8 @@ const LineChartBicolor = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSectionsBelow.map((sectionItems, index) => {
-                    let label = getLabel(horizSectionsBelow[horizSectionsBelow.length - 1 - index].value, index);
+                horizSectionsBelow.map(function (sectionItems, index) {
+                    var label = getLabel(horizSectionsBelow[horizSectionsBelow.length - 1 - index].value, index);
                     return (<react_native_1.View key={index} style={[
                             styles_1.styles.horizBar,
                             styles_1.styles.leftLabel,
@@ -797,8 +822,8 @@ const LineChartBicolor = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSections.map((sectionItems, index) => {
-                    let label = getLabel(sectionItems.value, index);
+                horizSections.map(function (sectionItems, index) {
+                    var label = getLabel(sectionItems.value, index);
                     if (hideOrigin && index === horizSections.length - 1) {
                         label = '';
                     }
@@ -882,20 +907,20 @@ const LineChartBicolor = (props) => {
             }
       </>);
     };
-    const onStripPress = (item, index) => {
+    var onStripPress = function (item, index) {
         setSelectedIndex(index);
         if (props.onPress) {
             props.onPress(item, index);
         }
     };
-    const renderDataPoints = (dataForRender, dataPtsShape, dataPtsWidth, dataPtsHeight, dataPtsColor, dataPtsRadius, textColor, textFontSize, startIndex, endIndex) => {
-        return dataForRender.map((item, index) => {
+    var renderDataPoints = function (dataForRender, dataPtsShape, dataPtsWidth, dataPtsHeight, dataPtsColor, dataPtsRadius, textColor, textFontSize, startIndex, endIndex) {
+        return dataForRender.map(function (item, index) {
             if (index < startIndex || index > endIndex)
                 return null;
             if (item.hideDataPoint) {
                 return null;
             }
-            let dataPointsShape, dataPointsWidth, dataPointsHeight, dataPointsColor, dataPointsRadius, text, customDataPoint, dataPointLabelComponent;
+            var dataPointsShape, dataPointsWidth, dataPointsHeight, dataPointsColor, dataPointsRadius, text, customDataPoint, dataPointLabelComponent;
             if (index === selectedIndex) {
                 dataPointsShape =
                     item.focusedDataPointShape ||
@@ -945,13 +970,15 @@ const LineChartBicolor = (props) => {
                 customDataPoint = item.customDataPoint || props.customDataPoint;
                 dataPointLabelComponent = item.dataPointLabelComponent;
             }
-            const currentStripHeight = item.stripHeight === 0 ? 0 : item.stripHeight || stripHeight;
-            const currentStripWidth = item.stripWidth === 0 ? 0 : item.stripWidth || stripWidth;
-            const currentStripOpacity = item.stripOpacity === 0 ? 0 : item.stripOpacity || stripOpacity;
-            const currentStripColor = item.stripColor || stripColor;
+            var currentStripHeight = item.stripHeight === 0 ? 0 : item.stripHeight || stripHeight;
+            var currentStripWidth = item.stripWidth === 0 ? 0 : item.stripWidth || stripWidth;
+            var currentStripOpacity = item.stripOpacity === 0 ? 0 : item.stripOpacity || stripOpacity;
+            var currentStripColor = item.stripColor || stripColor;
             return (<react_1.Fragment key={index}>
           {pressEnabled ? (<>
-              {unFocusOnPressOut ? (<react_native_svg_1.Rect onPressIn={() => onStripPress(item, index)} onPressOut={() => setTimeout(() => setSelectedIndex(-1), delayBeforeUnFocus)} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>) : (<react_native_svg_1.Rect onPress={() => onStripPress(item, index)} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>)}
+              {unFocusOnPressOut ? (<react_native_svg_1.Rect onPressIn={function () { return onStripPress(item, index); }} onPressOut={function () {
+                            return setTimeout(function () { return setSelectedIndex(-1); }, delayBeforeUnFocus);
+                        }} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>) : (<react_native_svg_1.Rect onPress={function () { return onStripPress(item, index); }} x={initialSpacing + (spacing * index - spacing / 2)} y={8} width={spacing} height={containerHeight - 0} fill={'none'}/>)}
             </>) : null}
           {item.showStrip ||
                     (pressEnabled && index === selectedIndex && showStripOnPress) ? (<react_native_svg_1.Rect x={initialSpacing + (spacing * index - dataPointsWidth / 2)} y={currentStripHeight
@@ -980,7 +1007,7 @@ const LineChartBicolor = (props) => {
                             ? index === selectedIndex
                                 ? dataPointsColor
                                 : 'none'
-                            : dataPointsColor} onPress={() => {
+                            : dataPointsColor} onPress={function () {
                             item.onPress ? item.onPress(item, index) : null;
                         }}/>)}
             </react_1.Fragment>) : (<react_1.Fragment key={index}>
@@ -990,7 +1017,7 @@ const LineChartBicolor = (props) => {
                             ? index === selectedIndex
                                 ? dataPointsColor
                                 : 'none'
-                            : dataPointsColor} onPress={() => {
+                            : dataPointsColor} onPress={function () {
                             item.onPress ? item.onPress(item, index) : null;
                         }}/>)}
             </react_1.Fragment>)}
@@ -1029,8 +1056,8 @@ const LineChartBicolor = (props) => {
         </react_1.Fragment>);
         });
     };
-    const renderSpecificVerticalLines = (dataForRender) => {
-        return dataForRender.map((item, index) => {
+    var renderSpecificVerticalLines = function (dataForRender) {
+        return dataForRender.map(function (item, index) {
             if (item.showVerticalLine) {
                 return (<react_native_svg_1.Rect x={initialSpacing -
                         (item.verticalLineThickness || 1) / 2 -
@@ -1046,14 +1073,14 @@ const LineChartBicolor = (props) => {
             return null;
         });
     };
-    const lineSvgComponent = (pointsArray, currentLineThickness, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray) => {
+    var lineSvgComponent = function (pointsArray, currentLineThickness, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray) {
         return (<react_native_svg_1.default>
         {strokeDashArray &&
                 strokeDashArray.length === 2 &&
                 typeof strokeDashArray[0] === 'number' &&
                 typeof strokeDashArray[1] === 'number'
-                ? pointsArray.map(points => (<react_native_svg_1.Path d={points.points} fill="none" stroke={points.color === 'green' ? color : colorNegative} strokeWidth={currentLineThickness || thickness} strokeDasharray={strokeDashArray}/>))
-                : pointsArray.map(points => {
+                ? pointsArray.map(function (points) { return (<react_native_svg_1.Path d={points.points} fill="none" stroke={points.color === 'green' ? color : colorNegative} strokeWidth={currentLineThickness || thickness} strokeDasharray={strokeDashArray}/>); })
+                : pointsArray.map(function (points) {
                     return (<react_native_svg_1.Path d={points.points} fill="none" stroke={points.color === 'green' ? color : colorNegative} strokeWidth={currentLineThickness || thickness}/>);
                 })}
 
@@ -1070,7 +1097,7 @@ const LineChartBicolor = (props) => {
             </react_native_svg_1.LinearGradient>
           </>)}
         {areaChart
-                ? fillPointsArray.map(item => {
+                ? fillPointsArray.map(function (item) {
                     return (<react_native_svg_1.Path d={item.points} fill={item.color === 'green'
                             ? 'url(#Gradient)'
                             : 'url(#GradientNegative)'} stroke={'transparent'} strokeWidth={currentLineThickness || thickness}/>);
@@ -1087,7 +1114,7 @@ const LineChartBicolor = (props) => {
                 : null}
       </react_native_svg_1.default>);
     };
-    const renderLine = (zIndex, pointsArray, currentLineThickness, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray) => {
+    var renderLine = function (zIndex, pointsArray, currentLineThickness, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray) {
         return (<react_native_1.View style={{
                 position: 'absolute',
                 height: containerHeight + 10 + horizSectionsBelow.length * stepHeight,
@@ -1100,7 +1127,7 @@ const LineChartBicolor = (props) => {
                 : null}
       </react_native_1.View>);
     };
-    const renderAnimatedLine = (zIndex, points, animatedWidth, currentLineThickness, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray) => {
+    var renderAnimatedLine = function (zIndex, points, animatedWidth, currentLineThickness, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray) {
         return (<react_native_1.Animated.View style={{
                 position: 'absolute',
                 height: containerHeight + 10 + horizSectionsBelow.length * stepHeight,
@@ -1134,7 +1161,7 @@ const LineChartBicolor = (props) => {
                 // backgroundColor: 'yellow'
             },
             !props.width && { width: totalWidth - 20 },
-        ]} scrollEnabled={!disableScroll} ref={scrollRef} onContentSizeChange={() => {
+        ]} scrollEnabled={!disableScroll} ref={scrollRef} onContentSizeChange={function () {
             if (scrollRef.current && scrollToEnd) {
                 scrollRef.current.scrollToEnd({ animated: scrollAnimation });
             }
@@ -1150,7 +1177,7 @@ const LineChartBicolor = (props) => {
             props.width && { width: props.width + 10 },
         ]}>
         {showVerticalLines &&
-            verticalLinesAr.map((item, index) => {
+            verticalLinesAr.map(function (item, index) {
                 return (<react_native_1.View key={index} style={{
                         position: 'absolute',
                         zIndex: verticalLinesZIndex || -1,
@@ -1172,7 +1199,7 @@ const LineChartBicolor = (props) => {
             })}
 
         {showYAxisIndices &&
-            data.map((item, index) => {
+            data.map(function (item, index) {
                 return (<react_native_1.View key={index + '' + item.value} style={{
                         position: 'absolute',
                         height: yAxisIndicesHeight,
@@ -1188,7 +1215,7 @@ const LineChartBicolor = (props) => {
         {isAnimated
             ? renderAnimatedLine(zIndex, pointsArray, animatedWidth, thickness1, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray1)
             : renderLine(zIndex, pointsArray, thickness1, color, startFillColor, endFillColor, startOpacity, endOpacity, strokeDashArray1)}
-        {data.map((item, index) => {
+        {data.map(function (item, index) {
             return (<react_native_1.View key={index}>
               {isAnimated
                     ? renderAnimatedLabel(index, item.label ||

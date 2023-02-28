@@ -22,70 +22,95 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PieChartMain = void 0;
-const react_1 = __importDefault(require("react"));
-const react_native_1 = require("react-native");
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const colors_1 = require("./colors");
-const PieChartMain = (props) => {
-    const { isThreeD } = props;
-    const propData = props.data;
-    const data = [];
+var react_1 = __importDefault(require("react"));
+var react_native_1 = require("react-native");
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var colors_1 = require("./colors");
+var PieChartMain = function (props) {
+    var isThreeD = props.isThreeD;
+    var propData = props.data;
+    var data = [];
     if (propData) {
-        for (let i = 0; i < propData.length; i++) {
+        for (var i = 0; i < propData.length; i++) {
             if (propData[i].value !== 0) {
                 data.push(propData[i]);
             }
         }
     }
-    const radius = props.radius || 120;
-    const canvasWidth = radius * 2;
-    const canvasHeight = isThreeD ? radius * 2.3 : radius * 2;
-    const shadowWidth = props.shadowWidth || radius / 5;
-    const backgroundColor = props.backgroundColor || 'transparent';
-    const shadowColor = props.shadowColor || 'lightgray';
-    const semiCircle = props.semiCircle || false;
-    let pi = Math.PI;
-    const initialAngle = props.initialAngle || (semiCircle ? pi / -2 : 0);
-    const shadow = props.shadow || false;
-    const donut = props.donut || false;
-    const strokeWidth = props.strokeWidth || 0;
-    const strokeColor = props.strokeColor || (strokeWidth ? 'gray' : 'transparent');
-    const innerRadius = props.innerRadius || radius / 2.5;
-    const innerCircleColor = props.innerCircleColor || props.backgroundColor || 'white';
-    const innerCircleBorderWidth = props.innerCircleBorderWidth ||
+    var radius = props.radius || 120;
+    var canvasWidth = radius * 2;
+    var canvasHeight = isThreeD ? radius * 2.3 : radius * 2;
+    var shadowWidth = props.shadowWidth || radius / 5;
+    var backgroundColor = props.backgroundColor || 'transparent';
+    var shadowColor = props.shadowColor || 'lightgray';
+    var semiCircle = props.semiCircle || false;
+    var pi = Math.PI;
+    var initialAngle = props.initialAngle || (semiCircle ? pi / -2 : 0);
+    var shadow = props.shadow || false;
+    var donut = props.donut || false;
+    var strokeWidth = props.strokeWidth || 0;
+    var strokeColor = props.strokeColor || (strokeWidth ? 'gray' : 'transparent');
+    var innerRadius = props.innerRadius || radius / 2.5;
+    var innerCircleColor = props.innerCircleColor || props.backgroundColor || 'white';
+    var innerCircleBorderWidth = props.innerCircleBorderWidth ||
         (props.innerCircleBorderColor ? strokeWidth || 2 : 0);
-    const innerCircleBorderColor = props.innerCircleBorderColor || 'lightgray';
-    const shiftInnerCenterX = props.shiftInnerCenterX || 0;
-    const shiftInnerCenterY = props.shiftInnerCenterY || 0;
-    const showText = props.showText || false;
-    const textColor = props.textColor || '';
-    const textSize = props.textSize ? Math.min(props.textSize, radius / 5) : 16;
-    let tiltAngle = props.tiltAngle || '55deg';
+    var innerCircleBorderColor = props.innerCircleBorderColor || 'lightgray';
+    var shiftInnerCenterX = props.shiftInnerCenterX || 0;
+    var shiftInnerCenterY = props.shiftInnerCenterY || 0;
+    var showText = props.showText || false;
+    var textColor = props.textColor || '';
+    var textSize = props.textSize ? Math.min(props.textSize, radius / 5) : 16;
+    var tiltAngle = props.tiltAngle || '55deg';
     if (tiltAngle &&
         !isNaN(Number(tiltAngle)) &&
         !(tiltAngle + '').endsWith('deg')) {
         tiltAngle += 'deg';
     }
     // const tilt = props.tilt ? Math.min(props.tilt, 1) : props.isThreeD ? 0.5 : 1;
-    const labelsPosition = props.labelsPosition
+    var labelsPosition = props.labelsPosition
         ? props.labelsPosition
         : donut || props.centerLabelComponent
             ? 'outward'
             : 'mid';
-    const showTextBackground = props.showTextBackground || false;
-    const textBackgroundColor = props.textBackgroundColor || 'white';
-    const showValuesAsLabels = props.showValuesAsLabels || false;
-    const showGradient = props.showGradient || false;
-    const gradientCenterColor = props.gradientCenterColor || 'white';
-    const toggleFocusOnPress = props.toggleFocusOnPress === false ? false : true;
-    let isDataShifted = false;
-    let minShiftX = 0, maxShiftX = 0, minShiftY = 0, maxShiftY = 0;
-    data.forEach((item) => {
+    var showTextBackground = props.showTextBackground || false;
+    var textBackgroundColor = props.textBackgroundColor || 'white';
+    var showValuesAsLabels = props.showValuesAsLabels || false;
+    var showGradient = props.showGradient || false;
+    var gradientCenterColor = props.gradientCenterColor || 'white';
+    var toggleFocusOnPress = props.toggleFocusOnPress === false ? false : true;
+    var isDataShifted = false;
+    var minShiftX = 0, maxShiftX = 0, minShiftY = 0, maxShiftY = 0;
+    data.forEach(function (item) {
         total += item.value;
         if (item.shiftX || item.shiftY) {
             isDataShifted = true;
@@ -103,27 +128,27 @@ const PieChartMain = (props) => {
             }
         }
     });
-    const horizAdjustment = maxShiftX - minShiftX;
-    const vertAdjustment = maxShiftY - minShiftY;
+    var horizAdjustment = maxShiftX - minShiftX;
+    var vertAdjustment = maxShiftY - minShiftY;
     if (semiCircle) {
         pi = Math.PI / 2;
     }
-    let cx = radius, cy = radius;
-    let total = data && data.length
-        ? data.map(item => item.value).reduce((v, a) => v + a)
+    var cx = radius, cy = radius;
+    var total = data && data.length
+        ? data.map(function (item) { return item.value; }).reduce(function (v, a) { return v + a; })
         : 0;
-    let acc = 0;
-    let pData = data.map(item => {
+    var acc = 0;
+    var pData = data.map(function (item) {
         acc += item.value / total;
         return acc;
     });
     acc = 0;
-    let mData = data.map(item => {
-        let pAcc = acc;
+    var mData = data.map(function (item) {
+        var pAcc = acc;
         acc += item.value / total;
         return pAcc + (acc - pAcc) / 2;
     });
-    pData = [0, ...pData];
+    pData = __spreadArray([0], __read(pData), false);
     return (<react_native_1.View style={[
             {
                 backgroundColor: backgroundColor,
@@ -133,13 +158,13 @@ const PieChartMain = (props) => {
             },
             isThreeD && { transform: [{ rotateX: tiltAngle }] },
         ]}>
-      <react_native_svg_1.default viewBox={`${strokeWidth / -2 + minShiftX} ${strokeWidth / -2 + minShiftY} ${(radius + strokeWidth) * 2 +
+      <react_native_svg_1.default viewBox={"".concat(strokeWidth / -2 + minShiftX, " ").concat(strokeWidth / -2 + minShiftY, " ").concat((radius + strokeWidth) * 2 +
             horizAdjustment +
-            (horizAdjustment ? strokeWidth : 0)} ${(radius + strokeWidth) * 2 +
+            (horizAdjustment ? strokeWidth : 0), " ").concat((radius + strokeWidth) * 2 +
             +vertAdjustment +
-            (vertAdjustment ? strokeWidth : 0)}`} height={radius * 2 + strokeWidth} width={radius * 2 + strokeWidth}>
+            (vertAdjustment ? strokeWidth : 0))} height={radius * 2 + strokeWidth} width={radius * 2 + strokeWidth}>
         <react_native_svg_1.Defs>
-          {data.map((item, index) => {
+          {data.map(function (item, index) {
             return (<react_native_svg_1.RadialGradient key={index + ''} id={'grad' + index} cx="50%" cy="50%" rx="50%" ry="50%" fx="50%" fy="50%" gradientUnits="userSpaceOnUse">
                 <react_native_svg_1.Stop offset="0%" stopColor={item.gradientCenterColor || gradientCenterColor} stopOpacity="1"/>
                 <react_native_svg_1.Stop offset="100%" stopColor={item.color || colors_1.colors[index % 9]} stopOpacity="1"/>
@@ -147,37 +172,37 @@ const PieChartMain = (props) => {
         })}
         </react_native_svg_1.Defs>
         {data.length === 1 ? (<>
-            <react_native_svg_1.Circle cx={cx} cy={cy} r={radius} fill={showGradient ? `url(#grad${0})` : data[0].color || colors_1.colors[0 % 9]} onPress={() => {
+            <react_native_svg_1.Circle cx={cx} cy={cy} r={radius} fill={showGradient ? "url(#grad".concat(0, ")") : data[0].color || colors_1.colors[0 % 9]} onPress={function () {
                 data[0].onPress
                     ? data[0].onPress()
                     : props.onPress
                         ? props.onPress(data[0], 0)
                         : null;
             }}/>
-          </>) : (data.map((item, index) => {
+          </>) : (data.map(function (item, index) {
             // console.log('index', index);
-            let nextItem;
+            var nextItem;
             if (index === pData.length - 1)
                 nextItem = pData[0];
             else
                 nextItem = pData[index + 1];
-            let sx = cx * (1 + Math.sin(2 * pi * pData[index] + initialAngle)) +
+            var sx = cx * (1 + Math.sin(2 * pi * pData[index] + initialAngle)) +
                 (item.shiftX || 0);
-            let sy = cy * (1 - Math.cos(2 * pi * pData[index] + initialAngle)) +
+            var sy = cy * (1 - Math.cos(2 * pi * pData[index] + initialAngle)) +
                 (item.shiftY || 0);
-            let ax = cx * (1 + Math.sin(2 * pi * nextItem + initialAngle)) +
+            var ax = cx * (1 + Math.sin(2 * pi * nextItem + initialAngle)) +
                 (item.shiftX || 0);
-            let ay = cy * (1 - Math.cos(2 * pi * nextItem + initialAngle)) +
+            var ay = cy * (1 - Math.cos(2 * pi * nextItem + initialAngle)) +
                 (item.shiftY || 0);
-            return (<react_native_svg_1.Path key={index + 'a'} d={`M ${cx + (item.shiftX || 0)} ${cy + (item.shiftY || 0)} L ${sx} ${sy} A ${radius} ${radius} 0 ${semiCircle ? 0 : data[index].value > total / 2 ? 1 : 0} 1 ${ax} ${ay} L ${cx + (item.shiftX || 0)} ${cy + (item.shiftY || 0)}`} stroke={item.strokeColor || strokeColor} strokeWidth={props.focusOnPress && props.selectedIndex === index
+            return (<react_native_svg_1.Path key={index + 'a'} d={"M ".concat(cx + (item.shiftX || 0), " ").concat(cy + (item.shiftY || 0), " L ").concat(sx, " ").concat(sy, " A ").concat(radius, " ").concat(radius, " 0 ").concat(semiCircle ? 0 : data[index].value > total / 2 ? 1 : 0, " 1 ").concat(ax, " ").concat(ay, " L ").concat(cx + (item.shiftX || 0), " ").concat(cy + (item.shiftY || 0))} stroke={item.strokeColor || strokeColor} strokeWidth={props.focusOnPress && props.selectedIndex === index
                     ? 0
                     : item.strokeWidth === 0
                         ? 0
                         : item.strokeWidth || strokeWidth} fill={props.selectedIndex === index || item.peripheral
                     ? 'transparent'
                     : showGradient
-                        ? `url(#grad${index})`
-                        : item.color || colors_1.colors[index % 9]} onPress={() => {
+                        ? "url(#grad".concat(index, ")")
+                        : item.color || colors_1.colors[index % 9]} onPress={function () {
                     if (item.onPress) {
                         item.onPress();
                     }
@@ -198,13 +223,13 @@ const PieChartMain = (props) => {
         }))}
 
         {showText &&
-            data.map((item, index) => {
-                let mx = cx * (1 + Math.sin(2 * pi * mData[index] + initialAngle));
-                let my = cy * (1 - Math.cos(2 * pi * mData[index] + initialAngle));
-                let midx = (mx + cx) / 2;
-                let midy = (my + cy) / 2;
-                let x = midx, y = midy;
-                const labelPosition = item.labelPosition || labelsPosition;
+            data.map(function (item, index) {
+                var mx = cx * (1 + Math.sin(2 * pi * mData[index] + initialAngle));
+                var my = cy * (1 - Math.cos(2 * pi * mData[index] + initialAngle));
+                var midx = (mx + cx) / 2;
+                var midy = (my + cy) / 2;
+                var x = midx, y = midy;
+                var labelPosition = item.labelPosition || labelsPosition;
                 if (labelPosition === 'onBorder') {
                     x = mx;
                     y = my;
@@ -243,7 +268,7 @@ const PieChartMain = (props) => {
                 {showTextBackground && (<react_native_svg_1.Circle cx={x} cy={y - (item.textSize || textSize) / 4} r={item.textBackgroundRadius ||
                             props.textBackgroundRadius ||
                             item.textSize ||
-                            textSize} fill={item.textBackgroundColor || textBackgroundColor} onPress={() => {
+                            textSize} fill={item.textBackgroundColor || textBackgroundColor} onPress={function () {
                             item.onLabelPress
                                 ? item.onLabelPress()
                                 : props.onLabelPress
@@ -266,7 +291,7 @@ const PieChartMain = (props) => {
                         }}/>)}
                 <react_native_svg_1.Text fill={item.textColor || textColor || colors_1.colors[(index + 2) % 9]} fontSize={item.textSize || textSize} fontFamily={item.font || props.font} fontWeight={item.fontWeight || props.fontWeight} fontStyle={item.fontStyle || props.fontStyle || 'normal'} x={x +
                         (item.shiftTextX || 0) -
-                        (item.textSize || textSize) / 1.8} y={y + (item.shiftTextY || 0)} onPress={() => {
+                        (item.textSize || textSize) / 1.8} y={y + (item.shiftTextY || 0)} onPress={function () {
                         item.onLabelPress
                             ? item.onLabelPress()
                             : props.onLabelPress

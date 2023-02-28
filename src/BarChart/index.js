@@ -22,42 +22,67 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BarChart = void 0;
-const react_1 = __importStar(require("react"));
-const react_native_1 = require("react-native");
-const styles_1 = require("./styles");
-const RenderBars_1 = __importDefault(require("./RenderBars"));
-const RenderStackBars_1 = __importDefault(require("./RenderStackBars"));
-const lineSvg_1 = __importDefault(require("../Components/lineSvg"));
-const utils_1 = require("../utils");
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const BarChart = (props) => {
+var react_1 = __importStar(require("react"));
+var react_native_1 = require("react-native");
+var styles_1 = require("./styles");
+var RenderBars_1 = __importDefault(require("./RenderBars"));
+var RenderStackBars_1 = __importDefault(require("./RenderStackBars"));
+var lineSvg_1 = __importDefault(require("../Components/lineSvg"));
+var utils_1 = require("../utils");
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var BarChart = function (props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-    const scrollRef = (0, react_1.useRef)();
-    const [points, setPoints] = (0, react_1.useState)('');
-    const [arrowPoints, setArrowPoints] = (0, react_1.useState)('');
-    const [selectedIndex, setSelectedIndex] = (0, react_1.useState)(-1);
-    const showLine = props.showLine || false;
-    const initialSpacing = props.initialSpacing === 0 ? 0 : props.initialSpacing || 40;
-    const data = (0, react_1.useMemo)(() => {
+    var scrollRef = (0, react_1.useRef)();
+    var _r = __read((0, react_1.useState)(''), 2), points = _r[0], setPoints = _r[1];
+    var _s = __read((0, react_1.useState)(''), 2), arrowPoints = _s[0], setArrowPoints = _s[1];
+    var _t = __read((0, react_1.useState)(-1), 2), selectedIndex = _t[0], setSelectedIndex = _t[1];
+    var showLine = props.showLine || false;
+    var initialSpacing = props.initialSpacing === 0 ? 0 : props.initialSpacing || 40;
+    var data = (0, react_1.useMemo)(function () {
         if (!props.data) {
             return [];
         }
         if (props.yAxisOffset) {
-            return props.data.map(item => {
+            return props.data.map(function (item) {
                 item.value = item.value - props.yAxisOffset;
                 return item;
             });
         }
         return props.data;
     }, [props.yAxisOffset, props.data]);
-    const lineData = props.lineData || data;
-    const lineBehindBars = props.lineBehindBars || false;
-    const defaultLineConfig = {
+    var lineData = props.lineData || data;
+    var lineBehindBars = props.lineBehindBars || false;
+    var defaultLineConfig = {
         initialSpacing: initialSpacing,
         curved: false,
         isAnimated: false,
@@ -87,7 +112,7 @@ const BarChart = (props) => {
             showArrowBase: true,
         },
     };
-    const lineConfig = props.lineConfig
+    var lineConfig = props.lineConfig
         ? {
             initialSpacing: props.lineConfig.initialSpacing === 0
                 ? 0
@@ -126,22 +151,22 @@ const BarChart = (props) => {
             },
         }
         : defaultLineConfig;
-    const containerHeight = props.height || 200;
-    const noOfSections = props.noOfSections || 10;
-    const horizSections = [{ value: '0' }];
-    const horizSectionsBelow = [];
-    const stepHeight = props.stepHeight || containerHeight / noOfSections;
-    const spacing = props.spacing === 0 ? 0 : props.spacing || 20;
-    const labelWidth = props.labelWidth || 0;
-    const scrollToEnd = props.scrollToEnd || false;
-    const scrollAnimation = props.scrollAnimation === false ? false : true;
-    const labelsExtraHeight = props.labelsExtraHeight || 0;
-    let totalWidth = spacing;
-    let maxItem = 0, minItem = 0;
+    var containerHeight = props.height || 200;
+    var noOfSections = props.noOfSections || 10;
+    var horizSections = [{ value: '0' }];
+    var horizSectionsBelow = [];
+    var stepHeight = props.stepHeight || containerHeight / noOfSections;
+    var spacing = props.spacing === 0 ? 0 : props.spacing || 20;
+    var labelWidth = props.labelWidth || 0;
+    var scrollToEnd = props.scrollToEnd || false;
+    var scrollAnimation = props.scrollAnimation === false ? false : true;
+    var labelsExtraHeight = props.labelsExtraHeight || 0;
+    var totalWidth = spacing;
+    var maxItem = 0, minItem = 0;
     if (props.stackData) {
-        props.stackData.forEach(stackItem => {
+        props.stackData.forEach(function (stackItem) {
             // console.log('stackItem', stackItem);
-            let stackSum = stackItem.stacks.reduce((acc, stack) => acc + stack.value, 0);
+            var stackSum = stackItem.stacks.reduce(function (acc, stack) { return acc + stack.value; }, 0);
             // console.log('stackSum--->', stackSum);
             if (stackSum > maxItem) {
                 maxItem = stackSum;
@@ -155,7 +180,7 @@ const BarChart = (props) => {
         });
     }
     else {
-        data.forEach((item) => {
+        data.forEach(function (item) {
             if (item.value > maxItem) {
                 maxItem = item.value;
             }
@@ -186,78 +211,76 @@ const BarChart = (props) => {
             minItem = minItem - (10 + (minItem % 10));
         }
     }
-    const maxValue = props.maxValue || maxItem;
-    const minValue = props.minValue || minItem;
-    const stepValue = props.stepValue || maxValue / noOfSections;
-    const noOfSectionsBelowXAxis = props.noOfSectionsBelowXAxis || -minValue / stepValue;
-    const disableScroll = props.disableScroll || false;
-    const showScrollIndicator = props.showScrollIndicator || false;
+    var maxValue = props.maxValue || maxItem;
+    var minValue = props.minValue || minItem;
+    var stepValue = props.stepValue || maxValue / noOfSections;
+    var noOfSectionsBelowXAxis = props.noOfSectionsBelowXAxis || -minValue / stepValue;
+    var disableScroll = props.disableScroll || false;
+    var showScrollIndicator = props.showScrollIndicator || false;
     // const oldData = props.oldData || [];
-    const side = props.side || '';
-    const rotateLabel = props.rotateLabel || false;
-    const isAnimated = props.isAnimated || false;
-    const animationDuration = props.animationDuration || 800;
+    var side = props.side || '';
+    var rotateLabel = props.rotateLabel || false;
+    var isAnimated = props.isAnimated || false;
+    var animationDuration = props.animationDuration || 800;
     // const animationEasing = props.animationEasing || Easing.ease;
-    const opacity = props.opacity || 1;
-    const isThreeD = props.isThreeD || false;
-    const showVerticalLines = props.showVerticalLines || false;
-    const rulesThickness = props.rulesThickness === 0 ? 0 : props.rulesThickness || 1;
-    const rulesLength = props.rulesLength;
-    const rulesColor = props.rulesColor || 'lightgray';
-    const verticalLinesThickness = props.verticalLinesThickness === 0 ? 0 : props.verticalLinesThickness || 1;
-    const verticalLinesHeight = props.verticalLinesHeight;
-    const verticalLinesColor = props.verticalLinesColor || 'lightgray';
-    const verticalLinesZIndex = props.verticalLinesZIndex || -1;
-    let verticalLinesAr = [];
+    var opacity = props.opacity || 1;
+    var isThreeD = props.isThreeD || false;
+    var showVerticalLines = props.showVerticalLines || false;
+    var rulesThickness = props.rulesThickness === 0 ? 0 : props.rulesThickness || 1;
+    var rulesLength = props.rulesLength;
+    var rulesColor = props.rulesColor || 'lightgray';
+    var verticalLinesThickness = props.verticalLinesThickness === 0 ? 0 : props.verticalLinesThickness || 1;
+    var verticalLinesHeight = props.verticalLinesHeight;
+    var verticalLinesColor = props.verticalLinesColor || 'lightgray';
+    var verticalLinesZIndex = props.verticalLinesZIndex || -1;
+    var verticalLinesAr = [];
     props.noOfVerticalLines
-        ? (verticalLinesAr = [...Array(props.noOfVerticalLines).keys()])
-        : (verticalLinesAr = [
-            ...Array(props.stackData ? props.stackData.length : data.length).keys(),
-        ]);
-    const verticalLinesSpacing = props.verticalLinesSpacing || 0;
-    const showYAxisIndices = props.showYAxisIndices || false;
-    const showXAxisIndices = props.showXAxisIndices || false;
-    const yAxisIndicesHeight = props.yAxisIndicesHeight || 2;
-    const xAxisIndicesHeight = props.xAxisIndicesHeight || 2;
-    const yAxisIndicesWidth = props.yAxisIndicesWidth || 4;
-    const xAxisIndicesWidth = props.xAxisIndicesWidth || 4;
-    const xAxisIndicesColor = props.xAxisIndicesColor || 'black';
-    const yAxisIndicesColor = props.yAxisIndicesColor || 'black';
-    const yAxisLabelPrefix = props.yAxisLabelPrefix || '';
-    const yAxisLabelSuffix = props.yAxisLabelSuffix || '';
-    const yAxisSide = props.yAxisSide || 'left';
-    const xAxisThickness = props.xAxisThickness === 0
+        ? (verticalLinesAr = __spreadArray([], __read(Array(props.noOfVerticalLines).keys()), false))
+        : (verticalLinesAr = __spreadArray([], __read(Array(props.stackData ? props.stackData.length : data.length).keys()), false));
+    var verticalLinesSpacing = props.verticalLinesSpacing || 0;
+    var showYAxisIndices = props.showYAxisIndices || false;
+    var showXAxisIndices = props.showXAxisIndices || false;
+    var yAxisIndicesHeight = props.yAxisIndicesHeight || 2;
+    var xAxisIndicesHeight = props.xAxisIndicesHeight || 2;
+    var yAxisIndicesWidth = props.yAxisIndicesWidth || 4;
+    var xAxisIndicesWidth = props.xAxisIndicesWidth || 4;
+    var xAxisIndicesColor = props.xAxisIndicesColor || 'black';
+    var yAxisIndicesColor = props.yAxisIndicesColor || 'black';
+    var yAxisLabelPrefix = props.yAxisLabelPrefix || '';
+    var yAxisLabelSuffix = props.yAxisLabelSuffix || '';
+    var yAxisSide = props.yAxisSide || 'left';
+    var xAxisThickness = props.xAxisThickness === 0
         ? props.xAxisThickness
         : props.xAxisThickness || 1;
-    const xAxisLength = props.xAxisLength;
-    const xAxisColor = props.xAxisColor || 'black';
-    const hideRules = props.hideRules || false;
-    const yAxisThickness = props.yAxisThickness === 0
+    var xAxisLength = props.xAxisLength;
+    var xAxisColor = props.xAxisColor || 'black';
+    var hideRules = props.hideRules || false;
+    var yAxisThickness = props.yAxisThickness === 0
         ? props.yAxisThickness
         : props.yAxisThickness || 1;
-    const yAxisColor = props.yAxisColor || 'black';
-    const yAxisTextStyle = props.yAxisTextStyle;
-    const yAxisTextNumberOfLines = props.yAxisTextNumberOfLines || 1;
-    const xAxisTextNumberOfLines = props.xAxisTextNumberOfLines || 1;
-    const yAxisLabelContainerStyle = props.yAxisLabelContainerStyle;
-    const horizontalRulesStyle = props.horizontalRulesStyle;
-    const showFractionalValues = props.showFractionalValues || false;
-    const yAxisLabelWidth = props.yAxisLabelWidth || 35;
-    const hideYAxisText = props.hideYAxisText || false;
-    const backgroundColor = props.backgroundColor || 'transparent';
-    const horizontal = props.horizontal || false;
-    const yAxisAtTop = props.yAxisAtTop || false;
-    const intactTopLabel = props.intactTopLabel || false;
-    const hideOrigin = props.hideOrigin || false;
-    const rulesType = props.rulesType || 'line';
-    const xAxisType = props.xAxisType || 'solid';
-    const dashWidth = props.dashWidth === 0 ? 0 : props.dashWidth || 4;
-    const dashGap = props.dashGap === 0 ? 0 : props.dashGap || 8;
-    const heightValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const opacValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const widthValue = (0, react_1.useMemo)(() => new react_native_1.Animated.Value(0), []);
-    const autoShiftLabels = props.autoShiftLabels || false;
-    const labelsAppear = (0, react_1.useCallback)(() => {
+    var yAxisColor = props.yAxisColor || 'black';
+    var yAxisTextStyle = props.yAxisTextStyle;
+    var yAxisTextNumberOfLines = props.yAxisTextNumberOfLines || 1;
+    var xAxisTextNumberOfLines = props.xAxisTextNumberOfLines || 1;
+    var yAxisLabelContainerStyle = props.yAxisLabelContainerStyle;
+    var horizontalRulesStyle = props.horizontalRulesStyle;
+    var showFractionalValues = props.showFractionalValues || false;
+    var yAxisLabelWidth = props.yAxisLabelWidth || 35;
+    var hideYAxisText = props.hideYAxisText || false;
+    var backgroundColor = props.backgroundColor || 'transparent';
+    var horizontal = props.horizontal || false;
+    var yAxisAtTop = props.yAxisAtTop || false;
+    var intactTopLabel = props.intactTopLabel || false;
+    var hideOrigin = props.hideOrigin || false;
+    var rulesType = props.rulesType || 'line';
+    var xAxisType = props.xAxisType || 'solid';
+    var dashWidth = props.dashWidth === 0 ? 0 : props.dashWidth || 4;
+    var dashGap = props.dashGap === 0 ? 0 : props.dashGap || 8;
+    var heightValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var opacValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var widthValue = (0, react_1.useMemo)(function () { return new react_native_1.Animated.Value(0); }, []);
+    var autoShiftLabels = props.autoShiftLabels || false;
+    var labelsAppear = (0, react_1.useCallback)(function () {
         opacValue.setValue(0);
         react_native_1.Animated.timing(opacValue, {
             toValue: 1,
@@ -275,7 +298,7 @@ const BarChart = (props) => {
     //     useNativeDriver: false,
     //   }).start();
     // }, [animationDuration, animationEasing, heightValue]);
-    const decreaseWidth = (0, react_1.useCallback)(() => {
+    var decreaseWidth = (0, react_1.useCallback)(function () {
         widthValue.setValue(0);
         react_native_1.Animated.timing(widthValue, {
             toValue: 1,
@@ -285,13 +308,13 @@ const BarChart = (props) => {
         }).start();
     }, [animationDuration, widthValue]);
     // console.log('olddata', oldData);
-    const getArrowPoints = (arrowTipX, arrowTipY, x1, y1, arrowLength, arrowWidth, showArrowBase) => {
-        let dataLineSlope = (arrowTipY - y1) / (arrowTipX - x1);
-        let d = arrowLength;
-        let d2 = arrowWidth / 2;
-        let interSectionX = arrowTipX - Math.sqrt((d * d) / (dataLineSlope * dataLineSlope + 1));
-        let interSectionY = arrowTipY - dataLineSlope * (arrowTipX - interSectionX);
-        let arrowBasex1, arrowBaseY1, arrowBaseX2, arrowBaseY2;
+    var getArrowPoints = function (arrowTipX, arrowTipY, x1, y1, arrowLength, arrowWidth, showArrowBase) {
+        var dataLineSlope = (arrowTipY - y1) / (arrowTipX - x1);
+        var d = arrowLength;
+        var d2 = arrowWidth / 2;
+        var interSectionX = arrowTipX - Math.sqrt((d * d) / (dataLineSlope * dataLineSlope + 1));
+        var interSectionY = arrowTipY - dataLineSlope * (arrowTipX - interSectionX);
+        var arrowBasex1, arrowBaseY1, arrowBaseX2, arrowBaseY2;
         if (dataLineSlope === 0) {
             arrowBasex1 = interSectionX;
             arrowBaseY1 = interSectionY - d2;
@@ -299,7 +322,7 @@ const BarChart = (props) => {
             arrowBaseY2 = interSectionY + d2;
         }
         else {
-            let arrowBaseSlope = -1 / dataLineSlope;
+            var arrowBaseSlope = -1 / dataLineSlope;
             arrowBasex1 =
                 interSectionX -
                     Math.sqrt((d2 * d2) / (arrowBaseSlope * arrowBaseSlope + 1));
@@ -311,22 +334,22 @@ const BarChart = (props) => {
             arrowBaseY2 =
                 interSectionY + arrowBaseSlope * (interSectionX - arrowBasex1);
         }
-        let arrowPoints = ` M${interSectionX} ${interSectionY}`;
-        arrowPoints += ` ${showArrowBase ? 'L' : 'M'}${arrowBasex1} ${arrowBaseY1}`;
-        arrowPoints += ` L${arrowTipX} ${arrowTipY}`;
-        arrowPoints += ` M${interSectionX} ${interSectionY}`;
-        arrowPoints += ` ${showArrowBase ? 'L' : 'M'}${arrowBaseX2} ${arrowBaseY2}`;
-        arrowPoints += ` L${arrowTipX} ${arrowTipY}`;
+        var arrowPoints = " M".concat(interSectionX, " ").concat(interSectionY);
+        arrowPoints += " ".concat(showArrowBase ? 'L' : 'M').concat(arrowBasex1, " ").concat(arrowBaseY1);
+        arrowPoints += " L".concat(arrowTipX, " ").concat(arrowTipY);
+        arrowPoints += " M".concat(interSectionX, " ").concat(interSectionY);
+        arrowPoints += " ".concat(showArrowBase ? 'L' : 'M').concat(arrowBaseX2, " ").concat(arrowBaseY2);
+        arrowPoints += " L".concat(arrowTipX, " ").concat(arrowTipY);
         return arrowPoints;
     };
-    (0, react_1.useEffect)(() => {
+    (0, react_1.useEffect)(function () {
         if (showLine) {
-            let pp = '';
+            var pp = '';
             if (!lineConfig.curved) {
-                for (let i = 0; i < lineData.length; i++) {
+                for (var i = 0; i < lineData.length; i++) {
                     if (i < lineConfig.startIndex || i > lineConfig.endIndex)
                         continue;
-                    const currentBarWidth = (data && data[i] && data[i].barWidth) || props.barWidth || 30;
+                    var currentBarWidth = (data && data[i] && data[i].barWidth) || props.barWidth || 30;
                     pp +=
                         'L' +
                             (yAxisLabelWidth +
@@ -343,21 +366,21 @@ const BarChart = (props) => {
                 }
                 setPoints(pp.replace('L', 'M'));
                 if (lineData.length > 1 && lineConfig.showArrow) {
-                    let ppArray = pp.trim().split(' ');
-                    let arrowTipY = parseInt(ppArray[ppArray.length - 1]);
-                    let arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
-                    let y1 = parseInt(ppArray[ppArray.length - 3]);
-                    let x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
-                    let arrowPoints = getArrowPoints(arrowTipX, arrowTipY, x1, y1, lineConfig.arrowConfig.length, lineConfig.arrowConfig.width, lineConfig.arrowConfig.showArrowBase);
-                    setArrowPoints(arrowPoints);
+                    var ppArray = pp.trim().split(' ');
+                    var arrowTipY = parseInt(ppArray[ppArray.length - 1]);
+                    var arrowTipX = parseInt(ppArray[ppArray.length - 2].replace('L', ''));
+                    var y1 = parseInt(ppArray[ppArray.length - 3]);
+                    var x1 = parseInt(ppArray[ppArray.length - 4].replace('L', ''));
+                    var arrowPoints_1 = getArrowPoints(arrowTipX, arrowTipY, x1, y1, lineConfig.arrowConfig.length, lineConfig.arrowConfig.width, lineConfig.arrowConfig.showArrowBase);
+                    setArrowPoints(arrowPoints_1);
                 }
             }
             else {
-                let p1Array = [];
-                for (let i = 0; i < lineData.length; i++) {
+                var p1Array = [];
+                for (var i = 0; i < lineData.length; i++) {
                     if (i < lineConfig.startIndex || i > lineConfig.endIndex)
                         continue;
-                    const currentBarWidth = (data && data[i] && data[i].barWidth) || props.barWidth || 30;
+                    var currentBarWidth = (data && data[i] && data[i].barWidth) || props.barWidth || 30;
                     p1Array.push([
                         yAxisLabelWidth +
                             lineConfig.initialSpacing +
@@ -369,16 +392,16 @@ const BarChart = (props) => {
                             lineConfig.shiftY -
                             (lineData[i].value * containerHeight) / maxValue,
                     ]);
-                    let xx = (0, utils_1.svgPath)(p1Array, utils_1.bezierCommand);
+                    var xx = (0, utils_1.svgPath)(p1Array, utils_1.bezierCommand);
                     setPoints(xx);
                 }
             }
             if (lineConfig.isAnimated) {
-                setTimeout(() => decreaseWidth(), lineConfig.delay || 0);
+                setTimeout(function () { return decreaseWidth(); }, lineConfig.delay || 0);
             }
         }
         // moveBar();
-        setTimeout(() => labelsAppear(), animationDuration);
+        setTimeout(function () { return labelsAppear(); }, animationDuration);
     }, [
         animationDuration,
         containerHeight,
@@ -405,7 +428,7 @@ const BarChart = (props) => {
         lineConfig.arrowConfig.width,
         lineConfig.arrowConfig.showArrowBase,
     ]);
-    const defaultReferenceConfig = {
+    var defaultReferenceConfig = {
         thickness: rulesThickness,
         width: horizontal
             ? props.width || totalWidth
@@ -417,11 +440,11 @@ const BarChart = (props) => {
         labelText: '',
         labelTextStyle: null,
     };
-    const showReferenceLine1 = props.showReferenceLine1 || false;
-    const referenceLine1Position = props.referenceLine1Position === 0
+    var showReferenceLine1 = props.showReferenceLine1 || false;
+    var referenceLine1Position = props.referenceLine1Position === 0
         ? 0
         : props.referenceLine1Position || containerHeight / 2;
-    const referenceLine1Config = props.referenceLine1Config
+    var referenceLine1Config = props.referenceLine1Config
         ? {
             thickness: props.referenceLine1Config.thickness || rulesThickness,
             width: horizontal
@@ -438,11 +461,11 @@ const BarChart = (props) => {
                 defaultReferenceConfig.labelTextStyle,
         }
         : defaultReferenceConfig;
-    const showReferenceLine2 = props.showReferenceLine2 || false;
-    const referenceLine2Position = props.referenceLine2Position === 0
+    var showReferenceLine2 = props.showReferenceLine2 || false;
+    var referenceLine2Position = props.referenceLine2Position === 0
         ? 0
         : props.referenceLine2Position || (3 * containerHeight) / 2;
-    const referenceLine2Config = props.referenceLine2Config
+    var referenceLine2Config = props.referenceLine2Config
         ? {
             thickness: props.referenceLine2Config.thickness || rulesThickness,
             width: horizontal
@@ -459,11 +482,11 @@ const BarChart = (props) => {
                 defaultReferenceConfig.labelTextStyle,
         }
         : defaultReferenceConfig;
-    const showReferenceLine3 = props.showReferenceLine3 || false;
-    const referenceLine3Position = props.referenceLine3Position === 0
+    var showReferenceLine3 = props.showReferenceLine3 || false;
+    var referenceLine3Position = props.referenceLine3Position === 0
         ? 0
         : props.referenceLine3Position || containerHeight / 3;
-    const referenceLine3Config = props.referenceLine3Config
+    var referenceLine3Config = props.referenceLine3Config
         ? {
             thickness: props.referenceLine3Config.thickness || rulesThickness,
             width: horizontal
@@ -481,8 +504,8 @@ const BarChart = (props) => {
         }
         : defaultReferenceConfig;
     horizSections.pop();
-    for (let i = 0; i <= noOfSections; i++) {
-        let value = maxValue - stepValue * i;
+    for (var i = 0; i <= noOfSections; i++) {
+        var value = maxValue - stepValue * i;
         if (props.showFractionalValues || props.roundToDigits) {
             value = parseFloat(value.toFixed(props.roundToDigits || 1));
         }
@@ -493,8 +516,8 @@ const BarChart = (props) => {
         });
     }
     if (noOfSectionsBelowXAxis) {
-        for (let i = 1; i <= noOfSectionsBelowXAxis; i++) {
-            let value = stepValue * -i;
+        for (var i = 1; i <= noOfSectionsBelowXAxis; i++) {
+            var value = stepValue * -i;
             if (props.showFractionalValues || props.roundToDigits) {
                 value = parseFloat(value.toFixed(props.roundToDigits || 1));
             }
@@ -505,20 +528,20 @@ const BarChart = (props) => {
             });
         }
     }
-    const animatedHeight = heightValue.interpolate({
+    var animatedHeight = heightValue.interpolate({
         inputRange: [0, 1],
         outputRange: ['0%', '100%'],
     });
-    const appearingOpacity = opacValue.interpolate({
+    var appearingOpacity = opacValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1],
     });
-    const animatedWidth = widthValue.interpolate({
+    var animatedWidth = widthValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0, totalWidth],
     });
-    const getLabel = (val, index) => {
-        let label = '';
+    var getLabel = function (val, index) {
+        var label = '';
         if (showFractionalValues ||
             (props.yAxisLabelTexts && props.yAxisLabelTexts[index] !== undefined)) {
             if (val) {
@@ -543,9 +566,9 @@ const BarChart = (props) => {
         }
         return yAxisLabelPrefix + label + yAxisLabelSuffix;
     };
-    const renderHorizSections = () => {
+    var renderHorizSections = function () {
         return (<>
-        {horizSections.map((sectionItems, index) => {
+        {horizSections.map(function (sectionItems, index) {
                 return (<react_native_1.View key={index} style={[
                         styles_1.styles.horizBar,
                         {
@@ -614,8 +637,8 @@ const BarChart = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSections.map((sectionItems, index) => {
-                    let label = getLabel(sectionItems.value, index);
+                horizSections.map(function (sectionItems, index) {
+                    var label = getLabel(sectionItems.value, index);
                     if (hideOrigin && index === horizSections.length - 1) {
                         label = '';
                     }
@@ -665,7 +688,7 @@ const BarChart = (props) => {
             /***********************************************************************************************/
             /***********************************************************************************************/
             }
-        {horizSectionsBelow.map((sectionItems, index) => {
+        {horizSectionsBelow.map(function (sectionItems, index) {
                 return (<react_native_1.View key={index} style={[
                         styles_1.styles.horizBar,
                         {
@@ -713,8 +736,8 @@ const BarChart = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSectionsBelow.map((sectionItems, index) => {
-                    let label = getLabel(horizSectionsBelow[horizSectionsBelow.length - 1 - index].value, index);
+                horizSectionsBelow.map(function (sectionItems, index) {
+                    var label = getLabel(horizSectionsBelow[horizSectionsBelow.length - 1 - index].value, index);
                     return (<react_native_1.View key={index} style={[
                             styles_1.styles.horizBar,
                             styles_1.styles.leftLabel,
@@ -758,8 +781,8 @@ const BarChart = (props) => {
             /***********************************************************************************************/
             props.hideAxesAndRules !== true &&
                 !hideYAxisText &&
-                horizSections.map((sectionItems, index) => {
-                    let label = getLabel(sectionItems.value, index);
+                horizSections.map(function (sectionItems, index) {
+                    var label = getLabel(sectionItems.value, index);
                     if (hideOrigin && index === horizSections.length - 1) {
                         label = '';
                     }
@@ -843,10 +866,10 @@ const BarChart = (props) => {
             }
       </>);
     };
-    const renderSpecificVerticalLines = (dataForRender) => {
-        return dataForRender.map((item, index) => {
+    var renderSpecificVerticalLines = function (dataForRender) {
+        return dataForRender.map(function (item, index) {
             if (item.showVerticalLine) {
-                const currentBarWidth = item.barWidth || props.barWidth || 30;
+                var currentBarWidth = item.barWidth || props.barWidth || 30;
                 return (<react_native_svg_1.Rect x={yAxisLabelWidth +
                         6 -
                         (item.verticalLineThickness || 1) / 2 -
@@ -860,13 +883,13 @@ const BarChart = (props) => {
             return null;
         });
     };
-    const renderDataPoints = () => {
-        return lineData.map((item, index) => {
+    var renderDataPoints = function () {
+        return lineData.map(function (item, index) {
             if (index < lineConfig.startIndex || index > lineConfig.endIndex) {
                 return null;
             }
             // console.log('comes in');
-            const currentBarWidth = item.barWidth || props.barWidth || 30;
+            var currentBarWidth = item.barWidth || props.barWidth || 30;
             if (lineConfig.dataPointsShape === 'rectangular') {
                 return (<react_1.Fragment key={index}>
             <react_native_svg_1.Rect x={yAxisLabelWidth +
@@ -918,9 +941,9 @@ const BarChart = (props) => {
         </react_1.Fragment>);
         });
     };
-    const renderSpecificDataPoints = dataForRender => {
-        return dataForRender.map((item, index) => {
-            const currentBarWidth = item.barWidth || props.barWidth || 30;
+    var renderSpecificDataPoints = function (dataForRender) {
+        return dataForRender.map(function (item, index) {
+            var currentBarWidth = item.barWidth || props.barWidth || 30;
             if (item.showDataPoint) {
                 if (item.dataPointShape === 'rectangular') {
                     return (<react_1.Fragment key={index}>
@@ -970,7 +993,7 @@ const BarChart = (props) => {
             return null;
         });
     };
-    const renderAnimatedLine = () => {
+    var renderAnimatedLine = function () {
         // console.log('animatedWidth is-------->', animatedWidth);
         return (<react_native_1.Animated.View style={{
                 position: 'absolute',
@@ -992,7 +1015,7 @@ const BarChart = (props) => {
         </react_native_svg_1.default>
       </react_native_1.Animated.View>);
     };
-    const renderLine = () => {
+    var renderLine = function () {
         return (<react_native_1.View style={{
                 position: 'absolute',
                 height: containerHeight + 10,
@@ -1024,11 +1047,11 @@ const BarChart = (props) => {
             horizontal && { transform: [{ rotate: '90deg' }, { translateY: 15 }] },
         ]}>
       {props.hideAxesAndRules !== true && renderHorizSections()}
-      <react_native_1.ScrollView ref={scrollRef} onTouchStart={evt => {
+      <react_native_1.ScrollView ref={scrollRef} onTouchStart={function (evt) {
             if (props.renderTooltip) {
                 setSelectedIndex(-1);
             }
-        }} onContentSizeChange={() => {
+        }} onContentSizeChange={function () {
             if (scrollRef.current && scrollToEnd) {
                 scrollRef.current.scrollToEnd({ animated: scrollAnimation });
             }
@@ -1054,11 +1077,11 @@ const BarChart = (props) => {
             !props.width && { width: totalWidth },
         ]} showsHorizontalScrollIndicator={showScrollIndicator} indicatorStyle={props.indicatorColor} horizontal 
     // data={props.stackData || data}
-    keyExtractor={(item, index) => index.toString()}>
+    keyExtractor={function (item, index) { return index.toString(); }}>
         <react_1.Fragment>
           {showVerticalLines &&
-            verticalLinesAr.map((item, index) => {
-                let totalSpacing = initialSpacing;
+            verticalLinesAr.map(function (item, index) {
+                var totalSpacing = initialSpacing;
                 if (verticalLinesSpacing) {
                     totalSpacing = verticalLinesSpacing * (index + 1);
                 }
@@ -1071,8 +1094,8 @@ const BarChart = (props) => {
                         totalSpacing +=
                             (props.data[0].barWidth || props.barWidth || 30) / 2;
                     }
-                    for (let i = 0; i < index; i++) {
-                        let actualSpacing = spacing;
+                    for (var i = 0; i < index; i++) {
+                        var actualSpacing = spacing;
                         if (props.stackData) {
                             if (i >= props.stackData.length - 1) {
                                 actualSpacing += (props.barWidth || 30) / 2;
@@ -1130,16 +1153,16 @@ const BarChart = (props) => {
                 : renderLine()
             : null}
           {props.stackData
-            ? props.stackData.map((item, index) => {
+            ? props.stackData.map(function (item, index) {
                 return (<RenderStackBars_1.default key={index} stackData={props.stackData} item={item} index={index} data={data} containerHeight={containerHeight} maxValue={maxValue} spacing={item.spacing === 0 ? 0 : item.spacing || spacing} propSpacing={spacing} xAxisThickness={xAxisThickness} barWidth={props.barWidth} opacity={opacity} disablePress={item.disablePress || props.disablePress} rotateLabel={rotateLabel} showXAxisIndices={showXAxisIndices} xAxisIndicesHeight={xAxisIndicesHeight} xAxisIndicesWidth={xAxisIndicesWidth} xAxisIndicesColor={xAxisIndicesColor} horizontal={horizontal} intactTopLabel={intactTopLabel} barBorderRadius={props.barBorderRadius} color={props.color} showGradient={props.showGradient} gradientColor={props.gradientColor} barBackgroundPattern={props.barBackgroundPattern} patternId={props.patternId} label={item.label ||
                         (props.xAxisLabelTexts && props.xAxisLabelTexts[index]
                             ? props.xAxisLabelTexts[index]
                             : '')} labelTextStyle={item.labelTextStyle || props.xAxisLabelTextStyle} onPress={props.onPress} xAxisTextNumberOfLines={xAxisTextNumberOfLines} renderTooltip={props.renderTooltip} leftShiftForTooltip={props.leftShiftForTooltip || 0} leftShiftForLastIndexTooltip={props.leftShiftForLastIndexTooltip || 0} initialSpacing={initialSpacing} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} activeOpacity={props.activeOpacity || 0.2}/>);
             })
-            : data.map((item, index) => (<RenderBars_1.default key={index} item={item} index={index} containerHeight={containerHeight} maxValue={maxValue} spacing={item.spacing === 0 ? 0 : item.spacing || spacing} propSpacing={spacing} side={side} data={data} minHeight={props.minHeight || 0} barWidth={props.barWidth} sideWidth={props.sideWidth} labelWidth={labelWidth} opacity={opacity} isThreeD={isThreeD} isAnimated={isAnimated} animationDuration={animationDuration} rotateLabel={rotateLabel} animatedHeight={animatedHeight} appearingOpacity={appearingOpacity} roundedTop={props.roundedTop} roundedBottom={props.roundedBottom} disablePress={props.disablePress} frontColor={props.frontColor} sideColor={props.sideColor} topColor={props.topColor} showGradient={props.showGradient} gradientColor={props.gradientColor} activeOpacity={props.activeOpacity} cappedBars={props.cappedBars} capThickness={props.capThickness} capColor={props.capColor} capRadius={props.capRadius} showXAxisIndices={showXAxisIndices} xAxisIndicesHeight={xAxisIndicesHeight} xAxisIndicesWidth={xAxisIndicesWidth} xAxisIndicesColor={xAxisIndicesColor} horizontal={horizontal} intactTopLabel={intactTopLabel} barBorderRadius={props.barBorderRadius} autoShiftLabels={autoShiftLabels} barBackgroundPattern={props.barBackgroundPattern} patternId={props.patternId} barMarginBottom={props.barMarginBottom} label={item.label ||
+            : data.map(function (item, index) { return (<RenderBars_1.default key={index} item={item} index={index} containerHeight={containerHeight} maxValue={maxValue} spacing={item.spacing === 0 ? 0 : item.spacing || spacing} propSpacing={spacing} side={side} data={data} minHeight={props.minHeight || 0} barWidth={props.barWidth} sideWidth={props.sideWidth} labelWidth={labelWidth} opacity={opacity} isThreeD={isThreeD} isAnimated={isAnimated} animationDuration={animationDuration} rotateLabel={rotateLabel} animatedHeight={animatedHeight} appearingOpacity={appearingOpacity} roundedTop={props.roundedTop} roundedBottom={props.roundedBottom} disablePress={props.disablePress} frontColor={props.frontColor} sideColor={props.sideColor} topColor={props.topColor} showGradient={props.showGradient} gradientColor={props.gradientColor} activeOpacity={props.activeOpacity} cappedBars={props.cappedBars} capThickness={props.capThickness} capColor={props.capColor} capRadius={props.capRadius} showXAxisIndices={showXAxisIndices} xAxisIndicesHeight={xAxisIndicesHeight} xAxisIndicesWidth={xAxisIndicesWidth} xAxisIndicesColor={xAxisIndicesColor} horizontal={horizontal} intactTopLabel={intactTopLabel} barBorderRadius={props.barBorderRadius} autoShiftLabels={autoShiftLabels} barBackgroundPattern={props.barBackgroundPattern} patternId={props.patternId} barMarginBottom={props.barMarginBottom} label={item.label ||
                     (props.xAxisLabelTexts && props.xAxisLabelTexts[index]
                         ? props.xAxisLabelTexts[index]
-                        : '')} labelTextStyle={item.labelTextStyle || props.xAxisLabelTextStyle} onPress={props.onPress} xAxisTextNumberOfLines={xAxisTextNumberOfLines} renderTooltip={props.renderTooltip} leftShiftForTooltip={props.leftShiftForTooltip || 0} leftShiftForLastIndexTooltip={props.leftShiftForLastIndexTooltip || 0} initialSpacing={initialSpacing} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} barStyle={props.barStyle}/>))}
+                        : '')} labelTextStyle={item.labelTextStyle || props.xAxisLabelTextStyle} onPress={props.onPress} xAxisTextNumberOfLines={xAxisTextNumberOfLines} renderTooltip={props.renderTooltip} leftShiftForTooltip={props.leftShiftForTooltip || 0} leftShiftForLastIndexTooltip={props.leftShiftForLastIndexTooltip || 0} initialSpacing={initialSpacing} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} barStyle={props.barStyle}/>); })}
         </react_1.Fragment>
       </react_native_1.ScrollView>
     </react_native_1.View>);

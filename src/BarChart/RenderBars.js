@@ -26,22 +26,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importDefault(require("react"));
-const react_native_1 = require("react-native");
-const ThreeDBar_1 = __importDefault(require("../Components/ThreeDBar"));
-const AnimatedBar_1 = __importDefault(require("../Components/AnimatedBar"));
-const react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
-const Animated2DWithGradient_1 = __importDefault(require("./Animated2DWithGradient"));
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const RenderBars = (props) => {
+var react_1 = __importDefault(require("react"));
+var react_native_1 = require("react-native");
+var ThreeDBar_1 = __importDefault(require("../Components/ThreeDBar"));
+var AnimatedBar_1 = __importDefault(require("../Components/AnimatedBar"));
+var react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
+var Animated2DWithGradient_1 = __importDefault(require("./Animated2DWithGradient"));
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var RenderBars = function (props) {
     var _a;
-    const { item, index, containerHeight, maxValue, minHeight, spacing, propSpacing, side, data, barStyle, 
+    var item = props.item, index = props.index, containerHeight = props.containerHeight, maxValue = props.maxValue, minHeight = props.minHeight, spacing = props.spacing, propSpacing = props.propSpacing, side = props.side, data = props.data, barStyle = props.barStyle, 
     // oldValue,
-    isThreeD, isAnimated, rotateLabel, appearingOpacity, opacity, animationDuration, autoShiftLabels, label, labelTextStyle, xAxisTextNumberOfLines, renderTooltip, leftShiftForTooltip, leftShiftForLastIndexTooltip, initialSpacing, selectedIndex, setSelectedIndex, } = props;
-    const barMarginBottom = item.barMarginBottom === 0
+    isThreeD = props.isThreeD, isAnimated = props.isAnimated, rotateLabel = props.rotateLabel, appearingOpacity = props.appearingOpacity, opacity = props.opacity, animationDuration = props.animationDuration, autoShiftLabels = props.autoShiftLabels, label = props.label, labelTextStyle = props.labelTextStyle, xAxisTextNumberOfLines = props.xAxisTextNumberOfLines, renderTooltip = props.renderTooltip, leftShiftForTooltip = props.leftShiftForTooltip, leftShiftForLastIndexTooltip = props.leftShiftForLastIndexTooltip, initialSpacing = props.initialSpacing, selectedIndex = props.selectedIndex, setSelectedIndex = props.setSelectedIndex;
+    var barMarginBottom = item.barMarginBottom === 0
         ? 0
         : item.barMarginBottom || props.barMarginBottom || 0;
-    const renderLabel = (label, labelTextStyle, value) => {
+    var renderLabel = function (label, labelTextStyle, value) {
         return (<react_native_1.View style={[
                 {
                     width: (item.labelWidth ||
@@ -80,7 +80,7 @@ const RenderBars = (props) => {
           </react_native_1.Text>)}
       </react_native_1.View>);
     };
-    const renderAnimatedLabel = (label, labelTextStyle, value) => {
+    var renderAnimatedLabel = function (label, labelTextStyle, value) {
         return (<react_native_1.Animated.View style={[
                 {
                     width: (item.labelWidth ||
@@ -108,7 +108,7 @@ const RenderBars = (props) => {
           </react_native_1.Text>)}
       </react_native_1.Animated.View>);
     };
-    const static2DWithGradient = (item) => {
+    var static2DWithGradient = function (item) {
         // console.log('comes to static2DWithGradient', item);
         return (<>
         <react_native_linear_gradient_1.default style={[
@@ -159,7 +159,7 @@ const RenderBars = (props) => {
                     ? item.barBackgroundPattern()
                     : props.barBackgroundPattern()}
             </react_native_svg_1.Defs>
-            <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width="100%" height="100%" fill={`url(#${item.patternId || props.patternId})`}/>
+            <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width="100%" height="100%" fill={"url(#".concat(item.patternId || props.patternId, ")")}/>
           </react_native_svg_1.default>)}
         {item.topLabelComponent && (<react_native_1.View style={[
                     {
@@ -181,19 +181,19 @@ const RenderBars = (props) => {
           </react_native_1.View>)}
       </>);
     };
-    const barHeight = Math.max(minHeight, (item.value >= 0 && (!isThreeD || isAnimated) && item.topLabelComponent
+    var barHeight = Math.max(minHeight, (item.value >= 0 && (!isThreeD || isAnimated) && item.topLabelComponent
         ? (item.topLabelComponentHeight || 30) +
             (Math.abs(item.value) * (containerHeight || 200)) / (maxValue || 200)
         : (Math.abs(item.value) * (containerHeight || 200)) / (maxValue || 200)) -
         barMarginBottom);
-    let leftSpacing = initialSpacing;
-    for (let i = 0; i < index; i++) {
+    var leftSpacing = initialSpacing;
+    for (var i = 0; i < index; i++) {
         leftSpacing +=
             (data[i].spacing === 0 ? 0 : data[i].spacing || propSpacing) +
                 (data[i].barWidth || props.barWidth || 30);
     }
     return (<>
-      <react_native_1.TouchableOpacity disabled={item.disablePress || props.disablePress} activeOpacity={props.activeOpacity || 0.2} onPress={() => {
+      <react_native_1.TouchableOpacity disabled={item.disablePress || props.disablePress} activeOpacity={props.activeOpacity || 0.2} onPress={function () {
             if (renderTooltip) {
                 setSelectedIndex(index);
             }

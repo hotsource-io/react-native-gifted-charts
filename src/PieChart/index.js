@@ -22,25 +22,41 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PieChart = void 0;
-const react_1 = __importStar(require("react"));
-const react_native_1 = require("react-native");
-const colors_1 = require("./colors");
-const main_1 = require("./main");
-const PieChart = (props) => {
-    const radius = props.radius || 120;
-    const extraRadiusForFocused = props.extraRadiusForFocused || radius / 10;
-    const pi = props.semiCircle ? Math.PI / 2 : Math.PI;
-    const [selectedIndex, setSelectedIndex] = (0, react_1.useState)(props.data.findIndex(item => item.focused === true));
-    let startAngle = props.initialAngle || (props.semiCircle ? -pi : 0);
-    let total = 0;
-    props.data.forEach(item => {
+var react_1 = __importStar(require("react"));
+var react_native_1 = require("react-native");
+var colors_1 = require("./colors");
+var main_1 = require("./main");
+var PieChart = function (props) {
+    var radius = props.radius || 120;
+    var extraRadiusForFocused = props.extraRadiusForFocused || radius / 10;
+    var pi = props.semiCircle ? Math.PI / 2 : Math.PI;
+    var _a = __read((0, react_1.useState)(props.data.findIndex(function (item) { return item.focused === true; })), 2), selectedIndex = _a[0], setSelectedIndex = _a[1];
+    var startAngle = props.initialAngle || (props.semiCircle ? -pi : 0);
+    var total = 0;
+    props.data.forEach(function (item) {
         total += item.value;
     });
     if (selectedIndex !== 0) {
-        let start = 0;
-        for (let i = 0; i < selectedIndex; i++) {
+        var start = 0;
+        for (var i = 0; i < selectedIndex; i++) {
             start += props.data[i].value;
         }
         startAngle += (2 * pi * start) / total;

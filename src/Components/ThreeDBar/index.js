@@ -26,12 +26,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importDefault(require("react"));
-const react_native_1 = require("react-native");
-const react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
-const react_native_svg_1 = __importStar(require("react-native-svg"));
-const styles_1 = require("./styles");
-const TriangleCorner = (props) => {
+var react_1 = __importDefault(require("react"));
+var react_native_1 = require("react-native");
+var react_native_linear_gradient_1 = __importDefault(require("react-native-linear-gradient"));
+var react_native_svg_1 = __importStar(require("react-native-svg"));
+var styles_1 = require("./styles");
+var TriangleCorner = function (props) {
     return (<react_native_1.View style={[
             aStyles.triangleCorner,
             props.style,
@@ -42,7 +42,7 @@ const TriangleCorner = (props) => {
             },
         ]}/>);
 };
-const aStyles = react_native_1.StyleSheet.create({
+var aStyles = react_native_1.StyleSheet.create({
     triangleCorner: {
         width: 0,
         height: 0,
@@ -52,16 +52,16 @@ const aStyles = react_native_1.StyleSheet.create({
         transform: [{ rotate: '90deg' }],
     },
 });
-const ThreeDBar = (props) => {
-    const { width, sideWidth, height, value, barBackgroundPattern, patternId, barStyle, item, } = props;
-    const showGradient = props.showGradient || false;
-    const gradientColor = props.gradientColor || 'white';
-    const frontColor = props.frontColor || '#fe2233';
-    const sideColor = props.sideColor || '#cc2233';
-    const topColor = props.topColor || '#ff4433';
-    const topLabelComponent = props.topLabelComponent || null;
-    const topLabelContainerStyle = props.topLabelContainerStyle || {};
-    const opacity = props.opacity || 1;
+var ThreeDBar = function (props) {
+    var width = props.width, sideWidth = props.sideWidth, height = props.height, value = props.value, barBackgroundPattern = props.barBackgroundPattern, patternId = props.patternId, barStyle = props.barStyle, item = props.item;
+    var showGradient = props.showGradient || false;
+    var gradientColor = props.gradientColor || 'white';
+    var frontColor = props.frontColor || '#fe2233';
+    var sideColor = props.sideColor || '#cc2233';
+    var topColor = props.topColor || '#ff4433';
+    var topLabelComponent = props.topLabelComponent || null;
+    var topLabelContainerStyle = props.topLabelContainerStyle || {};
+    var opacity = props.opacity || 1;
     return (<react_native_1.View style={styles_1.styles.container}>
       {props.height ? (<react_native_1.View style={[
                 styles_1.styles.row,
@@ -113,7 +113,7 @@ const ThreeDBar = (props) => {
             {showGradient && (<react_native_linear_gradient_1.default style={{ position: 'absolute', width: '100%', height: '100%' }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[gradientColor, frontColor]}/>)}
             {barBackgroundPattern && (<react_native_svg_1.default>
                 <react_native_svg_1.Defs>{barBackgroundPattern()}</react_native_svg_1.Defs>
-                <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width={width || 30} height={height} fill={`url(#${patternId})`}/>
+                <react_native_svg_1.Rect stroke="transparent" x="1" y="1" width={width || 30} height={height} fill={"url(#".concat(patternId, ")")}/>
               </react_native_svg_1.default>)}
           </react_native_1.View>
         </react_native_1.View>) : null}
